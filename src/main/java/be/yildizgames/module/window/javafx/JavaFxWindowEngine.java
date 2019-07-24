@@ -89,7 +89,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return new JavaFxWindowShell(JavaFxApplication.instance.getStage());
+            return new JavaFxWindowShell(JavaFxApplication.getInstance().getStage());
         }
         return new JavaFxWindowShell();
     }

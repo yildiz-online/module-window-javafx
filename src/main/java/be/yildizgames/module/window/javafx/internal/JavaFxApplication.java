@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  */
 public class JavaFxApplication extends Application {
 
-    public static JavaFxApplication instance;
+    private static JavaFxApplication instance;
 
     private Stage stage;
 
@@ -21,6 +21,18 @@ public class JavaFxApplication extends Application {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public static JavaFxApplication getInstance() {
+        if(instance == null) {
+            try {
+                Thread.sleep(200);
+                return getInstance();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
     }
 
     @Override
