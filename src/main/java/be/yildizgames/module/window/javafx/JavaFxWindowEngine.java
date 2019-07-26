@@ -4,25 +4,17 @@ import be.yildizgames.module.window.BaseWindowEngine;
 import be.yildizgames.module.window.Cursor;
 import be.yildizgames.module.window.ScreenSize;
 import be.yildizgames.module.window.WindowHandle;
+import be.yildizgames.module.window.WindowThreadManager;
 import be.yildizgames.module.window.input.WindowInputListener;
-import be.yildizgames.module.window.javafx.internal.JavaFxApplication;
-import be.yildizgames.module.window.javafx.widget.JavaFxWindowShell;
-import be.yildizgames.module.window.widget.WindowShell;
-import javafx.application.Application;
-import javafx.stage.Stage;
+import be.yildizgames.module.window.javafx.widget.JavaFxWindowShellFactory;
+import be.yildizgames.module.window.widget.WindowShellFactory;
 
 public class JavaFxWindowEngine implements BaseWindowEngine {
 
-    private boolean javafxStarted = false;
+    private final WindowShellFactory shellFactory = new JavaFxWindowShellFactory();
+    private final WindowThreadManager threadManager = new JavaFxThreadManager();
 
     public JavaFxWindowEngine() {
-
-       // new Thread(() -> Application.launch(JavaFxApplication.class)).start();
-       // try {
-        //    Thread.sleep(1000);
-       // } catch (InterruptedException e) {
-        //    e.printStackTrace();
-       // }
     }
 
     @Override
@@ -80,17 +72,12 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
     }
 
     @Override
-    public WindowShell createShell() {
-        if(!javafxStarted) {
-            javafxStarted = true;
-            new Thread(() -> Application.launch(JavaFxApplication.class)).start();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return new JavaFxWindowShell(JavaFxApplication.getInstance().getStage());
-        }
-        return new JavaFxWindowShell();
+    public WindowShellFactory getWindowShellFactory() {
+        return this.shellFactory;
+    }
+
+    @Override
+    public WindowThreadManager getThreadManager() {
+        return this.threadManager;
     }
 }
