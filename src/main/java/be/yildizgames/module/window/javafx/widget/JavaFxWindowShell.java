@@ -2,13 +2,16 @@ package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
 import be.yildizgames.module.coordinate.Coordinates;
+import be.yildizgames.module.coordinate.Position;
+import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.ScreenSize;
-import be.yildizgames.module.window.javafx.internal.JavaFxApplication;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowDropdown;
 import be.yildizgames.module.window.widget.WindowFont;
 import be.yildizgames.module.window.widget.WindowImage;
+import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
 import be.yildizgames.module.window.widget.WindowInputBox;
 import be.yildizgames.module.window.widget.WindowMenuBar;
 import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
@@ -16,28 +19,58 @@ import be.yildizgames.module.window.widget.WindowModal;
 import be.yildizgames.module.window.widget.WindowModalFile;
 import be.yildizgames.module.window.widget.WindowProgressBar;
 import be.yildizgames.module.window.widget.WindowShell;
+import be.yildizgames.module.window.widget.WindowShellOptions;
 import be.yildizgames.module.window.widget.WindowTextArea;
 import be.yildizgames.module.window.widget.WindowTextLine;
 import be.yildizgames.module.window.widget.WindowTreeElement;
 import be.yildizgames.module.window.widget.WindowTreeRoot;
 import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class JavaFxWindowShell implements WindowShell {
+public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
+
+    private WindowImageProvider imageProvider = new WindowImageProviderClassPath();
 
     private Stage stage;
 
-    public JavaFxWindowShell(Stage stage) {
+    private Pane pane;
+
+    public JavaFxWindowShell(Stage stage, WindowShellOptions... options) {
         this.stage = stage;
+        this.handleOptions(stage, options);
     }
 
-    public JavaFxWindowShell() {
-        Platform.runLater(() -> createStage());
+    public JavaFxWindowShell(WindowShellOptions... options) {
+        Platform.runLater(() -> createStage(options));
     }
 
-    private void createStage() {
+    private void createStage(WindowShellOptions... options) {
         this.stage = new Stage();
-        this.stage.show();
+        this.handleOptions(stage, options);
+    }
+
+    private void handleOptions(Stage stage, WindowShellOptions... options) {
+        Platform.runLater(() -> {
+            this.pane = new Pane();
+            Scene scene = new Scene(pane);
+            stage.setScene(scene);
+            if(options!= null) {
+                for (WindowShellOptions o : options) {
+                    switch (o) {
+                        case FULLSCREEN:
+                            stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+                            stage.setFullScreen(true);
+                            stage.setMaximized(true);
+                            break;
+                    }
+                }
+            }
+            this.stage.show();
+            this.setReady();
+        });
     }
 
     @Override
@@ -119,7 +152,8 @@ public class JavaFxWindowShell implements WindowShell {
 
     @Override
     public WindowTextLine createTextLine() {
-        return null;
+        this.runWhenReady(() -> {});
+        return new JavaFxLabel(this.pane);
     }
 
     @Override
@@ -134,7 +168,8 @@ public class JavaFxWindowShell implements WindowShell {
 
     @Override
     public WindowImage createImage(String image) {
-        return null;
+        this.runWhenReady(() -> {});
+        return new JavaFxImage(this.pane, this.imageProvider, image);
     }
 
     @Override
@@ -164,7 +199,7 @@ public class JavaFxWindowShell implements WindowShell {
 
     @Override
     public WindowShell createChildWindow() {
-        return null;
+        return new JavaFxWindowShell();
     }
 
     @Override
@@ -184,6 +219,16 @@ public class JavaFxWindowShell implements WindowShell {
 
     @Override
     public WindowShell setCoordinates(Coordinates coordinates) {
+        return null;
+    }
+
+    @Override
+    public WindowShell setSize(Size size) {
+        return null;
+    }
+
+    @Override
+    public WindowShell setPosition(Position position) {
         return null;
     }
 
@@ -211,4 +256,5 @@ public class JavaFxWindowShell implements WindowShell {
     public int getBottom() {
         return 0;
     }
+
 }
