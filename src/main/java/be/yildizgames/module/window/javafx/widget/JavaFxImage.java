@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.InputStream;
 
-public class JavaFxImage extends JavaFxBaseWidget implements WindowImage {
+class JavaFxImage extends JavaFxBaseWidget implements WindowImage {
 
     private WindowImageProvider provider;
     private ImageView imageView;

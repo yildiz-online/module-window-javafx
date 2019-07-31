@@ -1,7 +1,6 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.window.javafx.internal.JavaFxApplication;
-import be.yildizgames.module.window.widget.WindowShell;
 import be.yildizgames.module.window.widget.WindowShellFactory;
 import be.yildizgames.module.window.widget.WindowShellOptions;
 import javafx.application.Application;

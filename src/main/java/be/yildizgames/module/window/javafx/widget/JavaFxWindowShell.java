@@ -38,12 +38,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
 
     private Pane pane;
 
-    public JavaFxWindowShell(Stage stage, WindowShellOptions... options) {
+    JavaFxWindowShell(Stage stage, WindowShellOptions... options) {
         this.stage = stage;
         this.handleOptions(stage, options);
     }
 
-    public JavaFxWindowShell(WindowShellOptions... options) {
+    JavaFxWindowShell(WindowShellOptions... options) {
         Platform.runLater(() -> createStage(options));
     }
 
@@ -214,7 +214,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
 
     @Override
     public WindowFont createFont(String path, int height) {
-        return null;
+        return new JavaFxFont(path, height);
     }
 
     @Override

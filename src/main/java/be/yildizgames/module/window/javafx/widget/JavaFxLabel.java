@@ -10,7 +10,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class JavaFxLabel extends JavaFxBaseWidget implements WindowTextLine {
+class JavaFxLabel extends JavaFxBaseWidget implements WindowTextLine {
 
     private Label label;
 
@@ -63,6 +63,9 @@ public class JavaFxLabel extends JavaFxBaseWidget implements WindowTextLine {
     @Override
     public WindowTextLine setFont(WindowFont font) {
         this.runWhenReady(() -> {
+            System.out.println(this.label);
+            System.out.println(JavaFxFont.getById(font.getId()));
+            System.out.println(JavaFxFont.getById(font.getId()).getInnerFont());
             this.label.setFont(JavaFxFont.getById(font.getId()).getInnerFont());
         });
         return this;

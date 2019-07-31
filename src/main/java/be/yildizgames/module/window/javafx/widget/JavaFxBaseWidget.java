@@ -2,7 +2,7 @@ package be.yildizgames.module.window.javafx.widget;
 
 import javafx.application.Platform;
 
-public class JavaFxBaseWidget {
+class JavaFxBaseWidget {
 
     private boolean ready = false;
 
