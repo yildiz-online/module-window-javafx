@@ -4,6 +4,7 @@ import be.yildizgames.module.color.Color;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.window.widget.WindowFont;
 import be.yildizgames.module.window.widget.WindowTextLine;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -55,6 +56,14 @@ public class JavaFxLabel extends JavaFxBaseWidget implements WindowTextLine {
     public WindowTextLine setUnderline(boolean active) {
         this.runWhenReady(() -> {
             this.label.setUnderline(active);
+        });
+        return this;
+    }
+
+    @Override
+    public WindowTextLine setFont(WindowFont font) {
+        this.runWhenReady(() -> {
+            this.label.setFont(JavaFxFont.getById(font.getId()).getInnerFont());
         });
         return this;
     }
