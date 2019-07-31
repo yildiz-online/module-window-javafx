@@ -52,6 +52,14 @@ public class JavaFxLabel extends JavaFxBaseWidget implements WindowTextLine {
     }
 
     @Override
+    public WindowTextLine setUnderline(boolean active) {
+        this.runWhenReady(() -> {
+            this.label.setUnderline(active);
+        });
+        return this;
+    }
+
+    @Override
     public WindowTextLine setCoordinates(Coordinates coordinates) {
         return null;
     }
