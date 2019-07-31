@@ -5,13 +5,14 @@ import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.ScreenSize;
+import be.yildizgames.module.window.input.KeyboardListener;
+import be.yildizgames.module.window.javafx.input.JavaFxKeyMapper;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowDropdown;
 import be.yildizgames.module.window.widget.WindowFont;
 import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
-import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
 import be.yildizgames.module.window.widget.WindowInputBox;
 import be.yildizgames.module.window.widget.WindowMenuBar;
 import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
@@ -32,18 +33,20 @@ import javafx.stage.Stage;
 
 public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
 
-    private WindowImageProvider imageProvider = new WindowImageProviderClassPath();
+    private final WindowImageProvider imageProvider;
 
     private Stage stage;
 
     private Pane pane;
 
-    JavaFxWindowShell(Stage stage, WindowShellOptions... options) {
+    JavaFxWindowShell(Stage stage, WindowImageProvider imageProvider, WindowShellOptions... options) {
         this.stage = stage;
+        this.imageProvider = imageProvider;
         this.handleOptions(stage, options);
     }
 
-    JavaFxWindowShell(WindowShellOptions... options) {
+    JavaFxWindowShell(WindowImageProvider imageProvider, WindowShellOptions... options) {
+        this.imageProvider = imageProvider;
         Platform.runLater(() -> createStage(options));
     }
 
@@ -199,7 +202,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
 
     @Override
     public WindowShell createChildWindow() {
-        return new JavaFxWindowShell();
+        return new JavaFxWindowShell(this.imageProvider);
     }
 
     @Override
@@ -255,6 +258,18 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
     @Override
     public int getBottom() {
         return 0;
+    }
+
+    public WindowShell addKeyListener(KeyboardListener listener) {
+        this.runWhenReady(
+                () -> this.stage.getScene().setOnKeyPressed(new JavaFxKeyMapper(listener))
+        );
+        return this;
+    }
+
+    public WindowShell toBack() {
+        this.runWhenReady(() -> this.stage.toBack());
+        return this;
     }
 
 }

@@ -7,14 +7,24 @@ import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.WindowThreadManager;
 import be.yildizgames.module.window.input.WindowInputListener;
 import be.yildizgames.module.window.javafx.widget.JavaFxWindowShellFactory;
+import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
 import be.yildizgames.module.window.widget.WindowShellFactory;
 
 public class JavaFxWindowEngine implements BaseWindowEngine {
 
-    private final WindowShellFactory shellFactory = new JavaFxWindowShellFactory();
+    private final WindowShellFactory shellFactory;
+
     private final WindowThreadManager threadManager = new JavaFxThreadManager();
 
     public JavaFxWindowEngine() {
+        this(new WindowImageProviderClassPath());
+    }
+
+    public JavaFxWindowEngine(WindowImageProvider imageProvider) {
+        super();
+        this.shellFactory = new JavaFxWindowShellFactory(imageProvider);
+
     }
 
     @Override
