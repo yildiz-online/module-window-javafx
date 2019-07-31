@@ -22,12 +22,6 @@ public class JavaFxWindowShellFactory implements WindowShellFactory {
         if(!javafxStarted) {
             javafxStarted = true;
             new Thread(() -> Application.launch(JavaFxApplication.class)).start();
-            try {
-                //FIXME can cause race condition, build on event instead of after wait time.
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return new JavaFxWindowShell(JavaFxApplication.getInstance().getStage(), options);
         }
         return new JavaFxWindowShell(options);
