@@ -98,9 +98,7 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
     }
 
     public final T setVisible(boolean visible) {
-        this.runWhenReady(() -> {
-            this.node.setVisible(visible);
-        });
+        this.runWhenReady(() -> this.node.setVisible(visible));
         return (T)this;
     }
 }

@@ -87,9 +87,7 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     @Override
     public final WindowImage setImage(String url) {
-        this.runWhenReady(() -> {
-            this.imageView.setImage(new Image(provider.getImage(url)));
-        });
+        this.runWhenReady(() -> this.imageView.setImage(new Image(provider.getImage(url))));
         return this;
     }
 }

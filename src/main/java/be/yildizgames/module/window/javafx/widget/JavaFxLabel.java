@@ -82,17 +82,13 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
 
     @Override
     public WindowTextLine setUnderline(boolean active) {
-        this.runWhenReady(() -> {
-            this.label.setUnderline(active);
-        });
+        this.runWhenReady(() -> this.label.setUnderline(active));
         return this;
     }
 
     @Override
     public WindowTextLine setFont(WindowFont font) {
-        this.runWhenReady(() -> {
-            this.label.setFont(JavaFxFont.getById(font.getId()).getInnerFont());
-        });
+        this.runWhenReady(() -> this.label.setFont(JavaFxFont.getById(font.getId()).getInnerFont()));
         return this;
     }
 

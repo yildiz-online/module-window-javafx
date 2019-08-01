@@ -54,17 +54,13 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
 
     @Override
     public WindowDropdown setItems(Object... items) {
-        this.runWhenReady(() -> {
-            this.comboBox.setItems(FXCollections.observableArrayList(Arrays.stream(items).map(Object::toString).toArray(String[]::new)));
-        });
+        this.runWhenReady(() -> this.comboBox.setItems(FXCollections.observableArrayList(Arrays.stream(items).map(Object::toString).toArray(String[]::new))));
         return this;
     }
 
     @Override
     public WindowDropdown setItems(String... items) {
-        this.runWhenReady(() -> {
-            this.comboBox.setItems(FXCollections.observableArrayList(items));
-        });
+        this.runWhenReady(() -> this.comboBox.setItems(FXCollections.observableArrayList(items)));
         return this;
     }
 
