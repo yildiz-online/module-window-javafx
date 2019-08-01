@@ -75,9 +75,6 @@ public class JavaFxKeyMapper implements EventHandler<KeyEvent> {
         if(keyEvent.getCode().isLetterKey() || keyEvent.getCode().isDigitKey() || keyEvent.getCode().isWhitespaceKey()) {
             this.listener.keyPressed(keyEvent.getCode().getChar().charAt(0));
         } else {
-            System.out.println(keyEvent.getCode().getCode());
-            System.out.println(KeyCode.ENTER.getCode());
-            System.out.println(this.mapping.get(keyEvent.getCode()));
             this.listener.specialKeyPressed(this.mapping.get(keyEvent.getCode()));
         }
     }
