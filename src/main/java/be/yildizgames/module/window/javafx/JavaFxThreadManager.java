@@ -27,6 +27,9 @@ package be.yildizgames.module.window.javafx;
 import be.yildizgames.module.window.WindowThreadManager;
 import javafx.application.Platform;
 
+/**
+ * @author Grégory Van den Borre
+ */
 class JavaFxThreadManager implements WindowThreadManager {
 
     @Override

@@ -27,68 +27,65 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
-import be.yildizgames.module.window.widget.WindowImage;
-import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.WindowProgressBar;
 import javafx.application.Platform;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 
 /**
  * @author Grégory Van den Borre
  */
-class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
+class JavaFxProgressBar extends JavaFxBaseWidget<JavaFxProgressBar> implements WindowProgressBar {
 
-    private WindowImageProvider provider;
-    private ImageView imageView;
+    private ProgressBar progressBar;
 
-    JavaFxImage(Pane pane, WindowImageProvider provider, String image) {
+    JavaFxProgressBar(Pane pane) {
         super();
         Platform.runLater(() -> {
-            this.provider = provider;
-            this.imageView = new ImageView();
-            this.imageView.setImage(new Image(provider.getImage(image)));
-            pane.getChildren().add(this.imageView);
-            this.setReady(this.imageView);
+            this.progressBar = new ProgressBar();
+            pane.getChildren().add(this.progressBar);
+            this.setReady(this.progressBar);
         });
     }
 
     @Override
-    public final WindowImage setCoordinates(Coordinates coordinates) {
+    public WindowProgressBar setProgress(int progress) {
+        this.runWhenReady(() -> this.progressBar.setProgress(progress));
+        return this;
+    }
+
+    @Override
+    public WindowProgressBar setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
         this.runWhenReady(() -> {
-            this.imageView.setLayoutX(coordinates.left);
-            this.imageView.setLayoutY(coordinates.top);
-            this.imageView.setFitHeight(coordinates.height);
-            this.imageView.setFitWidth(coordinates.width);
+            this.progressBar.setLayoutX(coordinates.left);
+            this.progressBar.setLayoutY(coordinates.top);
+            this.progressBar.setMaxHeight(coordinates.height);
+            this.progressBar.setMinHeight(coordinates.height);
+            this.progressBar.setMaxWidth(coordinates.width);
+            this.progressBar.setMinWidth(coordinates.width);
         });
         return this;
     }
 
     @Override
-    public final WindowImage setSize(Size size) {
+    public WindowProgressBar setSize(Size size) {
         this.updateCoordinates(size);
         this.runWhenReady(() -> {
-            this.imageView.setFitHeight(size.height);
-            this.imageView.setFitWidth(size.width);
+            this.progressBar.setMaxHeight(size.height);
+            this.progressBar.setMinHeight(size.height);
+            this.progressBar.setMaxWidth(size.width);
+            this.progressBar.setMinWidth(size.width);
         });
         return this;
     }
 
     @Override
-    public final WindowImage setPosition(Position position) {
+    public WindowProgressBar setPosition(Position position) {
         this.updateCoordinates(position);
         this.runWhenReady(() -> {
-            this.imageView.setLayoutX(position.left);
-            this.imageView.setLayoutY(position.top);
-        });
-        return this;
-    }
-
-    @Override
-    public final WindowImage setImage(String url) {
-        this.runWhenReady(() -> {
-            this.imageView.setImage(new Image(provider.getImage(url)));
+            this.progressBar.setLayoutX(position.left);
+            this.progressBar.setLayoutY(position.top);
         });
         return this;
     }

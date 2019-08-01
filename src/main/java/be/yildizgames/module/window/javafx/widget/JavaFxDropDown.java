@@ -21,109 +21,90 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  *
  */
-
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.color.Color;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
-import be.yildizgames.module.window.widget.WindowFont;
-import be.yildizgames.module.window.widget.WindowTextLine;
+import be.yildizgames.module.window.widget.WindowDropdown;
 import javafx.application.Platform;
-import javafx.scene.control.Label;
+import javafx.collections.FXCollections;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 
-/**
- * @author Grégory Van den Borre
- */
-class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLine {
+import java.util.Arrays;
 
-    private Label label;
+class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowDropdown {
 
-    private String text = "";
+    private ComboBox comboBox;
 
-    JavaFxLabel(Pane pane) {
+    JavaFxDropDown(Pane pane) {
         super();
         Platform.runLater(() -> {
-            this.label = new Label();
-            pane.getChildren().add(this.label);
-            this.setReady(this.label);
+            this.comboBox = new ComboBox();
+            pane.getChildren().add(this.comboBox);
+            this.setReady(this.comboBox);
         });
     }
 
     @Override
-    public WindowTextLine setText(String text) {
-        this.runWhenReady(() -> {
-            this.label.setText(text);
-            this.text = text;
-        });
-        return this;
-    }
-
-    @Override
-    public WindowTextLine setPosition(int left, int top) {
-        this.runWhenReady(() -> {
-            this.label.setLayoutX(left);
-            this.label.setLayoutY(top);
-        });
-        return this;
-    }
-
-    @Override
-    public WindowTextLine setColor(Color color) {
+    public WindowDropdown select(int line) {
         return null;
     }
 
     @Override
-    public String getText() {
-        return this.text;
-    }
-
-    @Override
-    public WindowTextLine setUnderline(boolean active) {
+    public WindowDropdown setItems(Object... items) {
         this.runWhenReady(() -> {
-            this.label.setUnderline(active);
+            this.comboBox.setItems(FXCollections.observableArrayList(Arrays.stream(items).map(Object::toString).toArray(String[]::new)));
         });
         return this;
     }
 
     @Override
-    public WindowTextLine setFont(WindowFont font) {
+    public WindowDropdown setItems(String... items) {
         this.runWhenReady(() -> {
-            this.label.setFont(JavaFxFont.getById(font.getId()).getInnerFont());
+            this.comboBox.setItems(FXCollections.observableArrayList(items));
         });
         return this;
     }
 
     @Override
-    public WindowTextLine setCoordinates(Coordinates coordinates) {
+    public int getSelectionIndex() {
+        return 0;
+    }
+
+    @Override
+    public WindowDropdown setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
         this.runWhenReady(() -> {
-            this.label.setLayoutX(coordinates.left);
-            this.label.setLayoutY(coordinates.top);
-            this.label.setMaxHeight(coordinates.height);
-            this.label.setMaxWidth(coordinates.width);
+            this.comboBox.setLayoutX(coordinates.left);
+            this.comboBox.setLayoutY(coordinates.top);
+            this.comboBox.setMaxHeight(coordinates.height);
+            this.comboBox.setMinHeight(coordinates.height);
+            this.comboBox.setMaxWidth(coordinates.width);
+            this.comboBox.setMinWidth(coordinates.width);
         });
         return this;
     }
 
     @Override
-    public WindowTextLine setSize(Size size) {
+    public WindowDropdown setSize(Size size) {
         this.updateCoordinates(size);
         this.runWhenReady(() -> {
-            this.label.setMaxWidth(size.width);
-            this.label.setMaxHeight(size.height);
+            this.comboBox.setMaxHeight(size.height);
+            this.comboBox.setMinHeight(size.height);
+            this.comboBox.setMaxWidth(size.width);
+            this.comboBox.setMinWidth(size.width);
         });
         return this;
     }
 
     @Override
-    public WindowTextLine setPosition(Position position) {
+    public WindowDropdown setPosition(Position position) {
         this.updateCoordinates(position);
         this.runWhenReady(() -> {
-            this.label.setLayoutX(position.left);
-            this.label.setLayoutY(position.top);
+            this.comboBox.setLayoutX(position.left);
+            this.comboBox.setLayoutY(position.top);
         });
         return this;
     }

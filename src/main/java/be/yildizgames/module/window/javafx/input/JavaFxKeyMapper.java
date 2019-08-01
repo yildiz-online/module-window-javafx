@@ -30,52 +30,43 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxKeyMapper implements EventHandler<KeyEvent> {
+class JavaFxKeyMapper {
 
-    private final KeyboardListener listener;
+    protected static final EnumMap<KeyCode, Key> mapping = new EnumMap<>(KeyCode.class);
 
-    private final Map<KeyCode, Key> mapping = new HashMap<>();
-
-    public JavaFxKeyMapper(KeyboardListener listener) {
-        this.listener = listener;
-        this.mapping.put(KeyCode.ENTER, Key.ENTER);
-        this.mapping.put(KeyCode.ESCAPE, Key.ESC);
-        this.mapping.put(KeyCode.BACK_SPACE, Key.DELETE);
-        this.mapping.put(KeyCode.UP, Key.UP);
-        this.mapping.put(KeyCode.DOWN, Key.DOWN);
-        this.mapping.put(KeyCode.LEFT, Key.LEFT);
-        this.mapping.put(KeyCode.RIGHT, Key.RIGHT);
-        this.mapping.put(KeyCode.ALT, Key.ALT);
-        this.mapping.put(KeyCode.CONTROL, Key.CTRL);
-        this.mapping.put(KeyCode.SHIFT, Key.SHIFT);
-        this.mapping.put(KeyCode.PAGE_UP, Key.PAGE_UP);
-        this.mapping.put(KeyCode.PAGE_DOWN, Key.PAGE_DOWN);
-        this.mapping.put(KeyCode.F1, Key.F1);
-        this.mapping.put(KeyCode.F2, Key.F2);
-        this.mapping.put(KeyCode.F3, Key.F3);
-        this.mapping.put(KeyCode.F4, Key.F4);
-        this.mapping.put(KeyCode.F5, Key.F5);
-        this.mapping.put(KeyCode.F6, Key.F6);
-        this.mapping.put(KeyCode.F7, Key.F7);
-        this.mapping.put(KeyCode.F8, Key.F8);
-        this.mapping.put(KeyCode.F9, Key.F9);
-        this.mapping.put(KeyCode.F10, Key.F10);
-        this.mapping.put(KeyCode.F11, Key.F11);
-        this.mapping.put(KeyCode.F12, Key.F12);
+    static {
+        mapping.put(KeyCode.ENTER, Key.ENTER);
+        mapping.put(KeyCode.ESCAPE, Key.ESC);
+        mapping.put(KeyCode.BACK_SPACE, Key.DELETE);
+        mapping.put(KeyCode.UP, Key.UP);
+        mapping.put(KeyCode.DOWN, Key.DOWN);
+        mapping.put(KeyCode.LEFT, Key.LEFT);
+        mapping.put(KeyCode.RIGHT, Key.RIGHT);
+        mapping.put(KeyCode.ALT, Key.ALT);
+        mapping.put(KeyCode.CONTROL, Key.CTRL);
+        mapping.put(KeyCode.SHIFT, Key.SHIFT);
+        mapping.put(KeyCode.PAGE_UP, Key.PAGE_UP);
+        mapping.put(KeyCode.PAGE_DOWN, Key.PAGE_DOWN);
+        mapping.put(KeyCode.F1, Key.F1);
+        mapping.put(KeyCode.F2, Key.F2);
+        mapping.put(KeyCode.F3, Key.F3);
+        mapping.put(KeyCode.F4, Key.F4);
+        mapping.put(KeyCode.F5, Key.F5);
+        mapping.put(KeyCode.F6, Key.F6);
+        mapping.put(KeyCode.F7, Key.F7);
+        mapping.put(KeyCode.F8, Key.F8);
+        mapping.put(KeyCode.F9, Key.F9);
+        mapping.put(KeyCode.F10, Key.F10);
+        mapping.put(KeyCode.F11, Key.F11);
+        mapping.put(KeyCode.F12, Key.F12);
     }
 
-    @Override
-    public void handle(KeyEvent keyEvent) {
-        if(keyEvent.getCode().isLetterKey() || keyEvent.getCode().isDigitKey() || keyEvent.getCode().isWhitespaceKey()) {
-            this.listener.keyPressed(keyEvent.getCode().getChar().charAt(0));
-        } else {
-            this.listener.specialKeyPressed(this.mapping.get(keyEvent.getCode()));
-        }
+    protected JavaFxKeyMapper() {
+
     }
 }

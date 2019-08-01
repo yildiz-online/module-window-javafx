@@ -27,69 +27,69 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
-import be.yildizgames.module.window.widget.WindowImage;
-import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.input.MouseLeftClickListener;
+import be.yildizgames.module.window.javafx.input.JavaFxMapperMouseLeftClick;
+import be.yildizgames.module.window.widget.WindowButton;
 import javafx.application.Platform;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 /**
  * @author Grégory Van den Borre
  */
-class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
+class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButton {
 
-    private WindowImageProvider provider;
-    private ImageView imageView;
+    private Button button;
 
-    JavaFxImage(Pane pane, WindowImageProvider provider, String image) {
+    JavaFxButton(final Pane pane) {
         super();
         Platform.runLater(() -> {
-            this.provider = provider;
-            this.imageView = new ImageView();
-            this.imageView.setImage(new Image(provider.getImage(image)));
-            pane.getChildren().add(this.imageView);
-            this.setReady(this.imageView);
+            this.button = new Button();
+            pane.getChildren().add(this.button);
+            this.setReady(this.button);
         });
     }
 
+
     @Override
-    public final WindowImage setCoordinates(Coordinates coordinates) {
+    public WindowButton setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
         this.runWhenReady(() -> {
-            this.imageView.setLayoutX(coordinates.left);
-            this.imageView.setLayoutY(coordinates.top);
-            this.imageView.setFitHeight(coordinates.height);
-            this.imageView.setFitWidth(coordinates.width);
+            this.button.setLayoutX(coordinates.left);
+            this.button.setLayoutY(coordinates.top);
+            this.button.setMaxHeight(coordinates.height);
+            this.button.setMinHeight(coordinates.height);
+            this.button.setMaxWidth(coordinates.width);
+            this.button.setMinWidth(coordinates.width);
         });
         return this;
     }
 
     @Override
-    public final WindowImage setSize(Size size) {
+    public WindowButton setSize(Size size) {
         this.updateCoordinates(size);
         this.runWhenReady(() -> {
-            this.imageView.setFitHeight(size.height);
-            this.imageView.setFitWidth(size.width);
+            this.button.setMaxHeight(size.height);
+            this.button.setMinHeight(size.height);
+            this.button.setMaxWidth(size.width);
+            this.button.setMinWidth(size.width);
         });
         return this;
     }
 
     @Override
-    public final WindowImage setPosition(Position position) {
+    public WindowButton setPosition(Position position) {
         this.updateCoordinates(position);
         this.runWhenReady(() -> {
-            this.imageView.setLayoutX(position.left);
-            this.imageView.setLayoutY(position.top);
+            this.button.setLayoutX(position.left);
+            this.button.setLayoutY(position.top);
         });
         return this;
     }
 
     @Override
-    public final WindowImage setImage(String url) {
-        this.runWhenReady(() -> {
-            this.imageView.setImage(new Image(provider.getImage(url)));
-        });
+    public WindowButton addMouseLeftClickListener(MouseLeftClickListener l) {
+        this.runWhenReady(() -> this.button.setOnAction(new JavaFxMapperMouseLeftClick(l)));
         return this;
     }
 }

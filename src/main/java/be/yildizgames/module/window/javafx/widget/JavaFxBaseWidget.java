@@ -24,17 +24,41 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
+import be.yildizgames.module.coordinate.BaseCoordinate;
+import be.yildizgames.module.coordinate.Coordinates;
+import be.yildizgames.module.coordinate.Position;
+import be.yildizgames.module.coordinate.Size;
 import javafx.application.Platform;
+import javafx.scene.Node;
 
-class JavaFxBaseWidget {
+/**
+ * Building a widget is an async process done by the javafx thread, thus it is necessary to ensure that it is fully built before attempting to use it.
+ * @author Grégory Van den Borre
+ */
+class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
 
+    /**
+     * Widget readiness state.
+     */
     private boolean ready = false;
 
-    protected void setReady() {
+    private BaseCoordinate coordinates = Coordinates.ZERO;
+
+    private Node node;
+
+    /**
+     * Set ready is to be invoked once the widget is completly built.
+     */
+    protected final void setReady(Node node) {
         ready = true;
+        this.node = node;
     }
 
-    protected void runWhenReady(Runnable r) {
+    /**
+     * Ensure that is widget is ready to run any change.
+     * @param r Behavior to run in the javafx thread.
+     */
+    protected final void runWhenReady(Runnable r) {
         while (!ready) {
             try {
                 Thread.sleep(10);
@@ -43,5 +67,40 @@ class JavaFxBaseWidget {
             }
         }
         Platform.runLater(r);
+    }
+
+    public final int getLeft() {
+        return this.coordinates.left;
+    }
+
+    public final int getRight() {
+        return this.coordinates.left + this.coordinates.width;
+    }
+
+    public final int getTop() {
+        return this.coordinates.top;
+    }
+
+    public final int getBottom() {
+        return this.coordinates.top + this.coordinates.height;
+    }
+
+    protected final void updateCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    protected final void updateCoordinates(Position position) {
+        this.coordinates = new Coordinates(this.coordinates.width, this.coordinates.height, position);
+    }
+
+    protected final void updateCoordinates(Size size) {
+        this.coordinates = new Coordinates(size, this.coordinates.left, this.coordinates.top);
+    }
+
+    public final T setVisible(boolean visible) {
+        this.runWhenReady(() -> {
+            this.node.setVisible(visible);
+        });
+        return (T)this;
     }
 }

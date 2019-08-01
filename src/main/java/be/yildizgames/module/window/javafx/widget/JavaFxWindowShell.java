@@ -30,7 +30,8 @@ import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.ScreenSize;
 import be.yildizgames.module.window.input.KeyboardListener;
-import be.yildizgames.module.window.javafx.input.JavaFxKeyMapper;
+import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
+import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowDropdown;
@@ -58,7 +59,7 @@ import javafx.stage.Stage;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
+public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> implements WindowShell {
 
     private final WindowImageProvider imageProvider;
 
@@ -66,13 +67,17 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
 
     private Pane pane;
 
+    private boolean increase;
+
     JavaFxWindowShell(Stage stage, WindowImageProvider imageProvider, WindowShellOptions... options) {
+        super();
         this.stage = stage;
         this.imageProvider = imageProvider;
         this.handleOptions(stage, options);
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, WindowShellOptions... options) {
+        super();
         this.imageProvider = imageProvider;
         Platform.runLater(() -> createStage(options));
     }
@@ -99,7 +104,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
                 }
             }
             this.stage.show();
-            this.setReady();
+            this.setReady(this.pane);
         });
     }
 
@@ -157,7 +162,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
 
     @Override
     public void update() {
-
+        this.runWhenReady(() -> {
+            //hack to ensure to refresh the view in case of non full screen.
+            // if the screen is not maximized/resized, the view is not correctly updated.
+            this.stage.setHeight(this.stage.getHeight() + (increase ? 1 : -1));
+            increase = ! increase;
+        });
     }
 
     @Override
@@ -182,13 +192,14 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
 
     @Override
     public WindowTextLine createTextLine() {
-        this.runWhenReady(() -> {});
+        this.runWhenReady(() -> this.update());
         return new JavaFxLabel(this.pane);
     }
 
     @Override
     public WindowButton createButton() {
-        return null;
+        this.runWhenReady(() -> this.update());
+        return new JavaFxButton(this.pane);
     }
 
     @Override
@@ -198,13 +209,14 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
 
     @Override
     public WindowImage createImage(String image) {
-        this.runWhenReady(() -> {});
+        this.runWhenReady(() -> this.update());
         return new JavaFxImage(this.pane, this.imageProvider, image);
     }
 
     @Override
     public WindowProgressBar createProgressBar() {
-        return null;
+        this.runWhenReady(() -> this.update());
+        return new JavaFxProgressBar(this.pane);
     }
 
     @Override
@@ -224,11 +236,13 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
 
     @Override
     public WindowInputBox createInputBox() {
-        return null;
+        this.runWhenReady(() -> this.update());
+        return new JavaFxInputBox(this.pane);
     }
 
     @Override
     public WindowShell createChildWindow() {
+        this.runWhenReady(() -> this.update());
         return new JavaFxWindowShell(this.imageProvider);
     }
 
@@ -248,53 +262,52 @@ public class JavaFxWindowShell extends JavaFxBaseWidget implements WindowShell {
     }
 
     @Override
-    public WindowShell setCoordinates(Coordinates coordinates) {
-        return null;
+    public final WindowShell setCoordinates(Coordinates coordinates) {
+        this.updateCoordinates(coordinates);
+        this.runWhenReady(() -> {
+            this.pane.setLayoutX(coordinates.left);
+            this.pane.setLayoutY(coordinates.top);
+            this.pane.setMaxHeight(coordinates.height);
+            this.pane.setMinHeight(coordinates.height);
+            this.pane.setMaxWidth(coordinates.width);
+            this.pane.setMinWidth(coordinates.width);
+        });
+        return this;
     }
 
     @Override
-    public WindowShell setSize(Size size) {
-        return null;
+    public final WindowShell setSize(Size size) {
+        this.updateCoordinates(size);
+        this.runWhenReady(() -> {
+            this.pane.setMaxHeight(size.height);
+            this.pane.setMinHeight(size.height);
+            this.pane.setMaxWidth(size.width);
+            this.pane.setMinWidth(size.width);
+        });
+        return this;
     }
 
     @Override
-    public WindowShell setPosition(Position position) {
-        return null;
+    public final WindowShell setPosition(Position position) {
+        this.updateCoordinates(position);
+        this.runWhenReady(() -> {
+            this.pane.setLayoutX(position.left);
+            this.pane.setLayoutY(position.top);
+        });
+        return this;
     }
 
-    @Override
-    public WindowShell setVisible(boolean visible) {
-        return null;
-    }
-
-    @Override
-    public int getLeft() {
-        return 0;
-    }
-
-    @Override
-    public int getRight() {
-        return 0;
-    }
-
-    @Override
-    public int getTop() {
-        return 0;
-    }
-
-    @Override
-    public int getBottom() {
-        return 0;
-    }
-
-    public WindowShell addKeyListener(KeyboardListener listener) {
+    public final WindowShell addKeyListener(KeyboardListener listener) {
         this.runWhenReady(
-                () -> this.stage.getScene().setOnKeyPressed(new JavaFxKeyMapper(listener))
+                () -> {
+                    this.stage.getScene().setOnKeyPressed(new JavaFxMapperKeyPressed(listener));
+                    this.stage.getScene().setOnKeyReleased(new JavaFxMapperKeyReleased(listener));
+                }
         );
         return this;
     }
 
-    public WindowShell toBack() {
+    public final WindowShell toBack() {
         this.runWhenReady(() -> this.stage.toBack());
         return this;
     }

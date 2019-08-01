@@ -35,6 +35,9 @@ import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
 import be.yildizgames.module.window.widget.WindowShellFactory;
 
+/**
+ * @author Grégory Van den Borre
+ */
 public class JavaFxWindowEngine implements BaseWindowEngine {
 
     private final WindowShellFactory shellFactory;

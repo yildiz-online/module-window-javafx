@@ -27,69 +27,95 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
-import be.yildizgames.module.window.widget.WindowImage;
-import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.javafx.input.JavaFxMapperInput;
+import be.yildizgames.module.window.widget.WindowInputBox;
+import be.yildizgames.module.window.widget.WindowInputBoxChangeListener;
 import javafx.application.Platform;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 
 /**
  * @author Grégory Van den Borre
  */
-class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
+class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowInputBox {
 
-    private WindowImageProvider provider;
-    private ImageView imageView;
+    private TextField textField;
+    private String text = "";
 
-    JavaFxImage(Pane pane, WindowImageProvider provider, String image) {
+    JavaFxInputBox(Pane pane) {
         super();
         Platform.runLater(() -> {
-            this.provider = provider;
-            this.imageView = new ImageView();
-            this.imageView.setImage(new Image(provider.getImage(image)));
-            pane.getChildren().add(this.imageView);
-            this.setReady(this.imageView);
+            this.textField = new TextField();
+            pane.getChildren().add(this.textField);
+            this.setReady(this.textField);
         });
     }
 
+
     @Override
-    public final WindowImage setCoordinates(Coordinates coordinates) {
+    public WindowInputBox setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
         this.runWhenReady(() -> {
-            this.imageView.setLayoutX(coordinates.left);
-            this.imageView.setLayoutY(coordinates.top);
-            this.imageView.setFitHeight(coordinates.height);
-            this.imageView.setFitWidth(coordinates.width);
+            this.textField.setLayoutX(coordinates.left);
+            this.textField.setLayoutY(coordinates.top);
+            this.textField.setMaxHeight(coordinates.height);
+            this.textField.setMinHeight(coordinates.height);
+            this.textField.setMaxWidth(coordinates.width);
+            this.textField.setMinWidth(coordinates.width);
         });
         return this;
     }
 
     @Override
-    public final WindowImage setSize(Size size) {
+    public WindowInputBox setSize(Size size) {
         this.updateCoordinates(size);
         this.runWhenReady(() -> {
-            this.imageView.setFitHeight(size.height);
-            this.imageView.setFitWidth(size.width);
+            this.textField.setMaxHeight(size.height);
+            this.textField.setMinHeight(size.height);
+            this.textField.setMaxWidth(size.width);
+            this.textField.setMinWidth(size.width);
         });
         return this;
     }
 
     @Override
-    public final WindowImage setPosition(Position position) {
+    public WindowInputBox setPosition(Position position) {
         this.updateCoordinates(position);
         this.runWhenReady(() -> {
-            this.imageView.setLayoutX(position.left);
-            this.imageView.setLayoutY(position.top);
+            this.textField.setLayoutX(position.left);
+            this.textField.setLayoutY(position.top);
         });
         return this;
     }
 
     @Override
-    public final WindowImage setImage(String url) {
+    public final WindowInputBox setText(String text) {
+        this.text = text;
         this.runWhenReady(() -> {
-            this.imageView.setImage(new Image(provider.getImage(url)));
+            this.textField.setText(text);
         });
+        return this;
+    }
+
+    @Override
+    public String getText() {
+        return this.text;
+    }
+
+    @Override
+    public final WindowInputBox setToolTip(String text) {
+        this.runWhenReady(() -> {
+            Tooltip tooltip = new Tooltip();
+            tooltip.setText(text);
+            this.textField.setTooltip(tooltip);
+        });
+        return this;
+    }
+
+    @Override
+    public final WindowInputBox onChange(WindowInputBoxChangeListener l) {
+        this.textField.textProperty().addListener(new JavaFxMapperInput(l));
         return this;
     }
 }

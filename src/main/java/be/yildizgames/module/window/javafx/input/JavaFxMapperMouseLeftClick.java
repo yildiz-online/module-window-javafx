@@ -21,19 +21,22 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  *
  */
+package be.yildizgames.module.window.javafx.input;
 
-package be.yildizgames.module.window.javafx;
+import be.yildizgames.module.window.input.MouseLeftClickListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
-import be.yildizgames.module.window.BaseWindowEngine;
-import be.yildizgames.module.window.WindowEngineProvider;
+public class JavaFxMapperMouseLeftClick implements EventHandler<ActionEvent> {
 
-/**
- * @author Grégory Van den Borre
- */
-public class JavaFxWindowEngineProvider implements WindowEngineProvider {
+    private final MouseLeftClickListener listener;
+
+    public JavaFxMapperMouseLeftClick(MouseLeftClickListener listener) {
+        this.listener = listener;
+    }
 
     @Override
-    public final BaseWindowEngine getEngine() {
-        return new JavaFxWindowEngine();
+    public void handle(ActionEvent actionEvent) {
+        listener.click();
     }
 }
