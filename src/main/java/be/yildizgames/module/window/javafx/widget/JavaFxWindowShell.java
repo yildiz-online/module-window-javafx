@@ -192,13 +192,13 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public WindowTextLine createTextLine() {
-        this.runWhenReady(() -> this.update());
+        this.runWhenReady(this::update);
         return new JavaFxLabel(this.pane);
     }
 
     @Override
     public WindowButton createButton() {
-        this.runWhenReady(() -> this.update());
+        this.runWhenReady(this::update);
         return new JavaFxButton(this.pane);
     }
 
@@ -209,13 +209,13 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public WindowImage createImage(String image) {
-        this.runWhenReady(() -> this.update());
+        this.runWhenReady(this::update);
         return new JavaFxImage(this.pane, this.imageProvider, image);
     }
 
     @Override
     public WindowProgressBar createProgressBar() {
-        this.runWhenReady(() -> this.update());
+        this.runWhenReady(this::update);
         return new JavaFxProgressBar(this.pane);
     }
 
@@ -236,13 +236,13 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public WindowInputBox createInputBox() {
-        this.runWhenReady(() -> this.update());
+        this.runWhenReady(this::update);
         return new JavaFxInputBox(this.pane);
     }
 
     @Override
     public WindowShell createChildWindow() {
-        this.runWhenReady(() -> this.update());
+        this.runWhenReady(this::update);
         return new JavaFxWindowShell(this.imageProvider);
     }
 
