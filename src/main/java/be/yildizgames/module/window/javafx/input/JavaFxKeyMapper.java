@@ -37,6 +37,25 @@ public class JavaFxKeyMapper implements EventHandler<KeyEvent> {
         this.mapping.put(KeyCode.BACK_SPACE, Key.DELETE);
         this.mapping.put(KeyCode.UP, Key.UP);
         this.mapping.put(KeyCode.DOWN, Key.DOWN);
+        this.mapping.put(KeyCode.LEFT, Key.LEFT);
+        this.mapping.put(KeyCode.RIGHT, Key.RIGHT);
+        this.mapping.put(KeyCode.ALT, Key.ALT);
+        this.mapping.put(KeyCode.CONTROL, Key.CTRL);
+        this.mapping.put(KeyCode.SHIFT, Key.SHIFT);
+        this.mapping.put(KeyCode.PAGE_UP, Key.PAGE_UP);
+        this.mapping.put(KeyCode.PAGE_DOWN, Key.PAGE_DOWN);
+        this.mapping.put(KeyCode.F1, Key.F1);
+        this.mapping.put(KeyCode.F2, Key.F2);
+        this.mapping.put(KeyCode.F3, Key.F3);
+        this.mapping.put(KeyCode.F4, Key.F4);
+        this.mapping.put(KeyCode.F5, Key.F5);
+        this.mapping.put(KeyCode.F6, Key.F6);
+        this.mapping.put(KeyCode.F7, Key.F7);
+        this.mapping.put(KeyCode.F8, Key.F8);
+        this.mapping.put(KeyCode.F9, Key.F9);
+        this.mapping.put(KeyCode.F10, Key.F10);
+        this.mapping.put(KeyCode.F11, Key.F11);
+        this.mapping.put(KeyCode.F12, Key.F12);
     }
 
     @Override
@@ -45,7 +64,6 @@ public class JavaFxKeyMapper implements EventHandler<KeyEvent> {
             this.listener.keyPressed(keyEvent.getCode().getChar().charAt(0));
         } else {
             System.out.println(keyEvent.getCode().getCode());
-
             System.out.println(KeyCode.ENTER.getCode());
             System.out.println(this.mapping.get(keyEvent.getCode()));
             this.listener.specialKeyPressed(this.mapping.get(keyEvent.getCode()));
