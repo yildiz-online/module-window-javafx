@@ -53,7 +53,7 @@ public class JavaFxApplication extends Application {
                 Thread.sleep(200);
                 return getInstance();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
         return instance;
