@@ -29,6 +29,7 @@ package be.yildizgames.module.window.javafx.widget;
 
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.MediaView;
 
 /**
  * @author Grégory Van den Borre
