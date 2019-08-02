@@ -55,6 +55,9 @@ import be.yildizgames.module.window.widget.WindowCanvas;
 
 import java.util.Random;
 
+import com.sun.jna.*;
+import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.win32.*;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
@@ -120,6 +123,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public WindowShell setTitle(String title) {
+        this.title = title;
         Platform.runLater(() -> stage.setTitle(title));
         return this;
     }
