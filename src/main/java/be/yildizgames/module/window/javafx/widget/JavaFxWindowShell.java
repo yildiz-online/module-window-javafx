@@ -57,6 +57,7 @@ import java.util.Random;
 
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.User32;
+import com.sun.jna.Pointer;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
@@ -206,7 +207,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public WindowCanvas createCanvas() {
         this.runWhenReady(this::update);
         HWND hWnd = User32.INSTANCE.FindWindow(null, this.title);
-        return new JavaFxCanvas(this.pane, new WindowHandle(0));
+        return new JavaFxCanvas(this.pane, new WindowHandle(Pointer.nativeValue(hWnd.getPointer()));
     }
 
     @Override
