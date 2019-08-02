@@ -30,6 +30,7 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.widget.WindowCanvas;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.canvas.Canvas;
 
 /**
