@@ -41,7 +41,7 @@ public class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements Wind
     
     private Canvas canvas;
     
-    JavaFxLabel(Pane pane, WindowHandle handle) {
+    JavaFxCanvas(Pane pane, WindowHandle handle) {
         super();
         this.handle = handle;
         Platform.runLater(() -> {
