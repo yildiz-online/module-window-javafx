@@ -30,15 +30,31 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.widget.WindowCanvas;
 
+import javafx.scene.canvas.Canvas;
+
 /**
  * @author Grégory Van den Borre
  */
 public class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements WindowCanvas {
+    
+    private final WindowHandle handle;
+    
+    private Canvas canvas;
+    
+    JavaFxLabel(Pane pane, WindowHandle handle) {
+        super();
+        this.handle = handle;
+        Platform.runLater(() -> {
+            this.canvas = new Canvas();
+            pane.getChildren().add(this.canvas);
+            this.setReady(this.canvas);
+        });
+    }
   
-  public final WindowHandle getHandle() {
+    public final WindowHandle getHandle() {
         //stage.setTitle(WINDOW_NAME);
         //WinDef.HWND hWnd = User32.INSTANCE.FindWindow(null, WINDOW_NAME);
-        return new WindowHandle(0);
+        return this.handle;
     }
   
 }
