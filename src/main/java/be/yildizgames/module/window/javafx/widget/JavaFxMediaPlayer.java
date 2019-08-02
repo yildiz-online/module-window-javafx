@@ -30,6 +30,8 @@ package be.yildizgames.module.window.javafx.widget;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
 
 /**
  * @author Grégory Van den Borre
@@ -47,6 +49,12 @@ class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> {
     }
     
     public JavaFxMediaPlayer play(String url) {
+        this.runWhenReady(() -> {
+            Media media = new Media(source);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setAutoPlay(true);
+            this.mediaView.mediaPlayer.setValue(mediaPlayer);
+        });
         return this;
     }
 
