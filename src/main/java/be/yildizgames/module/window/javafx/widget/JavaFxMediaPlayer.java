@@ -53,7 +53,7 @@ class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> {
             Media media = new Media(source);
             MediaPlayer mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
-            this.mediaView.mediaPlayer.setValue(mediaPlayer);
+            this.mediaView.setMediaPlayer(mediaPlayer);
         });
         return this;
     }
