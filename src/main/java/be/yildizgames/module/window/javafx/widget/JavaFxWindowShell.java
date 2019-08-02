@@ -50,6 +50,7 @@ import be.yildizgames.module.window.widget.WindowTextArea;
 import be.yildizgames.module.window.widget.WindowTextLine;
 import be.yildizgames.module.window.widget.WindowTreeElement;
 import be.yildizgames.module.window.widget.WindowTreeRoot;
+import be.yildizgames.module.window.widget.WindowCanvas;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
