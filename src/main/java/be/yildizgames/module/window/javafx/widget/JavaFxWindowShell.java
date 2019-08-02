@@ -55,9 +55,8 @@ import be.yildizgames.module.window.widget.WindowCanvas;
 
 import java.util.Random;
 
-import com.sun.jna.*;
 import com.sun.jna.platform.win32.WinDef.HWND;
-import com.sun.jna.win32.*;
+import com.sun.jna.platform.win32.User32;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
@@ -206,7 +205,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     
     public WindowCanvas createCanvas() {
         this.runWhenReady(this::update);
-        WinDef.HWND hWnd = User32.INSTANCE.FindWindow(null, this.title);
+        HWND hWnd = User32.INSTANCE.FindWindow(null, this.title);
         return new JavaFxCanvas(this.pane, new WindowHandle(0));
     }
 
