@@ -207,7 +207,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public WindowCanvas createCanvas() {
         this.runWhenReady(this::update);
         HWND hWnd = User32.INSTANCE.FindWindow(null, this.title);
-        return new JavaFxCanvas(this.pane, new WindowHandle(Pointer.nativeValue(hWnd.getPointer()));
+        return new JavaFxCanvas(this.pane, new WindowHandle(Pointer.nativeValue(hWnd.getPointer())));
     }
 
     @Override
