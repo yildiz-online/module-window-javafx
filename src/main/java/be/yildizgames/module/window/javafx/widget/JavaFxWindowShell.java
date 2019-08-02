@@ -70,6 +70,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     private Pane pane;
 
     private boolean increase;
+    
+    private String title;
 
     JavaFxWindowShell(Stage stage, WindowImageProvider imageProvider, WindowShellOptions... options) {
         super();
@@ -106,6 +108,9 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
                 }
             }
             this.stage.show();
+            Random random = new Random();
+            this.title = "UnnamedWindow" + random.nextInt();
+            this.stage.setTitle(this.title);
             this.setReady(this.pane);
         });
     }
@@ -194,7 +199,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     
     public WindowCanvas createCanvas() {
         this.runWhenReady(this::update);
-        //WinDef.HWND hWnd = User32.INSTANCE.FindWindow(null, WINDOW_NAME);
+        WinDef.HWND hWnd = User32.INSTANCE.FindWindow(null, this.title);
         return new JavaFxCanvas(this.pane, new WindowHandle(0));
     }
 
