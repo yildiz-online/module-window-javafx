@@ -27,12 +27,14 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
+import be.yildizgames.module.coordinate.Coordinates;
+import be.yildizgames.module.coordinate.Position;
+import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.widget.WindowCanvas;
-
 import javafx.application.Platform;
-import javafx.scene.layout.Pane;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.Pane;
 
 /**
  * @author Grégory Van den Borre
@@ -54,9 +56,39 @@ public class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements Wind
     }
   
     public final WindowHandle getHandle() {
-        //stage.setTitle(WINDOW_NAME);
-        //WinDef.HWND hWnd = User32.INSTANCE.FindWindow(null, WINDOW_NAME);
         return this.handle;
+    }
+
+    @Override
+    public final JavaFxCanvas setCoordinates(Coordinates coordinates) {
+        this.updateCoordinates(coordinates);
+        this.runWhenReady(() -> {
+            this.canvas.setLayoutX(coordinates.left);
+            this.canvas.setLayoutY(coordinates.top);
+            this.canvas.setHeight(coordinates.height);
+            this.canvas.setWidth(coordinates.width);
+        });
+        return this;
+    }
+
+    @Override
+    public final JavaFxCanvas setSize(Size size) {
+        this.updateCoordinates(size);
+        this.runWhenReady(() -> {
+            this.canvas.setHeight(size.height);
+            this.canvas.setWidth(size.width);
+        });
+        return this;
+    }
+
+    @Override
+    public final JavaFxCanvas setPosition(Position position) {
+        this.updateCoordinates(position);
+        this.runWhenReady(() -> {
+            this.canvas.setLayoutX(position.left);
+            this.canvas.setLayoutY(position.top);
+        });
+        return this;
     }
   
 }

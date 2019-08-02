@@ -33,36 +33,27 @@ import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
-import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
-import be.yildizgames.module.window.widget.WindowDropdown;
-import be.yildizgames.module.window.widget.WindowFont;
-import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
-import be.yildizgames.module.window.widget.WindowInputBox;
 import be.yildizgames.module.window.widget.WindowMenuBar;
 import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
 import be.yildizgames.module.window.widget.WindowModal;
 import be.yildizgames.module.window.widget.WindowModalFile;
-import be.yildizgames.module.window.widget.WindowProgressBar;
 import be.yildizgames.module.window.widget.WindowShell;
 import be.yildizgames.module.window.widget.WindowShellOptions;
 import be.yildizgames.module.window.widget.WindowTextArea;
-import be.yildizgames.module.window.widget.WindowTextLine;
 import be.yildizgames.module.window.widget.WindowTreeElement;
 import be.yildizgames.module.window.widget.WindowTreeRoot;
-import be.yildizgames.module.window.widget.WindowCanvas;
-
-import java.util.Random;
-
-import com.sun.jna.platform.win32.WinDef.HWND;
-import com.sun.jna.platform.win32.User32;
 import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef.HWND;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import java.util.Random;
 
 /**
  * @author Grégory Van den Borre
@@ -122,35 +113,35 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public WindowShell setTitle(String title) {
+    public JavaFxWindowShell setTitle(String title) {
         this.title = title;
         Platform.runLater(() -> stage.setTitle(title));
         return this;
     }
 
     @Override
-    public WindowShell setIcon(String file) {
+    public JavaFxWindowShell setIcon(String file) {
         return null;
     }
 
     @Override
-    public WindowShell setBackground(Color color) {
+    public JavaFxWindowShell setBackground(Color color) {
 
         return null;
     }
 
     @Override
-    public WindowShell setBackground(String file) {
+    public JavaFxWindowShell setBackground(String file) {
         return null;
     }
 
     @Override
-    public WindowShell setSize(int width, int height) {
+    public JavaFxWindowShell setSize(int width, int height) {
         return null;
     }
 
     @Override
-    public WindowShell setFullScreen() {
+    public JavaFxWindowShell setFullScreen() {
         return null;
     }
 
@@ -203,38 +194,39 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public WindowTextArea createTextArea() {
         return null;
     }
-    
-    public WindowCanvas createCanvas() {
+
+    @Override
+    public final JavaFxCanvas createCanvas() {
         this.runWhenReady(this::update);
-        HWND hWnd = User32.INSTANCE.FindWindow(null, this.title);
+        HWND hWnd = User32.INSTANCE.GetForegroundWindow();
         return new JavaFxCanvas(this.pane, new WindowHandle(Pointer.nativeValue(hWnd.getPointer())));
     }
 
     @Override
-    public WindowTextLine createTextLine() {
+    public JavaFxLabel createTextLine() {
         this.runWhenReady(this::update);
         return new JavaFxLabel(this.pane);
     }
 
     @Override
-    public WindowButton createButton() {
+    public JavaFxButton createButton() {
         this.runWhenReady(this::update);
         return new JavaFxButton(this.pane);
     }
 
     @Override
-    public WindowButton createButton(String background, String hover) {
+    public JavaFxButton createButton(String background, String hover) {
         return null;
     }
 
     @Override
-    public WindowImage createImage(String image) {
+    public JavaFxImage createImage(String image) {
         this.runWhenReady(this::update);
         return new JavaFxImage(this.pane, this.imageProvider, image);
     }
 
     @Override
-    public WindowProgressBar createProgressBar() {
+    public JavaFxProgressBar createProgressBar() {
         this.runWhenReady(this::update);
         return new JavaFxProgressBar(this.pane);
     }
@@ -245,8 +237,9 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public WindowDropdown createDropdown() {
-        return null;
+    public JavaFxDropDown createDropdown() {
+        this.runWhenReady(this::update);
+        return new JavaFxDropDown(this.pane);
     }
 
     @Override
@@ -255,13 +248,13 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public WindowInputBox createInputBox() {
+    public JavaFxInputBox createInputBox() {
         this.runWhenReady(this::update);
         return new JavaFxInputBox(this.pane);
     }
 
     @Override
-    public WindowShell createChildWindow() {
+    public JavaFxWindowShell createChildWindow() {
         this.runWhenReady(this::update);
         return new JavaFxWindowShell(this.imageProvider);
     }
@@ -277,12 +270,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public WindowFont createFont(String path, int height) {
+    public JavaFxFont createFont(String path, int height) {
         return new JavaFxFont(path, height);
     }
 
     @Override
-    public final WindowShell setCoordinates(Coordinates coordinates) {
+    public final JavaFxWindowShell setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
         this.runWhenReady(() -> {
             this.pane.setLayoutX(coordinates.left);
@@ -296,7 +289,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public final WindowShell setSize(Size size) {
+    public final JavaFxWindowShell setSize(Size size) {
         this.updateCoordinates(size);
         this.runWhenReady(() -> {
             this.pane.setMaxHeight(size.height);
@@ -308,7 +301,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public final WindowShell setPosition(Position position) {
+    public final JavaFxWindowShell setPosition(Position position) {
         this.updateCoordinates(position);
         this.runWhenReady(() -> {
             this.pane.setLayoutX(position.left);
@@ -317,7 +310,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         return this;
     }
 
-    public final WindowShell addKeyListener(KeyboardListener listener) {
+    @Override
+    public final JavaFxWindowShell addKeyListener(KeyboardListener listener) {
         this.runWhenReady(
                 () -> {
                     this.stage.getScene().setOnKeyPressed(new JavaFxMapperKeyPressed(listener));
@@ -327,9 +321,16 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         return this;
     }
 
-    public final WindowShell toBack() {
+    @Override
+    public final JavaFxWindowShell toBack() {
         this.runWhenReady(() -> this.stage.toBack());
         return this;
+    }
+
+    @Override
+    public final JavaFxMediaPlayer createMediaPlayer() {
+        this.runWhenReady(this::update);
+        return new JavaFxMediaPlayer(this.pane);
     }
 
 }
