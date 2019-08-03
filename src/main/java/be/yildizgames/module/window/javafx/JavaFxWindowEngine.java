@@ -30,6 +30,8 @@ import be.yildizgames.module.window.ScreenSize;
 import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.WindowThreadManager;
 import be.yildizgames.module.window.input.WindowInputListener;
+import be.yildizgames.module.window.javafx.internal.JavaFxApplication;
+import be.yildizgames.module.window.javafx.widget.JavaFxWindowShell;
 import be.yildizgames.module.window.javafx.widget.JavaFxWindowShellFactory;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
@@ -39,6 +41,8 @@ import be.yildizgames.module.window.widget.WindowShellFactory;
  * @author Grégory Van den Borre
  */
 public class JavaFxWindowEngine implements BaseWindowEngine {
+
+    private final System.Logger logger = System.getLogger(JavaFxWindowShell.class.getName());
 
     private final WindowShellFactory shellFactory;
 
@@ -50,6 +54,8 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     public JavaFxWindowEngine(WindowImageProvider imageProvider) {
         super();
+        this.logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initializing...");
+        this.logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initialized.");
         this.shellFactory = new JavaFxWindowShellFactory(imageProvider);
 
     }
@@ -101,7 +107,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public ScreenSize getScreenSize() {
-        return null;// JavaFxApplication.instance.getScreenSize();
+        return JavaFxApplication.getInstance().getScreenSize();
     }
 
     @Override
