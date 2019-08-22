@@ -333,4 +333,9 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         return new JavaFxMediaPlayer(this.pane);
     }
 
+    @Override
+    public final void exit() {
+        Platform.exit();
+    }
+
 }
