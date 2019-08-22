@@ -26,6 +26,7 @@ package be.yildizgames.module.window.javafx;
 
 import be.yildizgames.module.window.BaseWindowEngine;
 import be.yildizgames.module.window.WindowEngineProvider;
+import be.yildizgames.module.window.widget.WindowImageProvider;
 
 /**
  * @author Grégory Van den Borre
@@ -35,5 +36,10 @@ public class JavaFxWindowEngineProvider implements WindowEngineProvider {
     @Override
     public final BaseWindowEngine getEngine() {
         return new JavaFxWindowEngine();
+    }
+
+    @Override
+    public final BaseWindowEngine getEngine(WindowImageProvider imageProvider) {
+        return new JavaFxWindowEngine(imageProvider);
     }
 }
