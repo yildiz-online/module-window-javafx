@@ -42,8 +42,6 @@ import be.yildizgames.module.window.widget.WindowShellFactory;
  */
 public class JavaFxWindowEngine implements BaseWindowEngine {
 
-    private final System.Logger logger = System.getLogger(JavaFxWindowShell.class.getName());
-
     private final WindowShellFactory shellFactory;
 
     private final WindowThreadManager threadManager = new JavaFxThreadManager();
@@ -54,8 +52,9 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     public JavaFxWindowEngine(WindowImageProvider imageProvider) {
         super();
-        this.logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initializing...");
-        this.logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initialized.");
+        System.Logger logger = System.getLogger(JavaFxWindowShell.class.getName());
+        logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initializing...");
+        logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initialized.");
         this.shellFactory = new JavaFxWindowShellFactory(imageProvider);
 
     }

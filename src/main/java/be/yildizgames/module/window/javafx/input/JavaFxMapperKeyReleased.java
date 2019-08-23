@@ -18,7 +18,7 @@ public class JavaFxMapperKeyReleased extends JavaFxKeyMapper implements EventHan
         if(keyEvent.getCode().isLetterKey() || keyEvent.getCode().isDigitKey() || keyEvent.getCode().isWhitespaceKey()) {
             this.listener.keyReleased(keyEvent.getCode().getChar().charAt(0));
         } else {
-            this.listener.specialKeyReleased(this.mapping.get(keyEvent.getCode()));
+            this.listener.specialKeyReleased(mapping.get(keyEvent.getCode()));
         }
     }
 }
