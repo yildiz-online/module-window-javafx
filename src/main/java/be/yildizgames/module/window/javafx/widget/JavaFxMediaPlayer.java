@@ -46,6 +46,8 @@ import java.nio.file.Path;
 public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> implements WindowMediaPlayer {
 
     private MediaView mediaView;
+
+    private boolean playing;
     
     JavaFxMediaPlayer(Pane pane ) {
         Platform.runLater(() -> {
@@ -111,12 +113,17 @@ public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> imple
     @Override
     public WindowMediaPlayer play() {
         this.runWhenReady(() -> this.mediaView.getMediaPlayer().play());
+        playing = true;
         return this;
     }
 
     @Override
     public WindowMediaPlayer stop() {
-        this.runWhenReady(() -> this.mediaView.getMediaPlayer().stop());
+        if (playing) {
+            this.runWhenReady(() -> this.mediaView.getMediaPlayer().stop());
+            playing = false;
+        }
+
         return this;
     }
 
