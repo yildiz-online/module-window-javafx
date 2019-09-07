@@ -60,7 +60,7 @@ public class JavaFxApplication extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
+    public final void start(Stage stage) {
         instance = this;
         this.stage = stage;
         stage.show();
