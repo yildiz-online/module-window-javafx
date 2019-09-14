@@ -27,9 +27,11 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.window.widget.ImageEffect;
 import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import javafx.application.Platform;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -88,6 +90,18 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
     @Override
     public final WindowImage setImage(String url) {
         this.runWhenReady(() -> this.imageView.setImage(new Image(provider.getImage(url))));
+        return this;
+    }
+
+    @Override
+    public final WindowImage addEffect(ImageEffect effect) {
+        this.runWhenReady(() -> {
+            if(effect == ImageEffect.DESATURATE) {
+                ColorAdjust adjust = new ColorAdjust();
+                adjust.setSaturation(-1);
+                this.imageView.setEffect(adjust);
+            }
+        });
         return this;
     }
 }
