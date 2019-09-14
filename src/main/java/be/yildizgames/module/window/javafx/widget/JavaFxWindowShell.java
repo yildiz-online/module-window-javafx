@@ -33,6 +33,7 @@ import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
+import be.yildizgames.module.window.widget.OnMinimize;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowMenuBar;
@@ -59,6 +60,8 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -336,6 +339,23 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final JavaFxWindowShell toBack() {
         this.runWhenReady(() -> this.stage.toBack());
+        return this;
+    }
+
+    @Override
+    public final JavaFxWindowShell minimize(OnMinimize... minimizes) {
+        this.runWhenReady(() -> {
+            this.stage.setIconified(true);
+            Optional.ofNullable(minimizes).ifPresent(m -> Arrays.stream(m).forEach(OnMinimize::minimized));
+        });
+        return this;
+    }
+
+    @Override
+    public final JavaFxWindowShell maximize() {
+        this.runWhenReady(() -> {
+            this.stage.setIconified(false);
+        });
         return this;
     }
 
