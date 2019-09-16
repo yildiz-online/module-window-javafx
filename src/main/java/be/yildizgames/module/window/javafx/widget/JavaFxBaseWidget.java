@@ -69,6 +69,10 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
         Platform.runLater(r);
     }
 
+    public final BaseCoordinate getCoordinates() {
+        return this.coordinates;
+    }
+
     public final int getLeft() {
         return this.coordinates.left;
     }
@@ -85,7 +89,7 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
         return this.coordinates.top + this.coordinates.height;
     }
 
-    protected final void updateCoordinates(Coordinates coordinates) {
+    protected final void updateCoordinates(BaseCoordinate coordinates) {
         this.coordinates = coordinates;
     }
 

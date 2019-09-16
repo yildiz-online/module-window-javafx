@@ -27,6 +27,7 @@
 package be.yildizgames.module.window.javafx.widget;
 
 
+import be.yildizgames.module.coordinate.BaseCoordinate;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
@@ -69,7 +70,7 @@ public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> imple
     }
 
     @Override
-    public final JavaFxMediaPlayer setCoordinates(Coordinates coordinates) {
+    public final JavaFxMediaPlayer setCoordinates(BaseCoordinate coordinates) {
         this.updateCoordinates(coordinates);
         this.runWhenReady(() -> {
             this.mediaView.setLayoutX(coordinates.left);
