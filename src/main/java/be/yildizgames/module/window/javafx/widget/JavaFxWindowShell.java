@@ -25,6 +25,7 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
+import be.yildizgames.module.coordinate.BaseCoordinate;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
@@ -368,6 +369,11 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final void exit() {
         Platform.exit();
+    }
+
+    @Override
+    public final BaseCoordinate getCoordinates() {
+        return new Coordinates((int)this.pane.getWidth(), (int) this.pane.getHeight(), (int) this.pane.getLayoutX(), (int) this.pane.getLayoutY());
     }
 
 }

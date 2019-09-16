@@ -100,6 +100,10 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
                 ColorAdjust adjust = new ColorAdjust();
                 adjust.setSaturation(-1);
                 this.imageView.setEffect(adjust);
+            } else if(effect == ImageEffect.NORMAL_SATURATION) {
+                ColorAdjust adjust = new ColorAdjust();
+                adjust.setSaturation(0);
+                this.imageView.setEffect(adjust);
             }
         });
         return this;
