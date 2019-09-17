@@ -109,6 +109,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
                             stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
                             stage.setFullScreen(true);
                             stage.setMaximized(true);
+                            this.updateCoordinates(new Coordinates((int)stage.getWidth(), (int) stage.getHeight(), 0, 0));
                             break;
                     }
                 }
