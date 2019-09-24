@@ -47,7 +47,7 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
     private Node node;
 
     /**
-     * Set ready is to be invoked once the widget is completly built.
+     * Set ready is to be invoked once the widget is completely built.
      */
     protected final void setReady(Node node) {
         ready = true;

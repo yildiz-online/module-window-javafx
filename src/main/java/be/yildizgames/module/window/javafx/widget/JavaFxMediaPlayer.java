@@ -28,7 +28,6 @@ package be.yildizgames.module.window.javafx.widget;
 
 
 import be.yildizgames.module.coordinate.BaseCoordinate;
-import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.widget.WindowMediaPlayer;

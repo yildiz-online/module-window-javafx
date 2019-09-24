@@ -354,9 +354,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public final JavaFxWindowShell maximize() {
-        this.runWhenReady(() -> {
-            this.stage.setIconified(false);
-        });
+        this.runWhenReady(this::run);
         return this;
     }
 
@@ -371,4 +369,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         Platform.exit();
     }
 
+    private void run() {
+        this.stage.setIconified(false);
+    }
 }

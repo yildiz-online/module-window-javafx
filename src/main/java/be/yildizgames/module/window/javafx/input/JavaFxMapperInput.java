@@ -4,7 +4,7 @@ import be.yildizgames.module.window.widget.WindowInputBoxChangeListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-public class JavaFxMapperInput implements ChangeListener {
+public class JavaFxMapperInput implements ChangeListener<String> {
 
     private final WindowInputBoxChangeListener listener;
 
@@ -13,7 +13,7 @@ public class JavaFxMapperInput implements ChangeListener {
     }
 
     @Override
-    public void changed(ObservableValue observableValue, Object o, Object t1) {
+    public void changed(ObservableValue observableValue, String o, String t1) {
         this.listener.onChange();
     }
 }
