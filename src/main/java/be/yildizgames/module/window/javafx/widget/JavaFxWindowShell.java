@@ -144,8 +144,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public JavaFxWindowShell setBackground(String file) {
         this.runWhenReady(() -> {
             BackgroundImage myBI= new BackgroundImage(new Image(this.imageProvider.getImage(file)),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
+                    new BackgroundSize(100, 100, true, true, true, true));
             this.pane.setBackground(new Background(myBI));
         });
         return this;
