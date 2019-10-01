@@ -79,6 +79,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     
     private String title;
 
+    private String background = "";
+
     JavaFxWindowShell(Stage stage, WindowImageProvider imageProvider, WindowShellOptions... options) {
         super();
         this.stage = stage;
@@ -136,12 +138,15 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxWindowShell setBackground(Color color) {
-
         return null;
     }
 
     @Override
     public JavaFxWindowShell setBackground(String file) {
+        if(file.equals(this.background)) {
+            return this;
+        }
+        this.background = file;
         this.runWhenReady(() -> {
             BackgroundImage myBI= new BackgroundImage(new Image(this.imageProvider.getImage(file)),
                     BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
