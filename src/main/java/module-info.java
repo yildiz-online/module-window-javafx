@@ -7,5 +7,8 @@ module be.yildizgames.module.window.javafx {
     requires com.sun.jna.platform;
     requires com.sun.jna;
 
+    provides be.yildizgames.module.window.WindowEngineProvider
+            with be.yildizgames.module.window.javafx.JavaFxWindowEngineProvider;
 
+    exports be.yildizgames.module.window.javafx;
 }
