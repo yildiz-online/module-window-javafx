@@ -42,6 +42,7 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
     private Label label;
 
     private String text = "";
+
     private Color color = Color.BLACK;
 
     JavaFxLabel(Pane pane) {
@@ -82,7 +83,7 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
         if(!color.equals(this.color)) {
             this.runWhenReady(() -> {
                 this.label.setTextFill(new javafx.scene.paint.Color(
-                        color.redValue, color.greenValue, color.blueValue, color.alphaValue));
+                        color.normalizedRedValue, color.normalizedGreenValue, color.normalizedBlueValue, color.normalizedAlphaValue));
             });
         }
         this.color = color;
