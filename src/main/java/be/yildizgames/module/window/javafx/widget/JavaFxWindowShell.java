@@ -33,18 +33,7 @@ import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
-import be.yildizgames.module.window.widget.OnMinimize;
-import be.yildizgames.module.window.widget.WindowButtonText;
-import be.yildizgames.module.window.widget.WindowImageProvider;
-import be.yildizgames.module.window.widget.WindowMenuBar;
-import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
-import be.yildizgames.module.window.widget.WindowModal;
-import be.yildizgames.module.window.widget.WindowModalFile;
-import be.yildizgames.module.window.widget.WindowShell;
-import be.yildizgames.module.window.widget.WindowShellOptions;
-import be.yildizgames.module.window.widget.WindowTextArea;
-import be.yildizgames.module.window.widget.WindowTreeElement;
-import be.yildizgames.module.window.widget.WindowTreeRoot;
+import be.yildizgames.module.window.widget.*;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
@@ -52,12 +41,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -214,6 +198,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public WindowTextArea createTextArea() {
         return null;
+    }
+
+    @Override
+    public WindowNotification showNotification(String title, String text, String type) {
+        this.runWhenReady(this::update);
+        return new JavaFxNotification(title, text, type);
     }
 
     @Override
