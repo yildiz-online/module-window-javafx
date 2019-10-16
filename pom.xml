@@ -77,6 +77,12 @@
       <groupId>org.controlsfx</groupId>
       <artifactId>controlsfx</artifactId>
       <version>11.0.0</version>
+      <exclusions>
+        <exclusion>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.java.dev.jna</groupId>
