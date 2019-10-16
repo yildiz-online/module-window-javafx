@@ -25,6 +25,7 @@ package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.window.widget.WindowNotification;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import org.controlsfx.control.Notifications;
 
 /**
@@ -39,6 +40,7 @@ class JavaFxNotification implements WindowNotification {
         super();
         Platform.runLater(() -> {
             this.notification = Notifications.create();
+            this.notification.position(Pos.TOP_RIGHT);
             this.ready = true;
         });
     }
