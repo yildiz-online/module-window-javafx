@@ -24,27 +24,65 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.window.widget.WindowNotification;
+import javafx.application.Platform;
 import org.controlsfx.control.Notifications;
 
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxNotification implements WindowNotification {
+class JavaFxNotification implements WindowNotification {
 
-    public JavaFxNotification(String title, String text, String type) {
+    private boolean ready;
+    private Notifications notification;
+
+    JavaFxNotification() {
         super();
-        Notifications notifications = Notifications.create()
-                .text(text)
-                .title(title);
-        switch (type) {
-            case "error":
-                    notifications.showError();
-                    break;
-            case "warning" :
-                notifications.showWarning();
-                break;
-            default:
-                notifications.show();
+        Platform.runLater(() -> {
+            this.notification = Notifications.create();
+            this.ready = true;
+        });
+    }
+
+    @Override
+    public void show() {
+        this.runWhenReady(this.notification::show);
+    }
+
+    @Override
+    public void showError() {
+        this.runWhenReady(this.notification::showError);
+    }
+
+    @Override
+    public void showWarning() {
+        this.runWhenReady(this.notification::showWarning);
+    }
+
+    @Override
+    public void showInfo() {
+        this.runWhenReady(this.notification::showInformation);
+    }
+
+    @Override
+    public WindowNotification setTitle(String title) {
+        this.runWhenReady(() -> this.notification.title(title));
+        return this;
+    }
+
+    @Override
+    public WindowNotification setText(String text) {
+        this.runWhenReady(() -> this.notification.text(text));
+        return this;
+    }
+
+    private void runWhenReady(Runnable r) {
+        while (!ready) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
+        Platform.runLater(r);
+    }
 }

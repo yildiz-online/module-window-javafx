@@ -201,9 +201,9 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public WindowNotification showNotification(String title, String text, String type) {
+    public WindowNotification createNotification() {
         this.runWhenReady(this::update);
-        return new JavaFxNotification(title, text, type);
+        return new JavaFxNotification();
     }
 
     @Override
