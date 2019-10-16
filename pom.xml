@@ -82,6 +82,18 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-graphics</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-controls</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-media</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
