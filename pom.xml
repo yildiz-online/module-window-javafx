@@ -48,7 +48,7 @@
   <properties>
     <java.version>11</java.version>
     <jna.version>5.4.0</jna.version>
-    <javafx.version>13</javafx.version>
+    <javafx.version>13.0.1</javafx.version>
   </properties>
 
   <scm>
