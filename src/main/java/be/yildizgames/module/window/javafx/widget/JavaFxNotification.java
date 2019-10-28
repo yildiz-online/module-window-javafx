@@ -28,6 +28,8 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import org.controlsfx.control.Notifications;
 
+import java.time.Duration;
+
 /**
  * @author Grégory Van den Borre
  */
@@ -74,6 +76,12 @@ class JavaFxNotification implements WindowNotification {
     @Override
     public WindowNotification setText(String text) {
         this.runWhenReady(() -> this.notification.text(text));
+        return this;
+    }
+
+    @Override
+    public WindowNotification hideAfter(Duration duration) {
+        this.runWhenReady(() -> this.notification.hideAfter(new javafx.util.Duration(duration.toMillis())));
         return this;
     }
 
