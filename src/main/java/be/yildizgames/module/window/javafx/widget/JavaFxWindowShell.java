@@ -33,15 +33,36 @@ import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
-import be.yildizgames.module.window.widget.*;
+import be.yildizgames.module.window.widget.OnMinimize;
+import be.yildizgames.module.window.widget.WindowButtonText;
+import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.WindowMenuBar;
+import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
+import be.yildizgames.module.window.widget.WindowModal;
+import be.yildizgames.module.window.widget.WindowModalFile;
+import be.yildizgames.module.window.widget.WindowNotification;
+import be.yildizgames.module.window.widget.WindowPopup;
+import be.yildizgames.module.window.widget.WindowShell;
+import be.yildizgames.module.window.widget.WindowShellOptions;
+import be.yildizgames.module.window.widget.WindowTextArea;
+import be.yildizgames.module.window.widget.WindowTreeElement;
+import be.yildizgames.module.window.widget.WindowTreeRoot;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -122,7 +143,18 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxWindowShell setBackground(Color color) {
-        return null;
+        this.runWhenReady(() -> {
+            this.pane.setBackground(
+                    new Background(
+                    new BackgroundFill(new javafx.scene.paint.Color(
+                            color.normalizedRedValue,
+                            color.normalizedGreenValue,
+                            color.normalizedBlueValue,
+                            color.normalizedAlphaValue),
+                            CornerRadii.EMPTY, Insets.EMPTY))
+            );
+        });
+        return this;
     }
 
     @Override
@@ -278,6 +310,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public WindowModalFile createOpenFileBox() {
         return null;
+    }
+
+    @Override
+    public final WindowPopup createPopup() {
+        this.runWhenReady(this::update);
+        return new JavaFxPopup(this.stage);
     }
 
     @Override
