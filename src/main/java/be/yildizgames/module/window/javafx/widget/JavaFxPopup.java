@@ -12,10 +12,11 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
+import be.yildizgames.module.color.Color;
+import be.yildizgames.module.window.widget.WindowButton;
+import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowPopup;
 import be.yildizgames.module.window.widget.WindowTextLine;
-import javafx.application.Platform;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 /**
@@ -23,34 +24,46 @@ import javafx.stage.Stage;
  */
 public class JavaFxPopup implements WindowPopup {
 
-    private final Popup popup = new Popup();
 
-    private boolean ready = false;
+    private JavaFxWindowShell modal;
 
 
-    public JavaFxPopup(Stage parent) {
+    public JavaFxPopup(WindowImageProvider imageProvider, Stage parent) {
         super();
-        Platform.runLater(() -> {
-            popup.centerOnScreen();
-            popup.show(parent);
-            this.ready = true;
-        });
-    }
-
-    protected final void runWhenReady(Runnable r) {
-        while (!ready) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        Platform.runLater(r);
+        this.modal = new JavaFxWindowShell(imageProvider, parent);
     }
 
 
     @Override
     public final WindowTextLine createTextLine() {
-       return null;
+       return this.modal.createTextLine();
+    }
+
+    @Override
+    public final WindowPopup setTitle(String title) {
+        this.modal.setTitle(title);
+        return this;
+    }
+
+    @Override
+    public final WindowPopup setBackground(Color color) {
+        this.modal.setBackground(color);
+        return this;
+    }
+
+    @Override
+    public final WindowPopup setSize(int width, int height) {
+        this.modal.setSize(width, height);
+        return this;
+    }
+
+    @Override
+    public final WindowButton createButton() {
+        return this.modal.createButton();
+    }
+
+    @Override
+    public void close() {
+        this.modal.close();
     }
 }

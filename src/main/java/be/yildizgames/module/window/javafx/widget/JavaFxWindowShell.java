@@ -63,6 +63,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -98,6 +99,23 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         super();
         this.imageProvider = imageProvider;
         Platform.runLater(() -> createStage(options));
+    }
+
+    JavaFxWindowShell(WindowImageProvider imageProvider, Stage parent) {
+        super();
+        this.imageProvider = imageProvider;
+        Platform.runLater(() ->    {
+            this.stage = new Stage();
+            this.pane = new Pane();
+            Scene scene = new Scene(pane);
+            this.stage.setScene(scene);
+            this.stage.initModality(Modality.WINDOW_MODAL);
+            this.stage.initOwner(parent);
+            this.stage.initStyle(StageStyle.UNDECORATED);
+            this.stage.show();
+            this.stage.setTitle("Modal");
+            this.setReady(this.pane);
+        });
     }
 
     private void createStage(WindowShellOptions... options) {
@@ -184,7 +202,16 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxWindowShell setFullScreen() {
-        return null;
+        this.runWhenReady(() -> {
+            this.stage.setFullScreen(true);
+            this.stage.setMaximized(true);
+            stage.focusedProperty().addListener((ov, onHidden, onShown) -> {
+                if(!stage.isFocused())
+                    Platform.runLater(() -> System.out.println("LOST FOCUS"));
+            });
+        });
+
+        return this;
     }
 
     @Override
@@ -320,7 +347,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final WindowPopup createPopup() {
         this.runWhenReady(this::update);
-        return new JavaFxPopup(this.stage);
+        return new JavaFxPopup(this.imageProvider, this.stage);
     }
 
     @Override
