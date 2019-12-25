@@ -70,15 +70,6 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
     }
 
     @Override
-    public final WindowTextLine setPosition(int left, int top) {
-        this.runWhenReady(() -> {
-            this.label.setLayoutX(left);
-            this.label.setLayoutY(top);
-        });
-        return this;
-    }
-
-    @Override
     public final WindowTextLine setColor(Color color) {
         if(!color.equals(this.color)) {
             this.runWhenReady(() -> {

@@ -52,6 +52,7 @@ import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
@@ -64,6 +65,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -165,17 +167,15 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxWindowShell setBackground(Color color) {
-        this.runWhenReady(() -> {
-            this.pane.setBackground(
-                    new Background(
-                    new BackgroundFill(new javafx.scene.paint.Color(
-                            color.normalizedRedValue,
-                            color.normalizedGreenValue,
-                            color.normalizedBlueValue,
-                            color.normalizedAlphaValue),
-                            CornerRadii.EMPTY, Insets.EMPTY))
-            );
-        });
+        this.runWhenReady(() -> this.pane.setBackground(
+                new Background(
+                new BackgroundFill(new javafx.scene.paint.Color(
+                        color.normalizedRedValue,
+                        color.normalizedGreenValue,
+                        color.normalizedBlueValue,
+                        color.normalizedAlphaValue),
+                        CornerRadii.EMPTY, Insets.EMPTY))
+        ));
         return this;
     }
 
@@ -191,12 +191,6 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
                     new BackgroundSize(100, 100, true, true, true, true));
             this.pane.setBackground(new Background(myBI));
         });
-        return this;
-    }
-
-    @Override
-    public JavaFxWindowShell setSize(int width, int height) {
-        this.setSize(new Size(width, height));
         return this;
     }
 
@@ -221,7 +215,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public ScreenSize getMonitorSize() {
-        return null;
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        return new ScreenSize((int)screenBounds.getWidth(), (int) screenBounds.getHeight());
     }
 
     @Override
@@ -373,10 +368,10 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public final JavaFxWindowShell setSize(Size size) {
         this.updateCoordinates(size);
         this.runWhenReady(() -> {
-            this.pane.setMaxHeight(size.height);
-            this.pane.setMinHeight(size.height);
-            this.pane.setMaxWidth(size.width);
-            this.pane.setMinWidth(size.width);
+            this.stage.setMaxHeight(size.height);
+            this.stage.setMinHeight(size.height);
+            this.stage.setMaxWidth(size.width);
+            this.stage.setMinWidth(size.width);
         });
         return this;
     }
@@ -436,5 +431,13 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     private void run() {
         this.stage.setIconified(false);
+    }
+
+    final void centerOnScreen() {
+        this.runWhenReady(this::update);
+        ScreenSize screenSize = this.getMonitorSize();
+        float x = (screenSize.width / 2f) -  (this.getRight() / 2f);
+        float y = (screenSize.height / 2f) - (this.getBottom() / 2f);
+        this.setPosition(new Position((int) x, (int) y));
     }
 }
