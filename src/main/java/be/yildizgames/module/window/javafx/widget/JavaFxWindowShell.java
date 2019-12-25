@@ -64,6 +64,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -117,6 +118,9 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
                             stage.setFullScreen(true);
                             stage.setMaximized(true);
                             this.updateCoordinates(new Coordinates((int)stage.getWidth(), (int) stage.getHeight(), 0, 0));
+                            break;
+                        case NO_TITLE_BAR:
+                            stage.initStyle(StageStyle.UNDECORATED);
                             break;
                     }
                 }
@@ -174,7 +178,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxWindowShell setSize(int width, int height) {
-        return null;
+        this.setSize(new Size(width, height));
+        return this;
     }
 
     @Override
@@ -184,7 +189,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public ScreenSize getSize() {
-        return null;
+        return new ScreenSize(this.getCoordinates().width, this.getCoordinates().height);
     }
 
     @Override
@@ -297,9 +302,9 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public JavaFxWindowShell createChildWindow() {
+    public JavaFxWindowShell createChildWindow(WindowShellOptions... options) {
         this.runWhenReady(this::update);
-        return new JavaFxWindowShell(this.imageProvider);
+        return new JavaFxWindowShell(this.imageProvider, options);
     }
 
     @Override
