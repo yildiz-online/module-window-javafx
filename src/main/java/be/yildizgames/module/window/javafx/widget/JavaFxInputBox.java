@@ -98,7 +98,7 @@ class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowI
 
     @Override
     public String getText() {
-        return this.text;
+        return this.textField.getText();
     }
 
     @Override
