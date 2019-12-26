@@ -24,12 +24,15 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
+import be.yildizgames.common.client.translation.Translation;
+import be.yildizgames.common.client.translation.TranslationKey;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.input.MouseLeftClickListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperMouseLeftClick;
 import be.yildizgames.module.window.widget.WindowButton;
+import be.yildizgames.module.window.widget.WindowButtonText;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -37,7 +40,7 @@ import javafx.scene.layout.Pane;
 /**
  * @author Grégory Van den Borre
  */
-class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButton {
+class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButton, WindowButtonText {
 
     private Button button;
 
@@ -91,5 +94,16 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
     public WindowButton addMouseLeftClickListener(MouseLeftClickListener l) {
         this.runWhenReady(() -> this.button.setOnAction(new JavaFxMapperMouseLeftClick(l)));
         return this;
+    }
+
+    @Override
+    public WindowButtonText setText(String text) {
+        this.runWhenReady(() -> this.button.setText(text));
+        return this;
+    }
+
+    @Override
+    public WindowButtonText setText(TranslationKey key) {
+        return this.setText(Translation.getInstance().translate(key));
     }
 }
