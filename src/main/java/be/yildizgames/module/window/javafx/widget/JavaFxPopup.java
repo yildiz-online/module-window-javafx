@@ -54,6 +54,12 @@ public class JavaFxPopup implements WindowPopup {
     }
 
     @Override
+    public final WindowPopup setBackground(String file) {
+        this.modal.setBackground(file);
+        return this;
+    }
+
+    @Override
     public final WindowPopup setSize(int width, int height) {
         this.modal.setSize(width, height);
         return this;
