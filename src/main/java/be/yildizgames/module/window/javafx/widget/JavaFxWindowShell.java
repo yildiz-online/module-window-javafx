@@ -226,7 +226,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public void close() {
-
+        this.runWhenReady(this.stage::close);
     }
 
     @Override
