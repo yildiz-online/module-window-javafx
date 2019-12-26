@@ -16,6 +16,7 @@ import be.yildizgames.module.color.Color;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.WindowInputBox;
 import be.yildizgames.module.window.widget.WindowPopup;
 import be.yildizgames.module.window.widget.WindowTextLine;
 import javafx.stage.Stage;
@@ -83,5 +84,10 @@ public class JavaFxPopup implements WindowPopup {
     public WindowPopup setPosition(int left, int top) {
         this.modal.setPosition(left, top);
         return this;
+    }
+
+    @Override
+    public WindowInputBox createInputBox() {
+        return this.modal.createInputBox();
     }
 }
