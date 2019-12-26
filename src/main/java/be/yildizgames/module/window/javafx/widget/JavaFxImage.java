@@ -27,6 +27,7 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.window.input.MouseOverListener;
 import be.yildizgames.module.window.widget.ImageEffect;
 import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
@@ -106,6 +107,13 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
                 this.imageView.setEffect(adjust);
             }
         });
+        return this;
+    }
+
+    @Override
+    public WindowImage addOnMouseOverListener(MouseOverListener l) {
+        this.imageView.setOnMouseEntered(e -> l.enter());
+        this.imageView.setOnMouseExited(e -> l.quit());
         return this;
     }
 }
