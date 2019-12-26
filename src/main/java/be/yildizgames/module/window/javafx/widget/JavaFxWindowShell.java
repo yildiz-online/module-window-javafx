@@ -314,7 +314,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public WindowButtonText createTextButton() {
-        return this.createButton();
+        this.runWhenReady(this::update);
+        return new JavaFxButtonText(this.pane);
     }
 
     @Override

@@ -14,6 +14,7 @@ package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
 import be.yildizgames.module.window.widget.WindowButton;
+import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowPopup;
 import be.yildizgames.module.window.widget.WindowTextLine;
@@ -60,6 +61,11 @@ public class JavaFxPopup implements WindowPopup {
     @Override
     public final WindowButton createButton() {
         return this.modal.createButton();
+    }
+
+    @Override
+    public final WindowButtonText createTextButton() {
+        return this.modal.createTextButton();
     }
 
     @Override
