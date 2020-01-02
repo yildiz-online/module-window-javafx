@@ -33,20 +33,7 @@ import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
-import be.yildizgames.module.window.widget.OnMinimize;
-import be.yildizgames.module.window.widget.WindowButtonText;
-import be.yildizgames.module.window.widget.WindowImageProvider;
-import be.yildizgames.module.window.widget.WindowMenuBar;
-import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
-import be.yildizgames.module.window.widget.WindowModal;
-import be.yildizgames.module.window.widget.WindowModalFile;
-import be.yildizgames.module.window.widget.WindowNotification;
-import be.yildizgames.module.window.widget.WindowPopup;
-import be.yildizgames.module.window.widget.WindowShell;
-import be.yildizgames.module.window.widget.WindowShellOptions;
-import be.yildizgames.module.window.widget.WindowTextArea;
-import be.yildizgames.module.window.widget.WindowTreeElement;
-import be.yildizgames.module.window.widget.WindowTreeRoot;
+import be.yildizgames.module.window.widget.*;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
@@ -56,27 +43,20 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Grégory Van den Borre
  */
 public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> implements WindowShell {
+
+    private static final Map<FontData, JavaFxFont> FONTS = new HashMap<>();
 
     private final WindowImageProvider imageProvider;
 
@@ -348,7 +328,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxFont createFont(String path, int height) {
-        return new JavaFxFont(path, height);
+        return FONTS.computeIfAbsent(new FontData(path, height), k -> new JavaFxFont(path, height));
     }
 
     @Override
@@ -440,5 +420,31 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         float x = (screenSize.width / 2f) -  (this.getRight() / 2f);
         float y = (screenSize.height / 2f) - (this.getBottom() / 2f);
         this.setPosition(new Position((int) x, (int) y));
+    }
+
+    private static class FontData {
+
+        private final String name;
+
+        private final int height;
+
+        private FontData(String name, int height) {
+            this.name = name;
+            this.height = height;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            FontData fontData = (FontData) o;
+            return height == fontData.height &&
+                    Objects.equals(name, fontData.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, height);
+        }
     }
 }

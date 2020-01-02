@@ -29,6 +29,7 @@ import javafx.scene.text.Font;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -59,5 +60,18 @@ class JavaFxFont implements WindowFont {
 
     Font getInnerFont() {
         return this.font;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JavaFxFont that = (JavaFxFont) o;
+        return font.equals(that.font);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(font);
     }
 }
