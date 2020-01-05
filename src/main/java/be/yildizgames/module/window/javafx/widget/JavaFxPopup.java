@@ -102,4 +102,8 @@ public class JavaFxPopup implements WindowPopup {
     public WindowImage createImage(String image) {
         return this.modal.createImage(image);
     }
+
+    public void createVirtualKeyboard() {
+         this.modal.createVirtualKeyboard();
+    }
 }
