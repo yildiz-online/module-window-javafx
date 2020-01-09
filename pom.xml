@@ -61,7 +61,7 @@
     <dependency>
       <groupId>be.yildiz-games</groupId>
       <artifactId>module-window</artifactId>
-      <version>3.0.3-SNAPSHOT</version>
+      <version>3.1.0</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
