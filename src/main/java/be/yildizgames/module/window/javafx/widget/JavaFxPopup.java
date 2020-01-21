@@ -13,6 +13,7 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
+import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowImage;
@@ -77,29 +78,34 @@ public class JavaFxPopup implements WindowPopup {
     }
 
     @Override
-    public void close() {
+    public final void close() {
         this.modal.close();
     }
 
     @Override
-    public WindowPopup centerOnScreen() {
+    public final WindowPopup centerOnScreen() {
         this.modal.centerOnScreen();
         return this;
     }
 
+    public final WindowPopup listenHidden(CallBack callBack) {
+        this.modal.addOnHiddenListener(callBack);
+        return this;
+    }
+
     @Override
-    public WindowPopup setPosition(int left, int top) {
+    public final WindowPopup setPosition(int left, int top) {
         this.modal.setPosition(left, top);
         return this;
     }
 
     @Override
-    public WindowInputBox createInputBox() {
+    public final WindowInputBox createInputBox() {
         return this.modal.createInputBox();
     }
 
     @Override
-    public WindowImage createImage(String image) {
+    public final WindowImage createImage(String image) {
         return this.modal.createImage(image);
     }
 

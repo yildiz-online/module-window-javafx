@@ -33,6 +33,7 @@ import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
+import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.javafx.widget.experimental.VirtualKeyboard;
 import be.yildizgames.module.window.widget.OnMinimize;
 import be.yildizgames.module.window.widget.WindowButtonText;
@@ -446,6 +447,11 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         float x = (screenSize.width / 2f) -  (this.getRight() / 2f);
         float y = (screenSize.height / 2f) - (this.getBottom() / 2f);
         this.setPosition(new Position((int) x, (int) y));
+    }
+
+    public final void addOnHiddenListener(CallBack callBack) {
+        this.runWhenReady(this::update);
+        this.stage.setOnHidden((e) -> callBack.onEvent());
     }
 
     private static class FontData {
