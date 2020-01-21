@@ -450,8 +450,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     public final void addOnHiddenListener(CallBack callBack) {
-        this.runWhenReady(this::update);
-        this.stage.setOnHidden((e) -> callBack.onEvent());
+        this.runWhenReady(() ->this.stage.setOnHidden((e) -> callBack.onEvent()));
+    }
+
+    public WindowShell hide() {
+        this.runWhenReady(this.stage::hide);
+        return this;
     }
 
     private static class FontData {

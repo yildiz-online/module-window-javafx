@@ -82,6 +82,11 @@ public class JavaFxPopup implements WindowPopup {
         this.modal.close();
     }
 
+    public WindowPopup hide() {
+        this.modal.hide();
+        return this;
+    }
+
     @Override
     public final WindowPopup centerOnScreen() {
         this.modal.centerOnScreen();
