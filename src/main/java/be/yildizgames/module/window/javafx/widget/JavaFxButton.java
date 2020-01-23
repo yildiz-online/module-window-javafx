@@ -33,7 +33,6 @@ import be.yildizgames.module.window.input.MouseLeftClickListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperMouseLeftClick;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
-import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
@@ -46,59 +45,55 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
 
     JavaFxButton(final Pane pane) {
         super();
-        Platform.runLater(() -> {
             this.button = new Button();
             pane.getChildren().add(this.button);
             this.setReady(this.button);
-        });
+
     }
 
 
     @Override
     public WindowButton setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.runWhenReady(() -> {
-            this.button.setLayoutX(coordinates.left);
+        this.button.setLayoutX(coordinates.left);
             this.button.setLayoutY(coordinates.top);
             this.button.setMaxHeight(coordinates.height);
             this.button.setMinHeight(coordinates.height);
             this.button.setMaxWidth(coordinates.width);
             this.button.setMinWidth(coordinates.width);
-        });
+
         return this;
     }
 
     @Override
     public WindowButton setSize(Size size) {
         this.updateCoordinates(size);
-        this.runWhenReady(() -> {
             this.button.setMaxHeight(size.height);
             this.button.setMinHeight(size.height);
             this.button.setMaxWidth(size.width);
             this.button.setMinWidth(size.width);
-        });
+
         return this;
     }
 
     @Override
     public WindowButton setPosition(Position position) {
         this.updateCoordinates(position);
-        this.runWhenReady(() -> {
             this.button.setLayoutX(position.left);
             this.button.setLayoutY(position.top);
-        });
+
         return this;
     }
 
     @Override
     public WindowButton addMouseLeftClickListener(MouseLeftClickListener l) {
-        this.runWhenReady(() -> this.button.setOnAction(new JavaFxMapperMouseLeftClick(l)));
+        this.button.setOnAction(new JavaFxMapperMouseLeftClick(l));
         return this;
     }
 
     @Override
     public WindowButtonText setText(String text) {
-        this.runWhenReady(() -> this.button.setText(text));
+         this.button.setText(text);
         return this;
     }
 

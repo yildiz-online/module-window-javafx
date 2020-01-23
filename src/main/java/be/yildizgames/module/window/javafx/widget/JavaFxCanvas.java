@@ -32,7 +32,6 @@ import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.widget.WindowCanvas;
-import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 
@@ -48,11 +47,9 @@ public class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements Wind
     JavaFxCanvas(Pane pane, WindowHandle handle) {
         super();
         this.handle = handle;
-        Platform.runLater(() -> {
             this.canvas = new Canvas();
             pane.getChildren().add(this.canvas);
             this.setReady(this.canvas);
-        });
     }
   
     public final WindowHandle getHandle() {
@@ -62,32 +59,28 @@ public class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements Wind
     @Override
     public final JavaFxCanvas setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.runWhenReady(() -> {
             this.canvas.setLayoutX(coordinates.left);
             this.canvas.setLayoutY(coordinates.top);
             this.canvas.setHeight(coordinates.height);
             this.canvas.setWidth(coordinates.width);
-        });
         return this;
     }
 
     @Override
     public final JavaFxCanvas setSize(Size size) {
         this.updateCoordinates(size);
-        this.runWhenReady(() -> {
             this.canvas.setHeight(size.height);
             this.canvas.setWidth(size.width);
-        });
+
         return this;
     }
 
     @Override
     public final JavaFxCanvas setPosition(Position position) {
         this.updateCoordinates(position);
-        this.runWhenReady(() -> {
             this.canvas.setLayoutX(position.left);
             this.canvas.setLayoutY(position.top);
-        });
+
         return this;
     }
   

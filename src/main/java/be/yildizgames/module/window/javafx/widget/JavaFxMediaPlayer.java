@@ -31,7 +31,6 @@ import be.yildizgames.module.coordinate.BaseCoordinate;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.widget.WindowMediaPlayer;
-import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -50,53 +49,48 @@ public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> imple
     private boolean playing;
     
     JavaFxMediaPlayer(Pane pane ) {
-        Platform.runLater(() -> {
             this.mediaView = new MediaView();
             pane.getChildren().add(this.mediaView);
             this.setReady(this.mediaView);
-        });
+
     }
 
     @Override
     public JavaFxMediaPlayer setMedia(String url) {
-        this.runWhenReady(() -> {
             Media media = new Media(url);
             MediaPlayer mediaPlayer = new MediaPlayer(media);
            // mediaPlayer.setAutoPlay(true);
             this.mediaView.setMediaPlayer(mediaPlayer);
-        });
+
         return this;
     }
 
     @Override
     public final JavaFxMediaPlayer setCoordinates(BaseCoordinate coordinates) {
         this.updateCoordinates(coordinates);
-        this.runWhenReady(() -> {
             this.mediaView.setLayoutX(coordinates.left);
             this.mediaView.setLayoutY(coordinates.top);
             this.mediaView.setFitHeight(coordinates.height);
             this.mediaView.setFitWidth(coordinates.width);
-        });
+
         return this;
     }
 
     @Override
     public final JavaFxMediaPlayer setSize(Size size) {
         this.updateCoordinates(size);
-        this.runWhenReady(() -> {
             this.mediaView.setFitHeight(size.height);
             this.mediaView.setFitWidth(size.width);
-        });
+
         return this;
     }
 
     @Override
     public final JavaFxMediaPlayer setPosition(Position position) {
         this.updateCoordinates(position);
-        this.runWhenReady(() -> {
             this.mediaView.setLayoutX(position.left);
             this.mediaView.setLayoutY(position.top);
-        });
+
         return this;
     }
 
@@ -112,7 +106,7 @@ public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> imple
 
     @Override
     public WindowMediaPlayer play() {
-        this.runWhenReady(() -> this.mediaView.getMediaPlayer().play());
+        this.mediaView.getMediaPlayer().play();
         playing = true;
         return this;
     }
@@ -120,7 +114,7 @@ public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> imple
     @Override
     public WindowMediaPlayer stop() {
         if (playing) {
-            this.runWhenReady(() -> this.mediaView.getMediaPlayer().stop());
+            this.mediaView.getMediaPlayer().stop();
             playing = false;
         }
 

@@ -28,10 +28,7 @@ import be.yildizgames.module.coordinate.BaseCoordinate;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
-import javafx.application.Platform;
 import javafx.scene.Node;
-
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Building a widget is an async process done by the javafx thread, thus it is necessary to ensure that it is fully built before attempting to use it.
@@ -52,40 +49,7 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
      * Set ready is to be invoked once the widget is completely built.
      */
     protected final void setReady(Node node) {
-        ready = true;
         this.node = node;
-    }
-
-    /**
-     * Ensure that is widget is ready to run any change.
-     * @param r Behavior to run in the javafx thread.
-     */
-    protected final void runWhenReady(Runnable r) {
-        /*while (!ready) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }*/
-        if (Platform.isFxApplicationThread()) {
-            r.run();
-            return;
-        }
-        final CountDownLatch doneLatch = new CountDownLatch(1);
-        Platform.runLater(() -> {
-            try {
-                r.run();
-            } finally {
-                doneLatch.countDown();
-            }
-        });
-
-        try {
-            doneLatch.await();
-        } catch (InterruptedException e) {
-            // ignore exception
-        }
     }
 
     public final BaseCoordinate getCoordinates() {
@@ -121,7 +85,7 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
     }
 
     public final T setVisible(boolean visible) {
-        this.runWhenReady(() -> this.node.setVisible(visible));
+        this.node.setVisible(visible);
         return (T)this;
     }
 }

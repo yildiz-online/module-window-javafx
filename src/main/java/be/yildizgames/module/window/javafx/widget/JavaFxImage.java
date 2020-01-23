@@ -31,7 +31,6 @@ import be.yildizgames.module.window.input.MouseOverListener;
 import be.yildizgames.module.window.widget.ImageEffect;
 import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
-import javafx.application.Platform;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -47,56 +46,51 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     JavaFxImage(Pane pane, WindowImageProvider provider, String image) {
         super();
-        Platform.runLater(() -> {
             this.provider = provider;
             this.imageView = new ImageView();
             this.imageView.setImage(new Image(provider.getImage(image)));
             pane.getChildren().add(this.imageView);
             this.setReady(this.imageView);
-        });
+
     }
 
     @Override
     public final WindowImage setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.runWhenReady(() -> {
             this.imageView.setLayoutX(coordinates.left);
             this.imageView.setLayoutY(coordinates.top);
             this.imageView.setFitHeight(coordinates.height);
             this.imageView.setFitWidth(coordinates.width);
-        });
+
         return this;
     }
 
     @Override
     public final WindowImage setSize(Size size) {
         this.updateCoordinates(size);
-        this.runWhenReady(() -> {
             this.imageView.setFitHeight(size.height);
             this.imageView.setFitWidth(size.width);
-        });
+
         return this;
     }
 
     @Override
     public final WindowImage setPosition(Position position) {
         this.updateCoordinates(position);
-        this.runWhenReady(() -> {
             this.imageView.setLayoutX(position.left);
             this.imageView.setLayoutY(position.top);
-        });
+
         return this;
     }
 
     @Override
     public final WindowImage setImage(String url) {
-        this.runWhenReady(() -> this.imageView.setImage(new Image(provider.getImage(url))));
+        this.imageView.setImage(new Image(provider.getImage(url)));
         return this;
     }
 
     @Override
     public final WindowImage addEffect(ImageEffect effect) {
-        this.runWhenReady(() -> {
             if(effect == ImageEffect.DESATURATE) {
                 ColorAdjust adjust = new ColorAdjust();
                 adjust.setSaturation(-1);
@@ -106,7 +100,6 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
                 adjust.setSaturation(0);
                 this.imageView.setEffect(adjust);
             }
-        });
         return this;
     }
 

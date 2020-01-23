@@ -24,7 +24,6 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.window.widget.WindowNotification;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import org.controlsfx.control.Notifications;
 
@@ -40,59 +39,47 @@ class JavaFxNotification implements WindowNotification {
 
     JavaFxNotification() {
         super();
-        Platform.runLater(() -> {
             this.notification = Notifications.create();
             this.notification.position(Pos.TOP_RIGHT);
             this.ready = true;
-        });
     }
 
     @Override
     public void show() {
-        this.runWhenReady(this.notification::show);
+        this.notification.show();;
     }
 
     @Override
     public void showError() {
-        this.runWhenReady(this.notification::showError);
+        this.notification.showError();
     }
 
     @Override
     public void showWarning() {
-        this.runWhenReady(this.notification::showWarning);
+        this.notification.showWarning();
     }
 
     @Override
     public void showInfo() {
-        this.runWhenReady(this.notification::showInformation);
+        this.notification.showInformation();
     }
 
     @Override
     public WindowNotification setTitle(String title) {
-        this.runWhenReady(() -> this.notification.title(title));
+        this.notification.title(title);
         return this;
     }
 
     @Override
     public WindowNotification setText(String text) {
-        this.runWhenReady(() -> this.notification.text(text));
+        this.notification.text(text);
         return this;
     }
 
     @Override
     public WindowNotification hideAfter(Duration duration) {
-        this.runWhenReady(() -> this.notification.hideAfter(new javafx.util.Duration(duration.toMillis())));
+        this.notification.hideAfter(new javafx.util.Duration(duration.toMillis()));
         return this;
     }
 
-    private void runWhenReady(Runnable r) {
-        while (!ready) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        Platform.runLater(r);
-    }
 }

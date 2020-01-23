@@ -30,7 +30,6 @@ import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.widget.WindowFont;
 import be.yildizgames.module.window.widget.WindowTextLine;
-import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
@@ -47,35 +46,32 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
 
     JavaFxLabel(Pane pane) {
         super();
-        Platform.runLater(() -> {
             this.label = new Label();
             pane.getChildren().add(this.label);
             this.setReady(this.label);
-        });
+
     }
 
     @Override
     public final WindowTextLine setText(String text) {
-        this.runWhenReady(() -> {
             this.label.setText(text);
             this.text = text;
-        });
+
         return this;
     }
 
     @Override
     public final WindowTextLine wrapText() {
-        this.runWhenReady(() -> this.label.setWrapText(true));
+        this.label.setWrapText(true);
         return this;
     }
 
     @Override
     public final WindowTextLine setColor(Color color) {
         if(!color.equals(this.color)) {
-            this.runWhenReady(() -> {
                 this.label.setTextFill(new javafx.scene.paint.Color(
                         color.normalizedRedValue, color.normalizedGreenValue, color.normalizedBlueValue, color.normalizedAlphaValue));
-            });
+
         }
         this.color = color;
         return this;
@@ -88,45 +84,42 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
 
     @Override
     public final WindowTextLine setUnderline(boolean active) {
-        this.runWhenReady(() -> this.label.setUnderline(active));
+        this.label.setUnderline(active);
         return this;
     }
 
     @Override
     public final WindowTextLine setFont(WindowFont font) {
-        this.runWhenReady(() -> this.label.setFont(JavaFxFont.getById(font.getId()).getInnerFont()));
+        this.label.setFont(JavaFxFont.getById(font.getId()).getInnerFont());
         return this;
     }
 
     @Override
     public final WindowTextLine setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.runWhenReady(() -> {
             this.label.setLayoutX(coordinates.left);
             this.label.setLayoutY(coordinates.top);
             this.label.setMaxHeight(coordinates.height);
             this.label.setMaxWidth(coordinates.width);
-        });
+
         return this;
     }
 
     @Override
     public final WindowTextLine setSize(Size size) {
         this.updateCoordinates(size);
-        this.runWhenReady(() -> {
             this.label.setMaxWidth(size.width);
             this.label.setMaxHeight(size.height);
-        });
+
         return this;
     }
 
     @Override
     public final WindowTextLine setPosition(Position position) {
         this.updateCoordinates(position);
-        this.runWhenReady(() -> {
             this.label.setLayoutX(position.left);
             this.label.setLayoutY(position.top);
-        });
+
         return this;
     }
 }

@@ -115,7 +115,6 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     JavaFxWindowShell(WindowImageProvider imageProvider, Stage parent) {
         super();
         this.imageProvider = imageProvider;
-        Platform.runLater(() ->    {
             this.stage = new Stage();
             this.pane = new Pane();
             Scene scene = new Scene(pane);
@@ -127,7 +126,6 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
             this.stage.show();
             this.stage.setTitle("Modal");
             this.setReady(this.pane);
-        });
     }
 
     private void createStage(WindowShellOptions... options) {
@@ -136,7 +134,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     private void handleOptions(Stage stage, WindowShellOptions... options) {
-        Platform.runLater(() -> {
+
             this.pane = new Pane();
             Scene scene = new Scene(pane);
             this.panes.put("primary", pane);
@@ -161,29 +159,26 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
             this.title = "UnnamedWindow" + random.nextInt();
             this.stage.setTitle(this.title);
             this.setReady(this.pane);
-        });
+
     }
 
     public void addScene(String name) {
-        Platform.runLater(() -> {
             Pane pane = new Pane();
             new Scene(pane);
             this.panes.put(name, pane);
 
-        });
     }
 
     public void selectScene(String name) {
-        Platform.runLater(() -> {
             this.pane = panes.get(name);
             this.stage.setScene(pane.getScene());
-        });
+
     }
 
     @Override
     public JavaFxWindowShell setTitle(String title) {
         this.title = title;
-        Platform.runLater(() -> stage.setTitle(title));
+        stage.setTitle(title);
         return this;
     }
 
@@ -195,15 +190,15 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxWindowShell setBackground(Color color) {
-        this.runWhenReady(() -> this.pane.setBackground(
+        this.pane.setBackground(
                 new Background(
                 new BackgroundFill(new javafx.scene.paint.Color(
                         color.normalizedRedValue,
                         color.normalizedGreenValue,
                         color.normalizedBlueValue,
                         color.normalizedAlphaValue),
-                        CornerRadii.EMPTY, Insets.EMPTY))
-        ));
+                        CornerRadii.EMPTY, Insets.EMPTY)));
+
         return this;
     }
 
@@ -213,26 +208,18 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
             return this;
         }
         this.background = file;
-        this.runWhenReady(() -> {
             BackgroundImage myBI= new BackgroundImage(new Image(this.imageProvider.getImage(file)),
                     BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
                     new BackgroundSize(100, 100, true, true, true, true));
             this.pane.setBackground(new Background(myBI));
-        });
+
         return this;
     }
 
     @Override
     public JavaFxWindowShell setFullScreen() {
-        this.runWhenReady(() -> {
             this.stage.setFullScreen(true);
             this.stage.setMaximized(true);
-            stage.focusedProperty().addListener((ov, onHidden, onShown) -> {
-                if(!stage.isFocused())
-                    Platform.runLater(() -> System.out.println("LOST FOCUS"));
-            });
-        });
-
         return this;
     }
 
@@ -254,17 +241,17 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public void close() {
-        this.runWhenReady(this.stage::close);
+        this.stage.close();
     }
 
     @Override
     public void update() {
-        this.runWhenReady(() -> {
+
             //hack to ensure to refresh the view in case of non full screen.
             // if the screen is not maximized/resized, the view is not correctly updated.
             this.stage.setHeight(this.stage.getHeight() + (increase ? 1 : -1));
             increase = ! increase;
-        });
+
     }
 
     @Override
@@ -289,26 +276,26 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public WindowNotification createNotification() {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxNotification();
     }
 
     @Override
     public final JavaFxCanvas createCanvas() {
-        this.runWhenReady(this::update);
+        this.update();
         HWND hWnd = User32.INSTANCE.GetForegroundWindow();
         return new JavaFxCanvas(this.pane, new WindowHandle(Pointer.nativeValue(hWnd.getPointer())));
     }
 
     @Override
     public JavaFxLabel createTextLine() {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxLabel(this.pane);
     }
 
     @Override
     public JavaFxButton createButton() {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxButton(this.pane);
     }
 
@@ -319,13 +306,13 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxImage createImage(String image) {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxImage(this.pane, this.imageProvider, image);
     }
 
     @Override
     public JavaFxProgressBar createProgressBar() {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxProgressBar(this.pane);
     }
 
@@ -336,25 +323,25 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxDropDown createDropdown() {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxDropDown(this.pane);
     }
 
     @Override
     public WindowButtonText createTextButton() {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxButtonText(this.pane);
     }
 
     @Override
     public JavaFxInputBox createInputBox() {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxInputBox(this.pane);
     }
 
     @Override
     public JavaFxWindowShell createChildWindow(WindowShellOptions... options) {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxWindowShell(this.imageProvider, options);
     }
 
@@ -370,7 +357,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public final WindowPopup createPopup() {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxPopup(this.imageProvider, this.stage);
     }
 
@@ -382,74 +369,67 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final JavaFxWindowShell setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.runWhenReady(() -> {
             this.pane.setLayoutX(coordinates.left);
             this.pane.setLayoutY(coordinates.top);
             this.pane.setMaxHeight(coordinates.height);
             this.pane.setMinHeight(coordinates.height);
             this.pane.setMaxWidth(coordinates.width);
             this.pane.setMinWidth(coordinates.width);
-        });
+
         return this;
     }
 
     @Override
     public final JavaFxWindowShell setSize(Size size) {
         this.updateCoordinates(size);
-        this.runWhenReady(() -> {
             this.stage.setMaxHeight(size.height);
             this.stage.setMinHeight(size.height);
             this.stage.setMaxWidth(size.width);
             this.stage.setMinWidth(size.width);
-        });
+
         return this;
     }
 
     @Override
     public final JavaFxWindowShell setPosition(Position position) {
         this.updateCoordinates(position);
-        this.runWhenReady(() -> {
             this.pane.setLayoutX(position.left);
             this.pane.setLayoutY(position.top);
-        });
+
         return this;
     }
 
     @Override
     public final JavaFxWindowShell addKeyListener(KeyboardListener listener) {
-        this.runWhenReady(
-                () -> {
-                    this.stage.getScene().setOnKeyPressed(new JavaFxMapperKeyPressed(listener));
+        this.stage.getScene().setOnKeyPressed(new JavaFxMapperKeyPressed(listener));
                     this.stage.getScene().setOnKeyReleased(new JavaFxMapperKeyReleased(listener));
-                }
-        );
+
         return this;
     }
 
     @Override
     public final JavaFxWindowShell toBack() {
-        this.runWhenReady(() -> this.stage.toBack());
+        this.stage.toBack();
         return this;
     }
 
     @Override
     public final JavaFxWindowShell minimize(OnMinimize... minimizes) {
-        this.runWhenReady(() -> {
             this.stage.setIconified(true);
             Optional.ofNullable(minimizes).ifPresent(m -> Arrays.stream(m).forEach(OnMinimize::minimized));
-        });
+
         return this;
     }
 
     @Override
     public final JavaFxWindowShell maximize() {
-        this.runWhenReady(this::run);
+        this.run();
         return this;
     }
 
     @Override
     public final JavaFxMediaPlayer createMediaPlayer() {
-        this.runWhenReady(this::update);
+        this.update();
         return new JavaFxMediaPlayer(this.pane);
     }
 
@@ -463,7 +443,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     final void centerOnScreen() {
-        this.runWhenReady(this::update);
+        this.update();
         ScreenSize screenSize = this.getMonitorSize();
         float x = (screenSize.width / 2f) -  (this.getRight() / 2f);
         float y = (screenSize.height / 2f) - (this.getBottom() / 2f);
@@ -471,11 +451,11 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     public final void addOnHiddenListener(CallBack callBack) {
-        this.runWhenReady(() ->this.stage.setOnHidden((e) -> callBack.onEvent()));
+        this.stage.setOnHidden((e) -> callBack.onEvent());
     }
 
     public WindowShell hide() {
-        this.runWhenReady(this.stage::hide);
+        this.stage.hide();
         return this;
     }
 
@@ -506,11 +486,10 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     public void createVirtualKeyboard() {
-        this.runWhenReady(this::update);
-        Platform.runLater(() -> {
+        this.update();
             VirtualKeyboard vk = new VirtualKeyboard();
             this.pane.getChildren().addAll(vk.view());
-        });
+
 
     }
 }

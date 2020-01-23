@@ -30,7 +30,6 @@ import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperInput;
 import be.yildizgames.module.window.widget.WindowInputBox;
 import be.yildizgames.module.window.widget.WindowInputBoxChangeListener;
-import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
@@ -45,54 +44,50 @@ class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowI
 
     JavaFxInputBox(Pane pane) {
         super();
-        Platform.runLater(() -> {
             this.textField = new TextField();
             pane.getChildren().add(this.textField);
             this.setReady(this.textField);
-        });
+
     }
 
 
     @Override
     public WindowInputBox setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.runWhenReady(() -> {
             this.textField.setLayoutX(coordinates.left);
             this.textField.setLayoutY(coordinates.top);
             this.textField.setMaxHeight(coordinates.height);
             this.textField.setMinHeight(coordinates.height);
             this.textField.setMaxWidth(coordinates.width);
             this.textField.setMinWidth(coordinates.width);
-        });
+
         return this;
     }
 
     @Override
     public WindowInputBox setSize(Size size) {
         this.updateCoordinates(size);
-        this.runWhenReady(() -> {
             this.textField.setMaxHeight(size.height);
             this.textField.setMinHeight(size.height);
             this.textField.setMaxWidth(size.width);
             this.textField.setMinWidth(size.width);
-        });
+
         return this;
     }
 
     @Override
     public WindowInputBox setPosition(Position position) {
         this.updateCoordinates(position);
-        this.runWhenReady(() -> {
             this.textField.setLayoutX(position.left);
             this.textField.setLayoutY(position.top);
-        });
+
         return this;
     }
 
     @Override
     public final WindowInputBox setText(String text) {
         this.text = text;
-        this.runWhenReady(() -> this.textField.setText(text));
+        this.textField.setText(text);
         return this;
     }
 
@@ -103,11 +98,10 @@ class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowI
 
     @Override
     public final WindowInputBox setToolTip(String text) {
-        this.runWhenReady(() -> {
             Tooltip tooltip = new Tooltip();
             tooltip.setText(text);
             this.textField.setTooltip(tooltip);
-        });
+
         return this;
     }
 
