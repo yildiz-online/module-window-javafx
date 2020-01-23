@@ -24,11 +24,10 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.window.javafx.internal.JavaFxApplication;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowShellFactory;
 import be.yildizgames.module.window.widget.WindowShellOptions;
-import javafx.application.Application;
+import javafx.stage.Stage;
 
 /**
  * Create javafx instances of window shell.
@@ -44,17 +43,15 @@ public class JavaFxWindowShellFactory implements WindowShellFactory {
 
     private final WindowImageProvider imageProvider;
 
-    public JavaFxWindowShellFactory(WindowImageProvider imageProvider) {
+    private final Stage primary;
+
+    public JavaFxWindowShellFactory(WindowImageProvider imageProvider, Stage primary) {
         this.imageProvider = imageProvider;
+        this.primary = primary;
     }
 
     @Override
     public JavaFxWindowShell buildShell(WindowShellOptions...options) {
-        if(!javafxStarted) {
-            javafxStarted = true;
-            new Thread(() -> Application.launch(JavaFxApplication.class)).start();
-            return new JavaFxWindowShell(JavaFxApplication.getInstance().getStage(), this.imageProvider, options);
-        }
-        return new JavaFxWindowShell(this.imageProvider, options);
+        return new JavaFxWindowShell(primary, this.imageProvider, options);
     }
 }

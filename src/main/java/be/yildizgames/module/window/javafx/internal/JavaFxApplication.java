@@ -25,8 +25,12 @@
 package be.yildizgames.module.window.javafx.internal;
 
 import be.yildizgames.module.window.ScreenSize;
+import be.yildizgames.module.window.javafx.JavaFxRegisteredView;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is internal, do not instantiate it manually nor use it.
@@ -39,6 +43,8 @@ public class JavaFxApplication extends Application {
 
     private Stage stage;
 
+    private final List<JavaFxRegisteredView> views = new ArrayList<>();
+
     public JavaFxApplication() {
         super();
     }
@@ -47,7 +53,7 @@ public class JavaFxApplication extends Application {
         return stage;
     }
 
-    public static JavaFxApplication getInstance() {
+    /*public static JavaFxApplication getInstance() {
         if(instance == null) {
             try {
                 Thread.sleep(200);
@@ -57,12 +63,15 @@ public class JavaFxApplication extends Application {
             }
         }
         return instance;
-    }
+    }*/
 
     @Override
     public final void start(Stage stage) {
         instance = this;
         this.stage = stage;
+        for(JavaFxRegisteredView view : this.views) {
+            view.build();
+        }
         stage.show();
     }
 
@@ -72,5 +81,9 @@ public class JavaFxApplication extends Application {
 
     public final ScreenSize getScreenSize() {
         return new ScreenSize((int)this.stage.getWidth(), (int)this.stage.getHeight());
+    }
+
+    public void addView(JavaFxRegisteredView view) {
+        this.views.add(view);
     }
 }

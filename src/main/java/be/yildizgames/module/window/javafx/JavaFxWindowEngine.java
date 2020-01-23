@@ -36,13 +36,14 @@ import be.yildizgames.module.window.javafx.widget.JavaFxWindowShellFactory;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
 import be.yildizgames.module.window.widget.WindowShellFactory;
+import javafx.application.Application;
 
 /**
  * @author Grégory Van den Borre
  */
 public class JavaFxWindowEngine implements BaseWindowEngine {
 
-    private final WindowShellFactory shellFactory;
+    //private final WindowShellFactory shellFactory;
 
     private final WindowThreadManager threadManager = new JavaFxThreadManager();
 
@@ -55,8 +56,11 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
         System.Logger logger = System.getLogger(JavaFxWindowShell.class.getName());
         logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initializing...");
         logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initialized.");
-        this.shellFactory = new JavaFxWindowShellFactory(imageProvider);
+        new Thread(() -> Application.launch(JavaFxApplication.class)).start();
+    }
 
+    public void registerView(JavaFxRegisteredView view) {
+        JavaFxApplication.getInstance().addView(view);
     }
 
     @Override

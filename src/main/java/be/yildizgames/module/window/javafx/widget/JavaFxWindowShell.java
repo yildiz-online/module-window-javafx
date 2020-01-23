@@ -89,6 +89,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     private Stage stage;
 
+    private Map<String, Pane> panes = new HashMap<>();
+
     private Pane pane;
 
     private boolean increase;
@@ -117,6 +119,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
             this.stage = new Stage();
             this.pane = new Pane();
             Scene scene = new Scene(pane);
+            this.panes.put("primary", pane);
             this.stage.setScene(scene);
             this.stage.initModality(Modality.WINDOW_MODAL);
             this.stage.initOwner(parent);
@@ -136,6 +139,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         Platform.runLater(() -> {
             this.pane = new Pane();
             Scene scene = new Scene(pane);
+            this.panes.put("primary", pane);
             stage.setScene(scene);
             if(options!= null) {
                 for (WindowShellOptions o : options) {
@@ -160,6 +164,22 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         });
     }
 
+    public void addScene(String name) {
+        Platform.runLater(() -> {
+            Pane pane = new Pane();
+            new Scene(pane);
+            this.panes.put(name, pane);
+
+        });
+    }
+
+    public void selectScene(String name) {
+        Platform.runLater(() -> {
+            this.pane = panes.get(name);
+            this.stage.setScene(pane.getScene());
+        });
+    }
+
     @Override
     public JavaFxWindowShell setTitle(String title) {
         this.title = title;
@@ -169,7 +189,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxWindowShell setIcon(String file) {
-        return null;
+        //FIXME implements
+        return this;
     }
 
     @Override

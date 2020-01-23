@@ -31,6 +31,8 @@ import be.yildizgames.module.coordinate.Size;
 import javafx.application.Platform;
 import javafx.scene.Node;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Building a widget is an async process done by the javafx thread, thus it is necessary to ensure that it is fully built before attempting to use it.
  * @author Grégory Van den Borre
@@ -59,14 +61,31 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
      * @param r Behavior to run in the javafx thread.
      */
     protected final void runWhenReady(Runnable r) {
-        while (!ready) {
+        /*while (!ready) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
+        }*/
+        if (Platform.isFxApplicationThread()) {
+            r.run();
+            return;
         }
-        Platform.runLater(r);
+        final CountDownLatch doneLatch = new CountDownLatch(1);
+        Platform.runLater(() -> {
+            try {
+                r.run();
+            } finally {
+                doneLatch.countDown();
+            }
+        });
+
+        try {
+            doneLatch.await();
+        } catch (InterruptedException e) {
+            // ignore exception
+        }
     }
 
     public final BaseCoordinate getCoordinates() {
