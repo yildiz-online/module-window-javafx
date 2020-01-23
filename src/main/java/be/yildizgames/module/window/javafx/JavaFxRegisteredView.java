@@ -1,6 +1,8 @@
 package be.yildizgames.module.window.javafx;
 
-public abstract class JavaFxRegisteredView {
+import be.yildizgames.module.window.widget.WindowShellFactory;
 
-    public abstract void build();
+public interface JavaFxRegisteredView {
+
+    void build(WindowShellFactory shellFactory);
 }

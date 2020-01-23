@@ -30,22 +30,30 @@ import be.yildizgames.module.window.ScreenSize;
 import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.WindowThreadManager;
 import be.yildizgames.module.window.input.WindowInputListener;
-import be.yildizgames.module.window.javafx.internal.JavaFxApplication;
 import be.yildizgames.module.window.javafx.widget.JavaFxWindowShell;
 import be.yildizgames.module.window.javafx.widget.JavaFxWindowShellFactory;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
 import be.yildizgames.module.window.widget.WindowShellFactory;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Grégory Van den Borre
  */
 public class JavaFxWindowEngine implements BaseWindowEngine {
 
-    //private final WindowShellFactory shellFactory;
-
     private final WindowThreadManager threadManager = new JavaFxThreadManager();
+
+    private final List<JavaFxRegisteredView> views = new ArrayList<>();
+
+    private final WindowImageProvider imageProvider;
+
+    private boolean started;
 
     public JavaFxWindowEngine() {
         this(new WindowImageProviderClassPath());
@@ -56,16 +64,36 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
         System.Logger logger = System.getLogger(JavaFxWindowShell.class.getName());
         logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initializing...");
         logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initialized.");
-        new Thread(() -> Application.launch(JavaFxApplication.class)).start();
+        this.imageProvider = imageProvider;
     }
 
     public void registerView(JavaFxRegisteredView view) {
-        JavaFxApplication.getInstance().addView(view);
+        this.views.add(view);
     }
 
     @Override
     public void update() {
+        if(!started) {
+            Platform.startup(() -> {
+                Application application = new Application() {
 
+                    @Override
+                    public void start(Stage stage) {
+                        JavaFxWindowShellFactory factory = new JavaFxWindowShellFactory(imageProvider, stage);
+                        for(JavaFxRegisteredView view : views) {
+                            view.build(factory);
+                        }
+                        started = true;
+                    }
+                };
+                try {
+                    application.init();
+                    application.start(new Stage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     @Override
@@ -110,7 +138,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public ScreenSize getScreenSize() {
-        return JavaFxApplication.getInstance().getScreenSize();
+        throw new IllegalArgumentException("Do not use it");
     }
 
     @Override
@@ -119,7 +147,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public WindowShellFactory getWindowShellFactory() {
-        return this.shellFactory;
+        throw new IllegalArgumentException("Do not use it");
     }
 
     @Override
