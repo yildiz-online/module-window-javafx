@@ -39,7 +39,7 @@ public class JavaFxWindowShellFactory implements WindowShellFactory {
     /**
      * Flag to check if the application is already launched or not.
      */
-    private boolean javafxStarted = false;
+    private boolean p = true;
 
     private final WindowImageProvider imageProvider;
 
@@ -52,6 +52,11 @@ public class JavaFxWindowShellFactory implements WindowShellFactory {
 
     @Override
     public JavaFxWindowShell buildShell(WindowShellOptions...options) {
-        return new JavaFxWindowShell(primary, this.imageProvider, options);
+        if(p) {
+            p = false;
+            return new JavaFxWindowShell(primary, this.imageProvider, options);
+        } else {
+            return new JavaFxWindowShell(this.imageProvider, options);
+        }
     }
 }
