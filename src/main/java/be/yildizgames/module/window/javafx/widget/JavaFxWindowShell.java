@@ -104,12 +104,14 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.stage = stage;
         this.imageProvider = imageProvider;
         this.handleOptions(stage, options);
+        this.updateCoordinates(new Coordinates((int)stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, WindowShellOptions... options) {
         super();
         this.imageProvider = imageProvider;
-        Platform.runLater(() -> createStage(options));
+        createStage(options);
+        this.updateCoordinates(new Coordinates((int)stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, Stage parent) {
@@ -126,6 +128,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
             this.stage.show();
             this.stage.setTitle("Modal");
             this.setReady(this.pane);
+            this.updateCoordinates(new Coordinates((int)stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
     private void createStage(WindowShellOptions... options) {
@@ -146,7 +149,6 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
                             stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
                             stage.setFullScreen(true);
                             stage.setMaximized(true);
-                            this.updateCoordinates(new Coordinates((int)stage.getWidth(), (int) stage.getHeight(), 0, 0));
                             break;
                         case NO_TITLE_BAR:
                             stage.initStyle(StageStyle.UNDECORATED);
