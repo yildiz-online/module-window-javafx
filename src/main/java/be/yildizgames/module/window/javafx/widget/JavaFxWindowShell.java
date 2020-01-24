@@ -437,6 +437,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public final void exit() {
+        this.stage.close();
         Platform.exit();
     }
 

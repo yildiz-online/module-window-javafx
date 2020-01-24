@@ -26,6 +26,7 @@ package be.yildizgames.module.window.javafx;
 
 import be.yildizgames.module.window.BaseWindowEngine;
 import be.yildizgames.module.window.Cursor;
+import be.yildizgames.module.window.RegisteredView;
 import be.yildizgames.module.window.ScreenSize;
 import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.WindowThreadManager;
@@ -34,7 +35,6 @@ import be.yildizgames.module.window.javafx.widget.JavaFxWindowShell;
 import be.yildizgames.module.window.javafx.widget.JavaFxWindowShellFactory;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
-import be.yildizgames.module.window.widget.WindowShellFactory;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -49,7 +49,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     private final WindowThreadManager threadManager = new JavaFxThreadManager();
 
-    private final List<JavaFxRegisteredView> views = new ArrayList<>();
+    private final List<RegisteredView> views = new ArrayList<>();
 
     private final WindowImageProvider imageProvider;
 
@@ -67,7 +67,8 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
         this.imageProvider = imageProvider;
     }
 
-    public void registerView(JavaFxRegisteredView view) {
+    @Override
+    public void registerView(RegisteredView view) {
         this.views.add(view);
     }
 
@@ -80,7 +81,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
                     @Override
                     public void start(Stage stage) {
                         JavaFxWindowShellFactory factory = new JavaFxWindowShellFactory(imageProvider, stage);
-                        for(JavaFxRegisteredView view : views) {
+                        for(RegisteredView view : views) {
                             view.build(factory);
                         }
                         started = true;
@@ -143,11 +144,6 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public void setWindowIcon(String file) {
-    }
-
-    @Override
-    public WindowShellFactory getWindowShellFactory() {
-        throw new IllegalArgumentException("Do not use it");
     }
 
     @Override
