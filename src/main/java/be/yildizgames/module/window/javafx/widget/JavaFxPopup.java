@@ -16,6 +16,7 @@ import be.yildizgames.module.color.Color;
 import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
+import be.yildizgames.module.window.widget.WindowDropdown;
 import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowInputBox;
@@ -75,6 +76,10 @@ public class JavaFxPopup implements WindowPopup {
     @Override
     public final WindowButtonText createTextButton() {
         return this.modal.createTextButton();
+    }
+
+    public final WindowDropdown createDropdown() {
+        return this.modal.createDropdown();
     }
 
     @Override
