@@ -47,7 +47,8 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
 
     @Override
     public WindowDropdown select(int line) {
-        return null;
+        this.comboBox.getSelectionModel().select(line);
+        return this;
     }
 
     @Override
