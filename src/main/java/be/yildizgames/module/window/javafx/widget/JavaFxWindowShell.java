@@ -37,6 +37,7 @@ import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.javafx.widget.experimental.VirtualKeyboard;
 import be.yildizgames.module.window.widget.OnMinimize;
 import be.yildizgames.module.window.widget.WindowButtonText;
+import be.yildizgames.module.window.widget.WindowCheckBox;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowMenuBar;
 import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
@@ -361,6 +362,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public final WindowPopup createPopup() {
         this.update();
         return new JavaFxPopup(this.imageProvider, this.stage);
+    }
+
+    @Override
+    public final WindowCheckBox createCheckBox() {
+        this.update();
+        return new JavaFxCheckBox(this.pane);
     }
 
     @Override
