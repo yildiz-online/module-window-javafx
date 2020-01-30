@@ -94,8 +94,14 @@ public class JavaFxPopup implements WindowPopup {
         this.modal.close();
     }
 
+
+    public WindowPopup show() {
+        this.modal.setVisible(true);
+        return this;
+    }
+
     public WindowPopup hide() {
-        this.modal.hide();
+        this.modal.setVisible(true);
         return this;
     }
 
