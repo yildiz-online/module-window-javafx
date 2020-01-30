@@ -35,13 +35,13 @@ import java.util.Arrays;
 
 class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowDropdown {
 
-    private ComboBox comboBox;
+    private final ComboBox<String> comboBox;
 
     JavaFxDropDown(Pane pane) {
         super();
-            this.comboBox = new ComboBox();
-            pane.getChildren().add(this.comboBox);
-            this.setReady(this.comboBox);
+        this.comboBox = new ComboBox<>();
+        pane.getChildren().add(this.comboBox);
+        this.setReady(this.comboBox);
 
     }
 
@@ -65,7 +65,7 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
 
     @Override
     public int getSelectionIndex() {
-        return 0;
+        return this.comboBox.getSelectionModel().getSelectedIndex();
     }
 
     @Override
