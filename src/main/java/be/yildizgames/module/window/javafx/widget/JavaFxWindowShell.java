@@ -502,4 +502,9 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
 
     }
+
+    @Override
+    public void requestFocus() {
+        this.pane.requestFocus();
+    }
 }
