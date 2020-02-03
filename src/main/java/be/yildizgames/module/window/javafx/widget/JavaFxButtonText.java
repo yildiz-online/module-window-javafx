@@ -24,8 +24,6 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.common.client.translation.Translation;
-import be.yildizgames.common.client.translation.TranslationKey;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
@@ -92,10 +90,5 @@ class JavaFxButtonText extends JavaFxBaseWidget<JavaFxButtonText> implements Win
     public WindowButtonText setText(String text) {
         this.button.setText(text);
         return this;
-    }
-
-    @Override
-    public WindowButtonText setText(TranslationKey key) {
-        return this.setText(Translation.getInstance().translate(key));
     }
 }
