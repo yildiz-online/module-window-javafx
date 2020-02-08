@@ -299,7 +299,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public JavaFxButton createButton() {
         this.update();
-        return new JavaFxButton(this.pane);
+        return new JavaFxButton(this.pane, this.imageProvider);
     }
 
     @Override

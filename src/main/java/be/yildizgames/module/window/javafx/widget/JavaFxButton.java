@@ -31,7 +31,14 @@ import be.yildizgames.module.window.input.MouseLeftClickListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperMouseLeftClick;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
+import be.yildizgames.module.window.widget.WindowImageProvider;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 
 /**
@@ -39,11 +46,14 @@ import javafx.scene.layout.Pane;
  */
 class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButton, WindowButtonText {
 
-    private Button button;
+    private final WindowImageProvider imageProvider;
 
-    JavaFxButton(final Pane pane) {
+    private final Button button;
+
+    JavaFxButton(final Pane pane, WindowImageProvider imageProvider) {
         super();
             this.button = new Button();
+            this.imageProvider = imageProvider;
             pane.getChildren().add(this.button);
             this.setReady(this.button);
 
@@ -86,6 +96,15 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
     @Override
     public WindowButton addMouseLeftClickListener(MouseLeftClickListener l) {
         this.button.setOnAction(new JavaFxMapperMouseLeftClick(l));
+        return this;
+    }
+
+    @Override
+    public WindowButton setBackground(String image) {
+        BackgroundImage myBI= new BackgroundImage(new Image(this.imageProvider.getImage(image)),
+                BackgroundRepeat.SPACE, BackgroundRepeat.SPACE, BackgroundPosition.CENTER,
+                new BackgroundSize(100, 100, true, true, true, true));
+        this.button.setBackground(new Background(myBI));
         return this;
     }
 
