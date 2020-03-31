@@ -64,13 +64,13 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
     }
 
     @Override
-    public WindowCheckBox setCaption(String text) {
+    public final WindowCheckBox setCaption(String text) {
         this.caption.setText(text);
         return this;
     }
 
     @Override
-    public JavaFxCheckBox setCoordinates(Coordinates coordinates) {
+    public final JavaFxCheckBox setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
         this.checkBox.setLayoutX(coordinates.left);
         this.checkBox.setLayoutY(coordinates.top);
