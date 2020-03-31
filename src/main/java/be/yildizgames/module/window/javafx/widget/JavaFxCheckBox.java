@@ -42,7 +42,8 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.checkBox = new CheckBox();
         this.caption = new Label();
         pane.getChildren().addAll(this.checkBox, this.caption);
-        this.caption.setLabelFor(this.checkBox);
+        this.caption.setMaxWidth(100);
+        this.caption.setMaxHeight(30);
         this.setReady(this.checkBox);
     }
 
@@ -78,6 +79,8 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.checkBox.setMinHeight(coordinates.height);
         this.checkBox.setMaxWidth(coordinates.width);
         this.checkBox.setMinWidth(coordinates.width);
+        this.caption.setLayoutX(coordinates.left + 30);
+        this.caption.setLayoutY(coordinates.top);
         return this;
     }
 
@@ -96,6 +99,8 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.updateCoordinates(position);
         this.checkBox.setLayoutX(position.left);
         this.checkBox.setLayoutY(position.top);
+        this.caption.setLayoutX(position.left + 30);
+        this.caption.setLayoutY(position.top);
 
         return this;
     }
