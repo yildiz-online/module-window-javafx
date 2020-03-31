@@ -80,7 +80,7 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.checkBox.setMaxWidth(coordinates.width);
         this.checkBox.setMinWidth(coordinates.width);
         this.caption.setLayoutX(coordinates.left + 20);
-        this.caption.setLayoutY(coordinates.top -10);
+        this.caption.setLayoutY(coordinates.top - 8);
         return this;
     }
 
@@ -100,7 +100,7 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.checkBox.setLayoutX(position.left);
         this.checkBox.setLayoutY(position.top);
         this.caption.setLayoutX(position.left + 20);
-        this.caption.setLayoutY(position.top - 10);
+        this.caption.setLayoutY(position.top - 8);
 
         return this;
     }
