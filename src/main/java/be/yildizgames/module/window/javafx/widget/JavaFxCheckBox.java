@@ -28,16 +28,21 @@ import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.widget.WindowCheckBox;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowCheckBox {
 
     private final CheckBox checkBox;
 
+    private final Label caption;
+
     JavaFxCheckBox(final Pane pane) {
         super();
         this.checkBox = new CheckBox();
-        pane.getChildren().add(this.checkBox);
+        this.caption = new Label();
+        pane.getChildren().addAll(this.checkBox, this.caption);
+        this.caption.setLabelFor(this.checkBox);
         this.setReady(this.checkBox);
     }
 
@@ -59,6 +64,12 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
     }
 
     @Override
+    public WindowCheckBox setCaption(String text) {
+        this.caption.setText(text);
+        return this;
+    }
+
+    @Override
     public JavaFxCheckBox setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
         this.checkBox.setLayoutX(coordinates.left);
@@ -67,7 +78,6 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.checkBox.setMinHeight(coordinates.height);
         this.checkBox.setMaxWidth(coordinates.width);
         this.checkBox.setMinWidth(coordinates.width);
-
         return this;
     }
 
