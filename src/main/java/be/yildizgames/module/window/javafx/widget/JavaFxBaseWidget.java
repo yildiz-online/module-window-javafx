@@ -84,7 +84,7 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
         this.coordinates = new Coordinates(size, this.coordinates.left, this.coordinates.top);
     }
 
-    public final T setVisible(boolean visible) {
+    public T setVisible(boolean visible) {
         this.node.setVisible(visible);
         return (T)this;
     }

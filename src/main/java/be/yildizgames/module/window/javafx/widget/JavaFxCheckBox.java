@@ -45,6 +45,7 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.caption.setMaxWidth(100);
         this.caption.setMaxHeight(30);
         this.setReady(this.checkBox);
+        this.setSize(0,0);
     }
 
     @Override
@@ -102,6 +103,12 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.caption.setLayoutX(position.left + 20);
         this.caption.setLayoutY(position.top - 8);
 
+        return this;
+    }
+
+    public JavaFxCheckBox setVisible(boolean visible) {
+        this.caption.setVisible(visible);
+        this.checkBox.setVisible(visible);
         return this;
     }
 
