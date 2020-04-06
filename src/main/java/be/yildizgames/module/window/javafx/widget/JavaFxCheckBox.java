@@ -42,7 +42,7 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.checkBox = new CheckBox();
         this.caption = new Label();
         pane.getChildren().addAll(this.checkBox, this.caption);
-        this.caption.setMaxWidth(100);
+        this.caption.setMaxWidth(200);
         this.caption.setMaxHeight(30);
         this.setReady(this.checkBox);
         this.setSize(0,0);
