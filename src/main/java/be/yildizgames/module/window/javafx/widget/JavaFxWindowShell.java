@@ -95,7 +95,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     private Pane pane;
 
     private boolean increase;
-    
+
     private String title;
 
     private String background = "";
@@ -105,31 +105,31 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.stage = stage;
         this.imageProvider = imageProvider;
         this.handleOptions(stage, options);
-        this.updateCoordinates(new Coordinates((int)stage.getWidth(), (int) stage.getHeight(), 0, 0));
+        this.updateCoordinates(new Coordinates((int) stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, WindowShellOptions... options) {
         super();
         this.imageProvider = imageProvider;
         createStage(options);
-        this.updateCoordinates(new Coordinates((int)stage.getWidth(), (int) stage.getHeight(), 0, 0));
+        this.updateCoordinates(new Coordinates((int) stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, Stage parent) {
         super();
         this.imageProvider = imageProvider;
-            this.stage = new Stage();
-            this.pane = new Pane();
-            Scene scene = new Scene(pane);
-            this.panes.put("primary", pane);
-            this.stage.setScene(scene);
-            this.stage.initModality(Modality.WINDOW_MODAL);
-            this.stage.initOwner(parent);
-            this.stage.initStyle(StageStyle.UNDECORATED);
-            this.stage.show();
-            this.stage.setTitle("Modal");
-            this.setReady(this.pane);
-            this.updateCoordinates(new Coordinates((int)stage.getWidth(), (int) stage.getHeight(), 0, 0));
+        this.stage = new Stage();
+        this.pane = new Pane();
+        Scene scene = new Scene(pane);
+        this.panes.put("primary", pane);
+        this.stage.setScene(scene);
+        this.stage.initModality(Modality.WINDOW_MODAL);
+        this.stage.initOwner(parent);
+        this.stage.initStyle(StageStyle.UNDECORATED);
+        this.stage.show();
+        this.stage.setTitle("Modal");
+        this.setReady(this.pane);
+        this.updateCoordinates(new Coordinates((int) stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
     private void createStage(WindowShellOptions... options) {
@@ -139,42 +139,42 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     private void handleOptions(Stage stage, WindowShellOptions... options) {
 
-            this.pane = new Pane();
-            Scene scene = new Scene(pane);
-            this.panes.put("primary", pane);
-            stage.setScene(scene);
-            if(options!= null) {
-                for (WindowShellOptions o : options) {
-                    switch (o) {
-                        case FULLSCREEN:
-                            stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-                            stage.setFullScreen(true);
-                            stage.setMaximized(true);
-                            break;
-                        case NO_TITLE_BAR:
-                            stage.initStyle(StageStyle.UNDECORATED);
-                            break;
-                    }
+        this.pane = new Pane();
+        Scene scene = new Scene(pane);
+        this.panes.put("primary", pane);
+        stage.setScene(scene);
+        if (options != null) {
+            for (WindowShellOptions o : options) {
+                switch (o) {
+                    case FULLSCREEN:
+                        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+                        stage.setFullScreen(true);
+                        stage.setMaximized(true);
+                        break;
+                    case NO_TITLE_BAR:
+                        stage.initStyle(StageStyle.UNDECORATED);
+                        break;
                 }
             }
-            this.stage.show();
-            Random random = new Random();
-            this.title = "UnnamedWindow" + random.nextInt();
-            this.stage.setTitle(this.title);
-            this.setReady(this.pane);
+        }
+        this.stage.show();
+        Random random = new Random();
+        this.title = "UnnamedWindow" + random.nextInt();
+        this.stage.setTitle(this.title);
+        this.setReady(this.pane);
 
     }
 
     public void addScene(String name) {
-            Pane pane = new Pane();
-            new Scene(pane);
-            this.panes.put(name, pane);
+        Pane pane = new Pane();
+        new Scene(pane);
+        this.panes.put(name, pane);
 
     }
 
     public void selectScene(String name) {
-            this.pane = panes.get(name);
-            this.stage.setScene(pane.getScene());
+        this.pane = panes.get(name);
+        this.stage.setScene(pane.getScene());
 
     }
 
@@ -195,34 +195,34 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public JavaFxWindowShell setBackground(Color color) {
         this.pane.setBackground(
                 new Background(
-                new BackgroundFill(new javafx.scene.paint.Color(
-                        color.normalizedRedValue,
-                        color.normalizedGreenValue,
-                        color.normalizedBlueValue,
-                        color.normalizedAlphaValue),
-                        CornerRadii.EMPTY, Insets.EMPTY)));
-
+                        new BackgroundFill(new javafx.scene.paint.Color(
+                                color.normalizedRedValue,
+                                color.normalizedGreenValue,
+                                color.normalizedBlueValue,
+                                color.normalizedAlphaValue),
+                                CornerRadii.EMPTY, Insets.EMPTY)));
+        this.background = "";
         return this;
     }
 
     @Override
     public JavaFxWindowShell setBackground(String file) {
-        if(file.equals(this.background)) {
+        if (file.equals(this.background)) {
             return this;
         }
         this.background = file;
-            BackgroundImage myBI= new BackgroundImage(new Image(this.imageProvider.getImage(file)),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
-                    new BackgroundSize(100, 100, true, true, true, true));
-            this.pane.setBackground(new Background(myBI));
+        BackgroundImage myBI = new BackgroundImage(new Image(this.imageProvider.getImage(file)),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(100, 100, true, true, true, true));
+        this.pane.setBackground(new Background(myBI));
 
         return this;
     }
 
     @Override
     public JavaFxWindowShell setFullScreen() {
-            this.stage.setFullScreen(true);
-            this.stage.setMaximized(true);
+        this.stage.setFullScreen(true);
+        this.stage.setMaximized(true);
         return this;
     }
 
@@ -234,7 +234,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public ScreenSize getMonitorSize() {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        return new ScreenSize((int)screenBounds.getWidth(), (int) screenBounds.getHeight());
+        return new ScreenSize((int) screenBounds.getWidth(), (int) screenBounds.getHeight());
     }
 
     @Override
@@ -250,10 +250,10 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public void update() {
 
-            //hack to ensure to refresh the view in case of non full screen.
-            // if the screen is not maximized/resized, the view is not correctly updated.
-            this.stage.setHeight(this.stage.getHeight() + (increase ? 1 : -1));
-            increase = ! increase;
+        //hack to ensure to refresh the view in case of non full screen.
+        // if the screen is not maximized/resized, the view is not correctly updated.
+        this.stage.setHeight(this.stage.getHeight() + (increase ? 1 : -1));
+        increase = !increase;
 
     }
 
@@ -378,12 +378,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final JavaFxWindowShell setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-            this.pane.setLayoutX(coordinates.left);
-            this.pane.setLayoutY(coordinates.top);
-            this.pane.setMaxHeight(coordinates.height);
-            this.pane.setMinHeight(coordinates.height);
-            this.pane.setMaxWidth(coordinates.width);
-            this.pane.setMinWidth(coordinates.width);
+        this.pane.setLayoutX(coordinates.left);
+        this.pane.setLayoutY(coordinates.top);
+        this.pane.setMaxHeight(coordinates.height);
+        this.pane.setMinHeight(coordinates.height);
+        this.pane.setMaxWidth(coordinates.width);
+        this.pane.setMinWidth(coordinates.width);
 
         return this;
     }
@@ -391,10 +391,10 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final JavaFxWindowShell setSize(Size size) {
         this.updateCoordinates(size);
-            this.stage.setMaxHeight(size.height);
-            this.stage.setMinHeight(size.height);
-            this.stage.setMaxWidth(size.width);
-            this.stage.setMinWidth(size.width);
+        this.stage.setMaxHeight(size.height);
+        this.stage.setMinHeight(size.height);
+        this.stage.setMaxWidth(size.width);
+        this.stage.setMinWidth(size.width);
 
         return this;
     }
@@ -402,8 +402,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final JavaFxWindowShell setPosition(Position position) {
         this.updateCoordinates(position);
-            this.pane.setLayoutX(position.left);
-            this.pane.setLayoutY(position.top);
+        this.pane.setLayoutX(position.left);
+        this.pane.setLayoutY(position.top);
 
         return this;
     }
@@ -411,7 +411,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final JavaFxWindowShell addKeyListener(KeyboardListener listener) {
         this.stage.getScene().setOnKeyPressed(new JavaFxMapperKeyPressed(listener));
-                    this.stage.getScene().setOnKeyReleased(new JavaFxMapperKeyReleased(listener));
+        this.stage.getScene().setOnKeyReleased(new JavaFxMapperKeyReleased(listener));
 
         return this;
     }
@@ -424,8 +424,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public final JavaFxWindowShell minimize(OnMinimize... minimizes) {
-            this.stage.setIconified(true);
-            Optional.ofNullable(minimizes).ifPresent(m -> Arrays.stream(m).forEach(OnMinimize::minimized));
+        this.stage.setIconified(true);
+        Optional.ofNullable(minimizes).ifPresent(m -> Arrays.stream(m).forEach(OnMinimize::minimized));
 
         return this;
     }
@@ -455,7 +455,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     final void centerOnScreen() {
         this.update();
         ScreenSize screenSize = this.getMonitorSize();
-        float x = (screenSize.width / 2f) -  (this.getRight() / 2f);
+        float x = (screenSize.width / 2f) - (this.getRight() / 2f);
         float y = (screenSize.height / 2f) - (this.getBottom() / 2f);
         this.setPosition(new Position((int) x, (int) y));
     }
@@ -497,8 +497,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     public void createVirtualKeyboard() {
         this.update();
-            VirtualKeyboard vk = new VirtualKeyboard();
-            this.pane.getChildren().addAll(vk.view());
+        VirtualKeyboard vk = new VirtualKeyboard();
+        this.pane.getChildren().addAll(vk.view());
 
 
     }
