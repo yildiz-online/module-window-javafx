@@ -495,7 +495,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         }
     }
 
-    public void createVirtualKeyboard() {
+    public final void createVirtualKeyboard() {
         this.update();
         VirtualKeyboard vk = new VirtualKeyboard();
         this.pane.getChildren().addAll(vk.view());
@@ -504,7 +504,13 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public void requestFocus() {
+    public final void requestFocus() {
         this.pane.requestFocus();
+    }
+
+    @Override
+    public final JavaFxDirectoryChooser createDirectoryChooser() {
+        this.update();
+        return new JavaFxDirectoryChooser(this.stage);
     }
 }
