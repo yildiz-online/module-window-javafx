@@ -47,6 +47,10 @@ class JavaFxDirectoryChooser implements DirectoryChooser {
 
     @Override
     public final Path open() {
-        return Path.of(this.directoryChooser.showDialog(this.stage).toURI());
+        var result = this.directoryChooser.showDialog(this.stage);
+        if(result!= null) {
+            return Path.of(result.toURI());
+        }
+        return Path.of(this.directoryChooser.getInitialDirectory().toURI());
     }
 }
