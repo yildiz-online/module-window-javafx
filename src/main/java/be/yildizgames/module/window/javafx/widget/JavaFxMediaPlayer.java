@@ -121,4 +121,9 @@ public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> imple
         return this;
     }
 
+    public JavaFxMediaPlayer setVisible(boolean visible) {
+        this.mediaView.setVisible(visible);
+        return this;
+    }
+
 }
