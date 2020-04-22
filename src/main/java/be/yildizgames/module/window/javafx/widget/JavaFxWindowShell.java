@@ -105,6 +105,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.stage = stage;
         this.imageProvider = imageProvider;
         this.handleOptions(stage, options);
+        this.stage.show();
         this.updateCoordinates(new Coordinates((int) stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
@@ -112,6 +113,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         super();
         this.imageProvider = imageProvider;
         createStage(options);
+        this.stage.show();
         this.updateCoordinates(new Coordinates((int) stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
