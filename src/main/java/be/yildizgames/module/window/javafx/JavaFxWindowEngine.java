@@ -68,12 +68,13 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
     }
 
     @Override
-    public void registerView(RegisteredView view) {
+    public final JavaFxWindowEngine registerView(RegisteredView view) {
         this.views.add(view);
+        return this;
     }
 
     @Override
-    public void update() {
+    public final JavaFxWindowEngine update() {
         if(!started) {
             Platform.startup(() -> {
                 Application application = new Application() {
@@ -95,59 +96,71 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
                 }
             });
         }
+        return this;
     }
 
     @Override
-    public void deleteLoadingResources() {
-
+    public final JavaFxWindowEngine deleteLoadingResources() {
+        return this;
     }
 
     @Override
-    public WindowHandle getHandle() {
+    public final WindowHandle getHandle() {
+        //FIXME IMPLEMENT!
+        return new WindowHandle(0);
+    }
+
+    @Override
+    public final JavaFxWindowEngine registerInput(WindowInputListener listener) {
+        //FIXME IMPLEMENT!
+        return this;
+    }
+
+    @Override
+    public final Cursor createCursor(Cursor cursor) {
+        //FIXME IMPLEMENT!
         return null;
     }
 
     @Override
-    public void registerInput(WindowInputListener listener) {
-
+    public final JavaFxWindowEngine setWindowTitle(String title) {
+        //FIXME IMPLEMENT!
+        return this;
     }
 
     @Override
-    public Cursor createCursor(Cursor cursor) {
-        return null;
+    public final JavaFxWindowEngine setCursor(Cursor cursor) {
+        //FIXME IMPLEMENT!
+        return this;
     }
 
     @Override
-    public void setWindowTitle(String title) {
-
+    public final JavaFxWindowEngine showCursor() {
+        //FIXME IMPLEMENT!
+        return this;
     }
 
     @Override
-    public void setCursor(Cursor cursor) {
-
-    }
-
-    @Override
-    public void showCursor() {
-
-    }
-
-    @Override
-    public void hideCursor() {
+    public final JavaFxWindowEngine hideCursor() {
+        //FIXME IMPLEMENT!
         //JavaFxApplication.instance.stage.getScene().setCursor(javafx.scene.Cursor.NONE);
+        return this;
     }
 
     @Override
-    public ScreenSize getScreenSize() {
+    public final ScreenSize getScreenSize() {
+        //FIXME IMPLEMENT!
         throw new IllegalArgumentException("Do not use it");
     }
 
     @Override
-    public void setWindowIcon(String file) {
+    public final JavaFxWindowEngine setWindowIcon(String file) {
+        //FIXME IMPLEMENT!
+        return this;
     }
 
     @Override
-    public WindowThreadManager getThreadManager() {
+    public final WindowThreadManager getThreadManager() {
         return this.threadManager;
     }
 }
