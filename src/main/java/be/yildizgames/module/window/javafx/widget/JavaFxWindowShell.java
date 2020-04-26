@@ -35,21 +35,7 @@ import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
 import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.javafx.widget.experimental.VirtualKeyboard;
-import be.yildizgames.module.window.widget.OnMinimize;
-import be.yildizgames.module.window.widget.WindowButtonText;
-import be.yildizgames.module.window.widget.WindowCheckBox;
-import be.yildizgames.module.window.widget.WindowImageProvider;
-import be.yildizgames.module.window.widget.WindowMenuBar;
-import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
-import be.yildizgames.module.window.widget.WindowModal;
-import be.yildizgames.module.window.widget.WindowModalFile;
-import be.yildizgames.module.window.widget.WindowNotification;
-import be.yildizgames.module.window.widget.WindowPopup;
-import be.yildizgames.module.window.widget.WindowShell;
-import be.yildizgames.module.window.widget.WindowShellOptions;
-import be.yildizgames.module.window.widget.WindowTextArea;
-import be.yildizgames.module.window.widget.WindowTreeElement;
-import be.yildizgames.module.window.widget.WindowTreeRoot;
+import be.yildizgames.module.window.widget.*;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
@@ -59,25 +45,13 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Grégory Van den Borre
@@ -105,16 +79,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.stage = stage;
         this.imageProvider = imageProvider;
         this.handleOptions(stage, options);
-        this.stage.show();
-        this.updateCoordinates(new Coordinates((int) stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, WindowShellOptions... options) {
         super();
         this.imageProvider = imageProvider;
         createStage(options);
-        this.stage.show();
-        this.updateCoordinates(new Coordinates((int) stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, Stage parent) {
@@ -131,7 +101,6 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.stage.show();
         this.stage.setTitle("Modal");
         this.setReady(this.pane);
-        this.updateCoordinates(new Coordinates((int) stage.getWidth(), (int) stage.getHeight(), 0, 0));
     }
 
     private void createStage(WindowShellOptions... options) {
@@ -152,6 +121,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
                         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
                         stage.setFullScreen(true);
                         stage.setMaximized(true);
+                        this.updateCoordinates(new Size((int)Screen.getPrimary().getBounds().getWidth(),(int)Screen.getPrimary().getBounds().getHeight()));
                         break;
                     case NO_TITLE_BAR:
                         stage.initStyle(StageStyle.UNDECORATED);
