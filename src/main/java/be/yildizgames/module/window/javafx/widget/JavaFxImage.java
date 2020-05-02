@@ -29,6 +29,7 @@ import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.input.MouseOverListener;
 import be.yildizgames.module.window.widget.ImageEffect;
+import be.yildizgames.module.window.widget.ImageMetadata;
 import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import javafx.scene.effect.ColorAdjust;
@@ -41,17 +42,19 @@ import javafx.scene.layout.Pane;
  */
 class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
-    private WindowImageProvider provider;
-    private ImageView imageView;
+    private final WindowImageProvider provider;
+
+    private final ImageView imageView;
+
+    private ImageMetadata metadata;
 
     JavaFxImage(Pane pane, WindowImageProvider provider, String image) {
         super();
             this.provider = provider;
             this.imageView = new ImageView();
-            this.imageView.setImage(new Image(provider.getImage(image)));
+            this.setImage(image);
             pane.getChildren().add(this.imageView);
             this.setReady(this.imageView);
-
     }
 
     @Override
@@ -85,7 +88,10 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     @Override
     public final WindowImage setImage(String url) {
+        var image = new Image(provider.getImage(url));
+        this.metadata = new ImageMetadata(image.getWidth(), image.getHeight());
         this.imageView.setImage(new Image(provider.getImage(url)));
+
         return this;
     }
 
@@ -100,13 +106,20 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
                 adjust.setSaturation(0);
                 this.imageView.setEffect(adjust);
             }
+
         return this;
     }
 
     @Override
-    public WindowImage addOnMouseOverListener(MouseOverListener l) {
+    public final WindowImage addOnMouseOverListener(MouseOverListener l) {
         this.imageView.setOnMouseEntered(e -> l.enter());
         this.imageView.setOnMouseExited(e -> l.quit());
+
         return this;
+    }
+
+    @Override
+    public final ImageMetadata getLoadedImageMetadata() {
+        return this.metadata;
     }
 }
