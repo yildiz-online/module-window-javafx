@@ -88,4 +88,9 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
         this.node.setVisible(visible);
         return (T)this;
     }
+
+    public T requestFocus() {
+        this.node.requestFocus();
+        return (T)this;
+    }
 }
