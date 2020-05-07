@@ -27,6 +27,7 @@ import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.widget.WindowCheckBox;
+import be.yildizgames.module.window.widget.WindowWidgetChangeListener;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -49,18 +50,18 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
     }
 
     @Override
-    public boolean isChecked() {
+    public final boolean isChecked() {
         return this.checkBox.isSelected();
     }
 
     @Override
-    public JavaFxCheckBox check() {
+    public final JavaFxCheckBox check() {
         this.checkBox.setSelected(true);
         return this;
     }
 
     @Override
-    public JavaFxCheckBox uncheck() {
+    public final JavaFxCheckBox uncheck() {
         this.checkBox.setSelected(false);
         return this;
     }
@@ -86,7 +87,7 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
     }
 
     @Override
-    public WindowCheckBox setSize(Size size) {
+    public final WindowCheckBox setSize(Size size) {
         this.updateCoordinates(size);
         this.checkBox.setMaxHeight(size.height);
         this.checkBox.setMinHeight(size.height);
@@ -96,7 +97,7 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
     }
 
     @Override
-    public WindowCheckBox setPosition(Position position) {
+    public final WindowCheckBox setPosition(Position position) {
         this.updateCoordinates(position);
         this.checkBox.setLayoutX(position.left);
         this.checkBox.setLayoutY(position.top);
@@ -106,9 +107,16 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         return this;
     }
 
-    public JavaFxCheckBox setVisible(boolean visible) {
+    @Override
+    public final JavaFxCheckBox setVisible(boolean visible) {
         this.caption.setVisible(visible);
         this.checkBox.setVisible(visible);
+        return this;
+    }
+
+    @Override
+    public final JavaFxCheckBox onChange(WindowWidgetChangeListener<Boolean> listener) {
+        this.checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> listener.changed(newValue));
         return this;
     }
 

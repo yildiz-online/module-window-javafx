@@ -27,6 +27,7 @@ import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.widget.WindowDropdown;
+import be.yildizgames.module.window.widget.WindowWidgetChangeListener;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
@@ -46,58 +47,64 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
     }
 
     @Override
-    public WindowDropdown select(int line) {
+    public final WindowDropdown select(int line) {
         this.comboBox.getSelectionModel().select(line);
         return this;
     }
 
     @Override
-    public WindowDropdown setItems(Object... items) {
+    public final WindowDropdown setItems(Object... items) {
         this.comboBox.setItems(FXCollections.observableArrayList(Arrays.stream(items).map(Object::toString).toArray(String[]::new)));
         return this;
     }
 
     @Override
-    public WindowDropdown setItems(String... items) {
+    public final WindowDropdown setItems(String... items) {
         this.comboBox.setItems(FXCollections.observableArrayList(items));
         return this;
     }
 
     @Override
-    public int getSelectionIndex() {
+    public final int getSelectionIndex() {
         return this.comboBox.getSelectionModel().getSelectedIndex();
     }
 
     @Override
-    public WindowDropdown setCoordinates(Coordinates coordinates) {
+    public final WindowDropdown setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-            this.comboBox.setLayoutX(coordinates.left);
-            this.comboBox.setLayoutY(coordinates.top);
-            this.comboBox.setMaxHeight(coordinates.height);
-            this.comboBox.setMinHeight(coordinates.height);
-            this.comboBox.setMaxWidth(coordinates.width);
-            this.comboBox.setMinWidth(coordinates.width);
+        this.comboBox.setLayoutX(coordinates.left);
+        this.comboBox.setLayoutY(coordinates.top);
+        this.comboBox.setMaxHeight(coordinates.height);
+        this.comboBox.setMinHeight(coordinates.height);
+        this.comboBox.setMaxWidth(coordinates.width);
+        this.comboBox.setMinWidth(coordinates.width);
 
         return this;
     }
 
     @Override
-    public WindowDropdown setSize(Size size) {
+    public final WindowDropdown setSize(Size size) {
         this.updateCoordinates(size);
-            this.comboBox.setMaxHeight(size.height);
-            this.comboBox.setMinHeight(size.height);
-            this.comboBox.setMaxWidth(size.width);
-            this.comboBox.setMinWidth(size.width);
+        this.comboBox.setMaxHeight(size.height);
+        this.comboBox.setMinHeight(size.height);
+        this.comboBox.setMaxWidth(size.width);
+        this.comboBox.setMinWidth(size.width);
 
         return this;
     }
 
     @Override
-    public WindowDropdown setPosition(Position position) {
+    public final WindowDropdown setPosition(Position position) {
         this.updateCoordinates(position);
-            this.comboBox.setLayoutX(position.left);
-            this.comboBox.setLayoutY(position.top);
+        this.comboBox.setLayoutX(position.left);
+        this.comboBox.setLayoutY(position.top);
 
+        return this;
+    }
+
+    @Override
+    public final WindowDropdown onChange(WindowWidgetChangeListener<Integer> listener) {
+        this.comboBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oldValue, newValue) -> listener.changed(newValue.intValue()));
         return this;
     }
 }

@@ -27,9 +27,8 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
-import be.yildizgames.module.window.javafx.input.JavaFxMapperInput;
 import be.yildizgames.module.window.widget.WindowInputBox;
-import be.yildizgames.module.window.widget.WindowInputBoxChangeListener;
+import be.yildizgames.module.window.widget.WindowWidgetChangeListener;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
@@ -39,75 +38,72 @@ import javafx.scene.layout.Pane;
  */
 class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowInputBox {
 
-    private TextField textField;
-    private String text = "";
+    private final TextField textField;
 
     JavaFxInputBox(Pane pane) {
         super();
-            this.textField = new TextField();
-            pane.getChildren().add(this.textField);
-            this.setReady(this.textField);
-
+        this.textField = new TextField();
+        pane.getChildren().add(this.textField);
+        this.setReady(this.textField);
     }
 
 
     @Override
-    public WindowInputBox setCoordinates(Coordinates coordinates) {
+    public final WindowInputBox setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-            this.textField.setLayoutX(coordinates.left);
-            this.textField.setLayoutY(coordinates.top);
-            this.textField.setMaxHeight(coordinates.height);
-            this.textField.setMinHeight(coordinates.height);
-            this.textField.setMaxWidth(coordinates.width);
-            this.textField.setMinWidth(coordinates.width);
+        this.textField.setLayoutX(coordinates.left);
+        this.textField.setLayoutY(coordinates.top);
+        this.textField.setMaxHeight(coordinates.height);
+        this.textField.setMinHeight(coordinates.height);
+        this.textField.setMaxWidth(coordinates.width);
+        this.textField.setMinWidth(coordinates.width);
 
         return this;
     }
 
     @Override
-    public WindowInputBox setSize(Size size) {
+    public final WindowInputBox setSize(Size size) {
         this.updateCoordinates(size);
-            this.textField.setMaxHeight(size.height);
-            this.textField.setMinHeight(size.height);
-            this.textField.setMaxWidth(size.width);
-            this.textField.setMinWidth(size.width);
+        this.textField.setMaxHeight(size.height);
+        this.textField.setMinHeight(size.height);
+        this.textField.setMaxWidth(size.width);
+        this.textField.setMinWidth(size.width);
 
         return this;
     }
 
     @Override
-    public WindowInputBox setPosition(Position position) {
+    public final WindowInputBox setPosition(Position position) {
         this.updateCoordinates(position);
-            this.textField.setLayoutX(position.left);
-            this.textField.setLayoutY(position.top);
+        this.textField.setLayoutX(position.left);
+        this.textField.setLayoutY(position.top);
 
         return this;
     }
 
     @Override
     public final WindowInputBox setText(String text) {
-        this.text = text;
         this.textField.setText(text);
         return this;
     }
 
     @Override
-    public String getText() {
+    public final String getText() {
         return this.textField.getText();
     }
 
     @Override
     public final WindowInputBox setToolTip(String text) {
-            Tooltip tooltip = new Tooltip();
-            tooltip.setText(text);
-            this.textField.setTooltip(tooltip);
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText(text);
+        this.textField.setTooltip(tooltip);
 
         return this;
     }
 
     @Override
-    public final WindowInputBox onChange(WindowInputBoxChangeListener l) {
-        this.textField.textProperty().addListener(new JavaFxMapperInput(l));
+    public final WindowInputBox onChange(WindowWidgetChangeListener<String> l) {
+        this.textField.textProperty().addListener((observableValue, s, t1) -> l.changed(t1));
         return this;
     }
 }
