@@ -26,6 +26,7 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.window.widget.WidgetEvent;
 import be.yildizgames.module.window.widget.WindowCheckBox;
 import be.yildizgames.module.window.widget.WindowWidgetChangeListener;
 import javafx.scene.control.CheckBox;
@@ -117,6 +118,18 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
     @Override
     public final JavaFxCheckBox onChange(WindowWidgetChangeListener<Boolean> listener) {
         this.checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> listener.changed(newValue));
+        return this;
+    }
+
+    @Override
+    public final JavaFxCheckBox fireEvent(WidgetEvent event) {
+        if(event == WidgetEvent.MOUSE_LEFT_CLICK) {
+            if(checkBox.isSelected()) {
+                this.uncheck();
+            } else {
+                this.check();
+            }
+        }
         return this;
     }
 

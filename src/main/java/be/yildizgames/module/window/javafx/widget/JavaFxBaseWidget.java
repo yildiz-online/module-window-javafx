@@ -101,8 +101,8 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
     public T fireEvent(WidgetEvent event) {
         if(event == WidgetEvent.MOUSE_LEFT_CLICK) {
             Event.fireEvent(this.node, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
-                    0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
-                    true, true, true, true, true, true, null));
+                    0, 0, 0, MouseButton.PRIMARY, 1, false, false, false, false,
+                    true, false, false, true, false, true, null));
         }
         return (T)this;
     }
