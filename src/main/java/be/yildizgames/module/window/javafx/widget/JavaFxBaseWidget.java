@@ -28,7 +28,11 @@ import be.yildizgames.module.coordinate.BaseCoordinate;
 import be.yildizgames.module.coordinate.Coordinates;
 import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.window.widget.WidgetEvent;
+import javafx.event.Event;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Building a widget is an async process done by the javafx thread, thus it is necessary to ensure that it is fully built before attempting to use it.
@@ -91,6 +95,15 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
 
     public T requestFocus() {
         this.node.requestFocus();
+        return (T)this;
+    }
+
+    public T fireEvent(WidgetEvent event) {
+        if(event == WidgetEvent.MOUSE_LEFT_CLICK) {
+            Event.fireEvent(this.node, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                    0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+                    true, true, true, true, true, true, null));
+        }
         return (T)this;
     }
 }
