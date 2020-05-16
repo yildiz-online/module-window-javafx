@@ -139,14 +139,17 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public final JavaFxWindowEngine setWindowTitle(String title) {
-        this.rootStage.setTitle(title);
+        Platform.runLater(() -> this.rootStage.setTitle(title));
         return this;
     }
 
     @Override
     public final JavaFxWindowEngine setCursor(Cursor cursor) {
-        this.rootStage.getScene().setCursor(cursors.get(cursor.getId()));
-        this.currentCursor = cursor;
+        Platform.runLater(() -> {
+            this.rootStage.getScene().setCursor(cursors.get(cursor.getId()));
+            this.currentCursor = cursor;
+        });
+
         return this;
     }
 
@@ -158,7 +161,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public final JavaFxWindowEngine hideCursor() {
-        this.rootStage.getScene().setCursor(javafx.scene.Cursor.NONE);
+        Platform.runLater(() ->this.rootStage.getScene().setCursor(javafx.scene.Cursor.NONE));
         return this;
     }
 
@@ -169,7 +172,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public final JavaFxWindowEngine setWindowIcon(String file) {
-        rootStage.getIcons().add(new Image(file));
+        Platform.runLater(() -> rootStage.getIcons().add(new Image(file)));
         return this;
     }
 
