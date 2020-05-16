@@ -37,10 +37,14 @@ import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.ImageCursor;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Grégory Van den Borre
@@ -54,6 +58,12 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
     private final WindowImageProvider imageProvider;
 
     private boolean started;
+
+    private Stage rootStage;
+
+    private final Map <String, ImageCursor> cursors = new HashMap<>();
+
+    private Cursor currentCursor;
 
     public JavaFxWindowEngine() {
         this(new WindowImageProviderClassPath());
@@ -86,6 +96,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
                             view.build(factory);
                         }
                         started = true;
+                        rootStage = stage;
                     }
                 };
                 try {
@@ -118,44 +129,47 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public final Cursor createCursor(Cursor cursor) {
-        //FIXME IMPLEMENT!
-        return null;
+        if(currentCursor == null) {
+            currentCursor = cursor;
+        }
+        var image = new Image(cursor.getPath());
+        cursors.put(cursor.getId(), new ImageCursor(image));
+        return cursor;
     }
 
     @Override
     public final JavaFxWindowEngine setWindowTitle(String title) {
-        //FIXME IMPLEMENT!
+        this.rootStage.setTitle(title);
         return this;
     }
 
     @Override
     public final JavaFxWindowEngine setCursor(Cursor cursor) {
-        //FIXME IMPLEMENT!
+        this.rootStage.getScene().setCursor(cursors.get(cursor.getId()));
+        this.currentCursor = cursor;
         return this;
     }
 
     @Override
     public final JavaFxWindowEngine showCursor() {
-        //FIXME IMPLEMENT!
+        this.setCursor(this.currentCursor);
         return this;
     }
 
     @Override
     public final JavaFxWindowEngine hideCursor() {
-        //FIXME IMPLEMENT!
-        //JavaFxApplication.instance.stage.getScene().setCursor(javafx.scene.Cursor.NONE);
+        this.rootStage.getScene().setCursor(javafx.scene.Cursor.NONE);
         return this;
     }
 
     @Override
     public final ScreenSize getScreenSize() {
-        //FIXME IMPLEMENT!
         throw new IllegalArgumentException("Do not use it");
     }
 
     @Override
     public final JavaFxWindowEngine setWindowIcon(String file) {
-        //FIXME IMPLEMENT!
+        rootStage.getIcons().add(new Image(file));
         return this;
     }
 
