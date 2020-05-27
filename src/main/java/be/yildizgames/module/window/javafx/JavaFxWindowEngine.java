@@ -72,8 +72,8 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
     public JavaFxWindowEngine(WindowImageProvider imageProvider) {
         super();
         System.Logger logger = System.getLogger(JavaFxWindowShell.class.getName());
-        logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initializing...");
-        logger.log(System.Logger.Level.INFO, "Window Engine JavaFx implementation initialized.");
+        logger.log(System.Logger.Level.DEBUG, "Window Engine JavaFx implementation initializing...");
+        logger.log(System.Logger.Level.DEBUG, "Window Engine JavaFx implementation initialized.");
         this.imageProvider = imageProvider;
     }
 
