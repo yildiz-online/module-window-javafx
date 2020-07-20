@@ -38,7 +38,7 @@ import javafx.scene.layout.Pane;
  */
 class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLine {
 
-    private Label label;
+    private final Label label;
 
     private String text = "";
 
@@ -120,6 +120,21 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
             this.label.setLayoutX(position.left);
             this.label.setLayoutY(position.top);
 
+        return this;
+    }
+
+    @Override
+    public final WindowTextLine alignText(TextAlignment alignment) {
+        switch (alignment) {
+            case RIGHT:
+                this.label.setTextAlignment(javafx.scene.text.TextAlignment.RIGHT);
+                break;
+            case CENTER:
+                this.label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+                break;
+            default:
+                this.label.setTextAlignment(javafx.scene.text.TextAlignment.LEFT);
+        }
         return this;
     }
 }
