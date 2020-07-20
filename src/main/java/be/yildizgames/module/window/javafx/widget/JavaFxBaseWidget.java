@@ -40,11 +40,6 @@ import javafx.scene.input.MouseEvent;
  */
 class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
 
-    /**
-     * Widget readiness state.
-     */
-    private boolean ready = false;
-
     private BaseCoordinate coordinates = Coordinates.ZERO;
 
     private Node node;
@@ -105,5 +100,9 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
                     true, false, false, true, false, true, null));
         }
         return (T)this;
+    }
+
+    public final boolean isFocused() {
+        return this.node.isFocused();
     }
 }
