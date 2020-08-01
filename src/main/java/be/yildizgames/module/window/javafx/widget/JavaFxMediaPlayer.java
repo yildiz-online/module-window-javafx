@@ -32,9 +32,6 @@ import be.yildizgames.module.coordinate.Position;
 import be.yildizgames.module.coordinate.Size;
 import be.yildizgames.module.window.widget.WindowMediaPlayer;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 
 import java.net.MalformedURLException;
 import java.nio.file.Path;
@@ -42,55 +39,60 @@ import java.nio.file.Path;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> implements WindowMediaPlayer {
+public class JavaFxMediaPlayer implements WindowMediaPlayer {
 
-    private MediaView mediaView;
+    private MediaPlayerStrategy current;
+
+    private final FileMediaPlayer fileMediaPlayer;
+
+    private final YoutubeMediaPlayer youtubeMediaPlayer;
 
     private boolean playing;
     
-    JavaFxMediaPlayer(Pane pane ) {
-            this.mediaView = new MediaView();
-            pane.getChildren().add(this.mediaView);
-            this.setReady(this.mediaView);
-
+    JavaFxMediaPlayer(Pane pane) {
+        super();
+        this.fileMediaPlayer = new FileMediaPlayer(pane);
+        this.youtubeMediaPlayer = new YoutubeMediaPlayer(pane);
+        this.current = this.fileMediaPlayer;
     }
 
     @Override
     public JavaFxMediaPlayer setMedia(String url) {
-            Media media = new Media(url);
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-           // mediaPlayer.setAutoPlay(true);
-            this.mediaView.setMediaPlayer(mediaPlayer);
-
+        this.defineStrategy(url);
+        this.current.setMedia(url);
         return this;
+    }
+
+    private void defineStrategy(String url) {
+        this.current.setVisible(false);
+        this.current = url.contains("www.youtube.com") ? this.youtubeMediaPlayer : this.fileMediaPlayer;
+        this.current.setVisible(true);
     }
 
     @Override
     public final JavaFxMediaPlayer setCoordinates(BaseCoordinate coordinates) {
-        this.updateCoordinates(coordinates);
-            this.mediaView.setLayoutX(coordinates.left);
-            this.mediaView.setLayoutY(coordinates.top);
-            this.mediaView.setFitHeight(coordinates.height);
-            this.mediaView.setFitWidth(coordinates.width);
-
+        this.youtubeMediaPlayer.updateCoordinates(coordinates);
+        this.youtubeMediaPlayer.setCoordinates(coordinates);
+        this.fileMediaPlayer.updateCoordinates(coordinates);
+        this.fileMediaPlayer.setCoordinates(coordinates);
         return this;
     }
 
     @Override
     public final JavaFxMediaPlayer setSize(Size size) {
-        this.updateCoordinates(size);
-            this.mediaView.setFitHeight(size.height);
-            this.mediaView.setFitWidth(size.width);
-
+        this.youtubeMediaPlayer.updateCoordinates(size);
+        this.fileMediaPlayer.updateCoordinates(size);
+        this.youtubeMediaPlayer.setSize(size);
+        this.fileMediaPlayer.setSize(size);
         return this;
     }
 
     @Override
     public final JavaFxMediaPlayer setPosition(Position position) {
-        this.updateCoordinates(position);
-            this.mediaView.setLayoutX(position.left);
-            this.mediaView.setLayoutY(position.top);
-
+        this.youtubeMediaPlayer.updateCoordinates(position);
+        this.fileMediaPlayer.updateCoordinates(position);
+        this.youtubeMediaPlayer.setPosition(position);
+        this.fileMediaPlayer.setPosition(position);
         return this;
     }
 
@@ -106,7 +108,7 @@ public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> imple
 
     @Override
     public WindowMediaPlayer play() {
-        this.mediaView.getMediaPlayer().play();
+        this.current.play();
         playing = true;
         return this;
     }
@@ -114,7 +116,7 @@ public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> imple
     @Override
     public WindowMediaPlayer stop() {
         if (playing) {
-            this.mediaView.getMediaPlayer().stop();
+            this.current.stop();
             playing = false;
         }
 
@@ -122,7 +124,7 @@ public class JavaFxMediaPlayer extends JavaFxBaseWidget<JavaFxMediaPlayer> imple
     }
 
     public JavaFxMediaPlayer setVisible(boolean visible) {
-        this.mediaView.setVisible(visible);
+        this.current.setVisible(visible);
         return this;
     }
 
