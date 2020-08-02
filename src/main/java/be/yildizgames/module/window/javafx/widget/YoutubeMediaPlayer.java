@@ -66,7 +66,7 @@ class YoutubeMediaPlayer extends JavaFxBaseWidget<YoutubeMediaPlayer> implements
 
     private String reformatUrl(String url) {
         url = url.replace("http://", "https://");
-        url = url.replace("www.youtube.com/watch?v=", "www.youtube.com/embed/");
+        url = url.replace("www.youtube.com/watch?v=", "www.youtube.com/embed/v");
         url = url + "?autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=0";
         return url;
     }
