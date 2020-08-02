@@ -54,6 +54,7 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
         this.fileMediaPlayer = new FileMediaPlayer(pane);
         this.youtubeMediaPlayer = new YoutubeMediaPlayer(pane);
         this.current = this.fileMediaPlayer;
+        this.youtubeMediaPlayer.setVisible(false);
     }
 
     @Override
