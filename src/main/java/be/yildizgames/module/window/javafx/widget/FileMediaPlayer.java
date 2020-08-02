@@ -35,7 +35,6 @@ class FileMediaPlayer extends JavaFxBaseWidget<FileMediaPlayer> implements Media
 
     @Override
     public void setMedia(String url) {
-        System.out.println("FILE");
         Media media = new Media(url);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         // mediaPlayer.setAutoPlay(true);
