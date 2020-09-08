@@ -23,6 +23,8 @@ import javafx.scene.web.WebView;
  */
 class YoutubeMediaPlayer extends JavaFxBaseWidget<YoutubeMediaPlayer> implements MediaPlayerStrategy {
 
+    private final System.Logger logger = System.getLogger(this.getClass().getName());
+
     private final WebView webview;
 
     YoutubeMediaPlayer(Pane pane) {
@@ -34,7 +36,9 @@ class YoutubeMediaPlayer extends JavaFxBaseWidget<YoutubeMediaPlayer> implements
 
     @Override
     public void setMedia(String url) {
-        this.webview.getEngine().load(this.reformatUrl(url));
+        var rurl = this.reformatUrl(url);
+        logger.log(System.Logger.Level.DEBUG, "Setting media with url {0} : {1}", url, rurl);
+        this.webview.getEngine().load(rurl);
     }
 
     @Override
@@ -44,12 +48,13 @@ class YoutubeMediaPlayer extends JavaFxBaseWidget<YoutubeMediaPlayer> implements
 
     @Override
     public void stop() {
-        //does nothing
+        this.webview.getEngine().loadContent("");
     }
 
     @Override
     public void setPosition(Position position) {
-
+        webview.setLayoutX(position.left);
+        webview.setLayoutY(position.top);
     }
 
     @Override
@@ -66,7 +71,7 @@ class YoutubeMediaPlayer extends JavaFxBaseWidget<YoutubeMediaPlayer> implements
 
     private String reformatUrl(String url) {
         url = url.replace("http://", "https://");
-        url = url.replace("www.youtube.com/watch?v=", "www.youtube.com/embed/");
+        url = url.replace("www.youtube.com/watch?v=", "www.youtube-nocookie.com/embed/");
         url = url + "?autoplay=1&controls=0&modestbranding=1&showinfo=0&rel=0&iv_load_policy=0";
         return url;
     }
