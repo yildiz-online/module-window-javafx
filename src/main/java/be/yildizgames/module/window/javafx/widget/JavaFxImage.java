@@ -46,13 +46,12 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     private final ImageView imageView;
 
-    private ImageMetadata metadata;
+    private ImageMetadata metadata = new ImageMetadata(0.0, 0.0);
 
-    private String imageFileName;
+    private String imageFileName = "";
 
     JavaFxImage(Pane pane, WindowImageProvider provider, String image) {
         super();
-        this.imageFileName = image;
         this.provider = provider;
         this.imageView = new ImageView();
         this.setImage(image);
