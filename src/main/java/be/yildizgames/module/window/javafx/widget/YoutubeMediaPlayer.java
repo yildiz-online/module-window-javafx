@@ -58,15 +58,24 @@ class YoutubeMediaPlayer extends JavaFxBaseWidget<YoutubeMediaPlayer> implements
     }
 
     @Override
-    public void setSize(Size size) {
+    public final void setSize(Size size) {
         webview.setPrefSize(size.width, size.height);
     }
 
     @Override
-    public void setCoordinates(BaseCoordinate coordinates) {
+    public final void setCoordinates(BaseCoordinate coordinates) {
         webview.setPrefSize(coordinates.width, coordinates.height);
         webview.setLayoutX(coordinates.left);
         webview.setLayoutY(coordinates.top);
+    }
+
+    @Override
+    public final YoutubeMediaPlayer setVisible(boolean visible) {
+        super.setVisible(visible);
+        if(!visible) {
+            this.stop();
+        }
+        return this;
     }
 
     private String reformatUrl(String url) {
