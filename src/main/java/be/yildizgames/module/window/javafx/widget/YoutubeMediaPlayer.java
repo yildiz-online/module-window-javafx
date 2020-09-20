@@ -48,7 +48,7 @@ class YoutubeMediaPlayer extends JavaFxBaseWidget<YoutubeMediaPlayer> implements
 
     @Override
     public void stop() {
-        this.webview.getEngine().loadContent("");
+        this.webview.getEngine().load(null);
     }
 
     @Override
