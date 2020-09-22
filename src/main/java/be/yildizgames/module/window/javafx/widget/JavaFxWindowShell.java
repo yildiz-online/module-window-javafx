@@ -421,6 +421,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
+    public final JavaFxWindowShell toFront() {
+        this.stage.toFront();
+        return this;
+    }
+
+    @Override
     public final JavaFxWindowShell minimize(OnMinimize... minimizes) {
         this.stage.setIconified(true);
         Optional.ofNullable(minimizes).ifPresent(m -> Arrays.stream(m).forEach(OnMinimize::minimized));
@@ -448,6 +454,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     private void run() {
         this.stage.setIconified(false);
+        this.stage.toFront();
     }
 
     final void centerOnScreen() {
