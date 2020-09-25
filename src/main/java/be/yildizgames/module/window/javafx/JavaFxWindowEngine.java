@@ -61,7 +61,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     private Stage rootStage;
 
-    private final Map <String, ImageCursor> cursors = new HashMap<>();
+    private final Map<String, ImageCursor> cursors = new HashMap<>();
 
     private Cursor currentCursor;
 
@@ -85,14 +85,14 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public final JavaFxWindowEngine update() {
-        if(!started) {
+        if (!started) {
             Platform.startup(() -> {
                 Application application = new Application() {
 
                     @Override
                     public void start(Stage stage) {
                         JavaFxWindowShellFactory factory = new JavaFxWindowShellFactory(imageProvider, stage);
-                        for(RegisteredView view : views) {
+                        for (RegisteredView view : views) {
                             view.build(factory);
                         }
                         started = true;
@@ -129,7 +129,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public final Cursor createCursor(Cursor cursor) {
-        if(currentCursor == null) {
+        if (currentCursor == null) {
             currentCursor = cursor;
         }
         var image = new Image(cursor.getPath());
@@ -161,7 +161,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public final JavaFxWindowEngine hideCursor() {
-        Platform.runLater(() ->this.rootStage.getScene().setCursor(javafx.scene.Cursor.NONE));
+        Platform.runLater(() -> this.rootStage.getScene().setCursor(javafx.scene.Cursor.NONE));
         return this;
     }
 

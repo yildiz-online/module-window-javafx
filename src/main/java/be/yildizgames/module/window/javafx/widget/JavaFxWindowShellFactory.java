@@ -51,8 +51,8 @@ public class JavaFxWindowShellFactory implements WindowShellFactory {
     }
 
     @Override
-    public JavaFxWindowShell buildShell(WindowShellOptions...options) {
-        if(p) {
+    public JavaFxWindowShell buildShell(WindowShellOptions... options) {
+        if (p) {
             p = false;
             return new JavaFxWindowShell(primary, this.imageProvider, options);
         } else {

@@ -24,9 +24,9 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WindowInputBox;
 import be.yildizgames.module.window.widget.WindowWidgetChangeListener;
 import javafx.scene.control.TextField;
@@ -51,32 +51,32 @@ class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowI
     @Override
     public final WindowInputBox setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.textField.setLayoutX(coordinates.left);
-        this.textField.setLayoutY(coordinates.top);
-        this.textField.setMaxHeight(coordinates.height);
-        this.textField.setMinHeight(coordinates.height);
-        this.textField.setMaxWidth(coordinates.width);
-        this.textField.setMinWidth(coordinates.width);
+        this.textField.setLayoutX(coordinates.getLeft());
+        this.textField.setLayoutY(coordinates.getTop());
+        this.textField.setMaxHeight(coordinates.getHeight());
+        this.textField.setMinHeight(coordinates.getHeight());
+        this.textField.setMaxWidth(coordinates.getWidth());
+        this.textField.setMinWidth(coordinates.getWidth());
 
         return this;
     }
 
     @Override
     public final WindowInputBox setSize(Size size) {
-        this.updateCoordinates(size);
-        this.textField.setMaxHeight(size.height);
-        this.textField.setMinHeight(size.height);
-        this.textField.setMaxWidth(size.width);
-        this.textField.setMinWidth(size.width);
+        this.updateSize(size);
+        this.textField.setMaxHeight(size.getHeight());
+        this.textField.setMinHeight(size.getHeight());
+        this.textField.setMaxWidth(size.getWidth());
+        this.textField.setMinWidth(size.getWidth());
 
         return this;
     }
 
     @Override
     public final WindowInputBox setPosition(Position position) {
-        this.updateCoordinates(position);
-        this.textField.setLayoutX(position.left);
-        this.textField.setLayoutY(position.top);
+        this.updatePosition(position);
+        this.textField.setLayoutX(position.getLeft());
+        this.textField.setLayoutY(position.getTop());
 
         return this;
     }

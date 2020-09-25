@@ -12,9 +12,9 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.BaseCoordinate;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 
@@ -53,26 +53,26 @@ class YoutubeMediaPlayer extends JavaFxBaseWidget<YoutubeMediaPlayer> implements
 
     @Override
     public void setPosition(Position position) {
-        webview.setLayoutX(position.left);
-        webview.setLayoutY(position.top);
+        webview.setLayoutX(position.getLeft());
+        webview.setLayoutY(position.getTop());
     }
 
     @Override
     public final void setSize(Size size) {
-        webview.setPrefSize(size.width, size.height);
+        webview.setPrefSize(size.getWidth(), size.getHeight());
     }
 
     @Override
-    public final void setCoordinates(BaseCoordinate coordinates) {
-        webview.setPrefSize(coordinates.width, coordinates.height);
-        webview.setLayoutX(coordinates.left);
-        webview.setLayoutY(coordinates.top);
+    public final void setCoordinates(Coordinates coordinates) {
+        webview.setPrefSize(coordinates.getWidth(), coordinates.getHeight());
+        webview.setLayoutX(coordinates.getLeft());
+        webview.setLayoutY(coordinates.getTop());
     }
 
     @Override
     public final YoutubeMediaPlayer setVisible(boolean visible) {
         super.setVisible(visible);
-        if(!visible) {
+        if (!visible) {
             this.stop();
         }
         return this;

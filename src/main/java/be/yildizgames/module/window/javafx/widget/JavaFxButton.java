@@ -24,9 +24,9 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.input.MouseLeftClickListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperMouseLeftClick;
 import be.yildizgames.module.window.widget.WindowButton;
@@ -52,43 +52,42 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
 
     JavaFxButton(final Pane pane, WindowImageProvider imageProvider) {
         super();
-            this.button = new Button();
-            this.imageProvider = imageProvider;
-            pane.getChildren().add(this.button);
-            this.setReady(this.button);
-
+        this.button = new Button();
+        this.imageProvider = imageProvider;
+        pane.getChildren().add(this.button);
+        this.setReady(this.button);
     }
 
 
     @Override
     public WindowButton setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.button.setLayoutX(coordinates.left);
-            this.button.setLayoutY(coordinates.top);
-            this.button.setMaxHeight(coordinates.height);
-            this.button.setMinHeight(coordinates.height);
-            this.button.setMaxWidth(coordinates.width);
-            this.button.setMinWidth(coordinates.width);
+        this.button.setLayoutX(coordinates.getLeft());
+        this.button.setLayoutY(coordinates.getTop());
+        this.button.setMaxHeight(coordinates.getHeight());
+        this.button.setMinHeight(coordinates.getHeight());
+        this.button.setMaxWidth(coordinates.getWidth());
+        this.button.setMinWidth(coordinates.getWidth());
 
         return this;
     }
 
     @Override
     public WindowButton setSize(Size size) {
-        this.updateCoordinates(size);
-            this.button.setMaxHeight(size.height);
-            this.button.setMinHeight(size.height);
-            this.button.setMaxWidth(size.width);
-            this.button.setMinWidth(size.width);
+        this.updateSize(size);
+        this.button.setMaxHeight(size.getHeight());
+        this.button.setMinHeight(size.getHeight());
+        this.button.setMaxWidth(size.getWidth());
+        this.button.setMinWidth(size.getWidth());
 
         return this;
     }
 
     @Override
     public WindowButton setPosition(Position position) {
-        this.updateCoordinates(position);
-            this.button.setLayoutX(position.left);
-            this.button.setLayoutY(position.top);
+        this.updatePosition(position);
+        this.button.setLayoutX(position.getLeft());
+        this.button.setLayoutY(position.getTop());
 
         return this;
     }
@@ -101,7 +100,8 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
 
     @Override
     public WindowButton setBackground(String image) {
-        BackgroundImage myBI= new BackgroundImage(new Image(this.imageProvider.getImage(image)),
+        BackgroundImage myBI = new BackgroundImage(
+                new Image(this.imageProvider.getImage(image)),
                 BackgroundRepeat.SPACE, BackgroundRepeat.SPACE, BackgroundPosition.CENTER,
                 new BackgroundSize(100, 100, true, true, true, true));
         this.button.setBackground(new Background(myBI));
@@ -110,7 +110,7 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
 
     @Override
     public WindowButtonText setText(String text) {
-         this.button.setText(text);
+        this.button.setText(text);
         return this;
     }
 

@@ -23,9 +23,9 @@
  */
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WidgetEvent;
 import be.yildizgames.module.window.widget.WindowCheckBox;
 import be.yildizgames.module.window.widget.WindowWidgetChangeListener;
@@ -47,7 +47,7 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         this.caption.setMaxWidth(200);
         this.caption.setMaxHeight(30);
         this.setReady(this.checkBox);
-        this.setSize(0,0);
+        this.setSize(0, 0);
     }
 
     @Override
@@ -76,34 +76,34 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
     @Override
     public final JavaFxCheckBox setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.checkBox.setLayoutX(coordinates.left);
-        this.checkBox.setLayoutY(coordinates.top);
-        this.checkBox.setMaxHeight(coordinates.height);
-        this.checkBox.setMinHeight(coordinates.height);
-        this.checkBox.setMaxWidth(coordinates.width);
-        this.checkBox.setMinWidth(coordinates.width);
-        this.caption.setLayoutX(coordinates.left + 20);
-        this.caption.setLayoutY(coordinates.top - 8);
+        this.checkBox.setLayoutX(coordinates.getLeft());
+        this.checkBox.setLayoutY(coordinates.getTop());
+        this.checkBox.setMaxHeight(coordinates.getHeight());
+        this.checkBox.setMinHeight(coordinates.getHeight());
+        this.checkBox.setMaxWidth(coordinates.getWidth());
+        this.checkBox.setMinWidth(coordinates.getWidth());
+        this.caption.setLayoutX(coordinates.getLeft() + 20);
+        this.caption.setLayoutY(coordinates.getTop() - 8);
         return this;
     }
 
     @Override
     public final WindowCheckBox setSize(Size size) {
-        this.updateCoordinates(size);
-        this.checkBox.setMaxHeight(size.height);
-        this.checkBox.setMinHeight(size.height);
-        this.checkBox.setMaxWidth(size.width);
-        this.checkBox.setMinWidth(size.width);
+        this.updateSize(size);
+        this.checkBox.setMaxHeight(size.getHeight());
+        this.checkBox.setMinHeight(size.getHeight());
+        this.checkBox.setMaxWidth(size.getWidth());
+        this.checkBox.setMinWidth(size.getWidth());
         return this;
     }
 
     @Override
     public final WindowCheckBox setPosition(Position position) {
-        this.updateCoordinates(position);
-        this.checkBox.setLayoutX(position.left);
-        this.checkBox.setLayoutY(position.top);
-        this.caption.setLayoutX(position.left + 20);
-        this.caption.setLayoutY(position.top - 8);
+        this.updatePosition(position);
+        this.checkBox.setLayoutX(position.getLeft());
+        this.checkBox.setLayoutY(position.getTop());
+        this.caption.setLayoutX(position.getLeft() + 20);
+        this.caption.setLayoutY(position.getTop() - 8);
 
         return this;
     }
@@ -123,8 +123,8 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
 
     @Override
     public final JavaFxCheckBox fireEvent(WidgetEvent event) {
-        if(event == WidgetEvent.MOUSE_LEFT_CLICK) {
-            if(checkBox.isSelected()) {
+        if (event == WidgetEvent.MOUSE_LEFT_CLICK) {
+            if (checkBox.isSelected()) {
                 this.uncheck();
             } else {
                 this.check();

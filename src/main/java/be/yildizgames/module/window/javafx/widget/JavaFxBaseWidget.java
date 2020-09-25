@@ -24,10 +24,10 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.BaseCoordinate;
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.FullCoordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WidgetEvent;
 import javafx.event.Event;
 import javafx.scene.Node;
@@ -36,11 +36,12 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * Building a widget is an async process done by the javafx thread, thus it is necessary to ensure that it is fully built before attempting to use it.
+ *
  * @author Grégory Van den Borre
  */
-class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
+class JavaFxBaseWidget<T extends JavaFxBaseWidget> {
 
-    private BaseCoordinate coordinates = Coordinates.ZERO;
+    private Coordinates coordinates = FullCoordinates.ZERO;
 
     private Node node;
 
@@ -51,55 +52,55 @@ class JavaFxBaseWidget <T extends JavaFxBaseWidget>{
         this.node = node;
     }
 
-    public final BaseCoordinate getCoordinates() {
+    public final Coordinates getCoordinates() {
         return this.coordinates;
     }
 
     public final int getLeft() {
-        return this.coordinates.left;
+        return this.coordinates.getLeft();
     }
 
     public final int getRight() {
-        return this.coordinates.left + this.coordinates.width;
+        return this.coordinates.getLeft() + this.coordinates.getWidth();
     }
 
     public final int getTop() {
-        return this.coordinates.top;
+        return this.coordinates.getTop();
     }
 
     public final int getBottom() {
-        return this.coordinates.top + this.coordinates.height;
+        return this.coordinates.getTop() + this.coordinates.getHeight();
     }
 
-    protected final void updateCoordinates(BaseCoordinate coordinates) {
+    protected final void updateCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 
-    protected final void updateCoordinates(Position position) {
-        this.coordinates = new Coordinates(this.coordinates.width, this.coordinates.height, position);
+    protected final void updatePosition(Position c) {
+        this.coordinates = FullCoordinates.full(this.coordinates.getWidth(), this.coordinates.getHeight(), c.getLeft(), c.getTop());
     }
 
-    protected final void updateCoordinates(Size size) {
-        this.coordinates = new Coordinates(size, this.coordinates.left, this.coordinates.top);
+    protected final void updateSize(Size c) {
+        this.coordinates = FullCoordinates.full(c.getWidth(), c.getHeight(), this.coordinates.getLeft(), this.coordinates.getTop());
     }
 
     public T setVisible(boolean visible) {
         this.node.setVisible(visible);
-        return (T)this;
+        return (T) this;
     }
 
     public T requestFocus() {
         this.node.requestFocus();
-        return (T)this;
+        return (T) this;
     }
 
     public T fireEvent(WidgetEvent event) {
-        if(event == WidgetEvent.MOUSE_LEFT_CLICK) {
+        if (event == WidgetEvent.MOUSE_LEFT_CLICK) {
             Event.fireEvent(this.node, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
                     0, 0, 0, MouseButton.PRIMARY, 1, false, false, false, false,
                     true, false, false, true, false, true, null));
         }
-        return (T)this;
+        return (T) this;
     }
 
     public final boolean isFocused() {

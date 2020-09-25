@@ -15,7 +15,7 @@ public class JavaFxMapperKeyPressed extends JavaFxKeyMapper implements EventHand
 
     @Override
     public final void handle(final KeyEvent keyEvent) {
-        if(keyEvent.getCode().isLetterKey() || keyEvent.getCode().isDigitKey() || keyEvent.getCode().isWhitespaceKey()) {
+        if (keyEvent.getCode().isLetterKey() || keyEvent.getCode().isDigitKey() || keyEvent.getCode().isWhitespaceKey()) {
             this.listener.keyPressed(keyEvent.getCode().getChar().charAt(0));
         } else {
             this.listener.specialKeyPressed(mapping.get(keyEvent.getCode()));

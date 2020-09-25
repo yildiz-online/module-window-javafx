@@ -27,9 +27,9 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.widget.WindowCanvas;
 import javafx.scene.canvas.Canvas;
@@ -39,19 +39,19 @@ import javafx.scene.layout.Pane;
  * @author Grégory Van den Borre
  */
 public class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements WindowCanvas {
-    
+
     private final WindowHandle handle;
-    
-    private Canvas canvas;
-    
+
+    private final Canvas canvas;
+
     JavaFxCanvas(Pane pane, WindowHandle handle) {
         super();
         this.handle = handle;
-            this.canvas = new Canvas();
-            pane.getChildren().add(this.canvas);
-            this.setReady(this.canvas);
+        this.canvas = new Canvas();
+        pane.getChildren().add(this.canvas);
+        this.setReady(this.canvas);
     }
-  
+
     public final WindowHandle getHandle() {
         return this.handle;
     }
@@ -59,29 +59,29 @@ public class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements Wind
     @Override
     public final JavaFxCanvas setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-            this.canvas.setLayoutX(coordinates.left);
-            this.canvas.setLayoutY(coordinates.top);
-            this.canvas.setHeight(coordinates.height);
-            this.canvas.setWidth(coordinates.width);
+        this.canvas.setLayoutX(coordinates.getLeft());
+        this.canvas.setLayoutY(coordinates.getTop());
+        this.canvas.setHeight(coordinates.getHeight());
+        this.canvas.setWidth(coordinates.getWidth());
         return this;
     }
 
     @Override
     public final JavaFxCanvas setSize(Size size) {
-        this.updateCoordinates(size);
-            this.canvas.setHeight(size.height);
-            this.canvas.setWidth(size.width);
+        this.updateSize(size);
+        this.canvas.setHeight(size.getHeight());
+        this.canvas.setWidth(size.getWidth());
 
         return this;
     }
 
     @Override
     public final JavaFxCanvas setPosition(Position position) {
-        this.updateCoordinates(position);
-            this.canvas.setLayoutX(position.left);
-            this.canvas.setLayoutY(position.top);
+        this.updatePosition(position);
+        this.canvas.setLayoutX(position.getLeft());
+        this.canvas.setLayoutY(position.getTop());
 
         return this;
     }
-  
+
 }

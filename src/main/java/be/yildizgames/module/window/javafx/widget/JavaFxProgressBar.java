@@ -24,9 +24,9 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WindowProgressBar;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
@@ -36,13 +36,13 @@ import javafx.scene.layout.Pane;
  */
 class JavaFxProgressBar extends JavaFxBaseWidget<JavaFxProgressBar> implements WindowProgressBar {
 
-    private ProgressBar progressBar;
+    private final ProgressBar progressBar;
 
     JavaFxProgressBar(Pane pane) {
         super();
-            this.progressBar = new ProgressBar();
-            pane.getChildren().add(this.progressBar);
-            this.setReady(this.progressBar);
+        this.progressBar = new ProgressBar();
+        pane.getChildren().add(this.progressBar);
+        this.setReady(this.progressBar);
 
     }
 
@@ -55,32 +55,32 @@ class JavaFxProgressBar extends JavaFxBaseWidget<JavaFxProgressBar> implements W
     @Override
     public WindowProgressBar setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-            this.progressBar.setLayoutX(coordinates.left);
-            this.progressBar.setLayoutY(coordinates.top);
-            this.progressBar.setMaxHeight(coordinates.height);
-            this.progressBar.setMinHeight(coordinates.height);
-            this.progressBar.setMaxWidth(coordinates.width);
-            this.progressBar.setMinWidth(coordinates.width);
+        this.progressBar.setLayoutX(coordinates.getLeft());
+        this.progressBar.setLayoutY(coordinates.getTop());
+        this.progressBar.setMaxHeight(coordinates.getHeight());
+        this.progressBar.setMinHeight(coordinates.getHeight());
+        this.progressBar.setMaxWidth(coordinates.getWidth());
+        this.progressBar.setMinWidth(coordinates.getWidth());
 
         return this;
     }
 
     @Override
     public WindowProgressBar setSize(Size size) {
-        this.updateCoordinates(size);
-            this.progressBar.setMaxHeight(size.height);
-            this.progressBar.setMinHeight(size.height);
-            this.progressBar.setMaxWidth(size.width);
-            this.progressBar.setMinWidth(size.width);
+        this.updateSize(size);
+        this.progressBar.setMaxHeight(size.getHeight());
+        this.progressBar.setMinHeight(size.getHeight());
+        this.progressBar.setMaxWidth(size.getWidth());
+        this.progressBar.setMinWidth(size.getWidth());
 
         return this;
     }
 
     @Override
     public WindowProgressBar setPosition(Position position) {
-        this.updateCoordinates(position);
-            this.progressBar.setLayoutX(position.left);
-            this.progressBar.setLayoutY(position.top);
+        this.updatePosition(position);
+        this.progressBar.setLayoutX(position.getLeft());
+        this.progressBar.setLayoutY(position.getTop());
 
         return this;
     }

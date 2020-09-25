@@ -39,14 +39,15 @@ class JavaFxNotification implements WindowNotification {
 
     JavaFxNotification() {
         super();
-            this.notification = Notifications.create();
-            this.notification.position(Pos.TOP_RIGHT);
-            this.ready = true;
+        this.notification = Notifications.create();
+        this.notification.position(Pos.TOP_RIGHT);
+        this.ready = true;
     }
 
     @Override
     public void show() {
-        this.notification.show();;
+        this.notification.show();
+        ;
     }
 
     @Override

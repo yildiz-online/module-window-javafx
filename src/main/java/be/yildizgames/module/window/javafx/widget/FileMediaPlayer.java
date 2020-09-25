@@ -12,9 +12,9 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.BaseCoordinate;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -59,21 +59,21 @@ class FileMediaPlayer extends JavaFxBaseWidget<FileMediaPlayer> implements Media
 
     @Override
     public void setPosition(Position position) {
-        this.mediaView.setLayoutX(position.left);
-        this.mediaView.setLayoutY(position.top);
+        this.mediaView.setLayoutX(position.getLeft());
+        this.mediaView.setLayoutY(position.getTop());
     }
 
     @Override
     public void setSize(Size size) {
-        this.mediaView.setFitHeight(size.height);
-        this.mediaView.setFitWidth(size.width);
+        this.mediaView.setFitHeight(size.getHeight());
+        this.mediaView.setFitWidth(size.getWidth());
     }
 
     @Override
-    public void setCoordinates(BaseCoordinate coordinates) {
-        this.mediaView.setLayoutX(coordinates.left);
-        this.mediaView.setLayoutY(coordinates.top);
-        this.mediaView.setFitHeight(coordinates.height);
-        this.mediaView.setFitWidth(coordinates.width);
+    public void setCoordinates(Coordinates coordinates) {
+        this.mediaView.setLayoutX(coordinates.getLeft());
+        this.mediaView.setLayoutY(coordinates.getTop());
+        this.mediaView.setFitHeight(coordinates.getHeight());
+        this.mediaView.setFitWidth(coordinates.getWidth());
     }
 }

@@ -23,9 +23,9 @@
  */
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WidgetEvent;
 import be.yildizgames.module.window.widget.WindowDropdown;
 import be.yildizgames.module.window.widget.WindowWidgetChangeListener;
@@ -73,32 +73,32 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
     @Override
     public final JavaFxDropDown setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.comboBox.setLayoutX(coordinates.left);
-        this.comboBox.setLayoutY(coordinates.top);
-        this.comboBox.setMaxHeight(coordinates.height);
-        this.comboBox.setMinHeight(coordinates.height);
-        this.comboBox.setMaxWidth(coordinates.width);
-        this.comboBox.setMinWidth(coordinates.width);
+        this.comboBox.setLayoutX(coordinates.getLeft());
+        this.comboBox.setLayoutY(coordinates.getTop());
+        this.comboBox.setMaxHeight(coordinates.getHeight());
+        this.comboBox.setMinHeight(coordinates.getHeight());
+        this.comboBox.setMaxWidth(coordinates.getWidth());
+        this.comboBox.setMinWidth(coordinates.getWidth());
 
         return this;
     }
 
     @Override
     public final JavaFxDropDown setSize(Size size) {
-        this.updateCoordinates(size);
-        this.comboBox.setMaxHeight(size.height);
-        this.comboBox.setMinHeight(size.height);
-        this.comboBox.setMaxWidth(size.width);
-        this.comboBox.setMinWidth(size.width);
+        this.updateSize(size);
+        this.comboBox.setMaxHeight(size.getHeight());
+        this.comboBox.setMinHeight(size.getHeight());
+        this.comboBox.setMaxWidth(size.getWidth());
+        this.comboBox.setMinWidth(size.getWidth());
 
         return this;
     }
 
     @Override
     public final JavaFxDropDown setPosition(Position position) {
-        this.updateCoordinates(position);
-        this.comboBox.setLayoutX(position.left);
-        this.comboBox.setLayoutY(position.top);
+        this.updatePosition(position);
+        this.comboBox.setLayoutX(position.getLeft());
+        this.comboBox.setLayoutY(position.getTop());
 
         return this;
     }
@@ -111,7 +111,7 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
 
     @Override
     public final JavaFxDropDown fireEvent(WidgetEvent event) {
-        if(event == WidgetEvent.MOUSE_LEFT_CLICK) {
+        if (event == WidgetEvent.MOUSE_LEFT_CLICK) {
             this.comboBox.show();
         }
         return this;

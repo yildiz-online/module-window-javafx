@@ -12,9 +12,9 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.BaseCoordinate;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 
 /**
  * @author Grégory Van den Borre
@@ -33,5 +33,5 @@ interface MediaPlayerStrategy {
 
     void setSize(Size size);
 
-    void setCoordinates(BaseCoordinate coordinates);
+    void setCoordinates(Coordinates coordinates);
 }

@@ -25,9 +25,10 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.FullCoordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.ScreenSize;
 import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.input.KeyboardListener;
@@ -147,7 +148,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
                         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
                         stage.setFullScreen(true);
                         stage.setMaximized(true);
-                        this.updateCoordinates(new Size((int)Screen.getPrimary().getBounds().getWidth(),(int)Screen.getPrimary().getBounds().getHeight()));
+                        this.updateSize(FullCoordinates.size((int) Screen.getPrimary().getBounds().getWidth(), (int) Screen.getPrimary().getBounds().getHeight()));
                         break;
                     case NO_TITLE_BAR:
                         stage.initStyle(StageStyle.UNDECORATED);
@@ -226,7 +227,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public ScreenSize getSize() {
-        return new ScreenSize(this.getCoordinates().width, this.getCoordinates().height);
+        return new ScreenSize(this.getCoordinates().getWidth(), this.getCoordinates().getHeight());
     }
 
     @Override
@@ -376,32 +377,32 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final JavaFxWindowShell setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-        this.pane.setLayoutX(coordinates.left);
-        this.pane.setLayoutY(coordinates.top);
-        this.pane.setMaxHeight(coordinates.height);
-        this.pane.setMinHeight(coordinates.height);
-        this.pane.setMaxWidth(coordinates.width);
-        this.pane.setMinWidth(coordinates.width);
+        this.pane.setLayoutX(coordinates.getLeft());
+        this.pane.setLayoutY(coordinates.getTop());
+        this.pane.setMaxHeight(coordinates.getHeight());
+        this.pane.setMinHeight(coordinates.getHeight());
+        this.pane.setMaxWidth(coordinates.getWidth());
+        this.pane.setMinWidth(coordinates.getWidth());
 
         return this;
     }
 
     @Override
     public final JavaFxWindowShell setSize(Size size) {
-        this.updateCoordinates(size);
-        this.stage.setMaxHeight(size.height);
-        this.stage.setMinHeight(size.height);
-        this.stage.setMaxWidth(size.width);
-        this.stage.setMinWidth(size.width);
+        this.updateSize(size);
+        this.stage.setMaxHeight(size.getHeight());
+        this.stage.setMinHeight(size.getHeight());
+        this.stage.setMaxWidth(size.getWidth());
+        this.stage.setMinWidth(size.getWidth());
 
         return this;
     }
 
     @Override
     public final JavaFxWindowShell setPosition(Position position) {
-        this.updateCoordinates(position);
-        this.pane.setLayoutX(position.left);
-        this.pane.setLayoutY(position.top);
+        this.updatePosition(position);
+        this.pane.setLayoutX(position.getLeft());
+        this.pane.setLayoutY(position.getTop());
 
         return this;
     }
@@ -462,7 +463,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         ScreenSize screenSize = this.getMonitorSize();
         float x = (screenSize.width / 2f) - (this.getRight() / 2f);
         float y = (screenSize.height / 2f) - (this.getBottom() / 2f);
-        this.setPosition(new Position((int) x, (int) y));
+        this.setPosition((int) x, (int) y);
     }
 
     public final void addOnHiddenListener(CallBack callBack) {

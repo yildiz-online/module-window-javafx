@@ -42,7 +42,7 @@ public class JavaFxPopup implements WindowPopup {
 
     @Override
     public final WindowTextLine createTextLine() {
-       return this.modal.createTextLine();
+        return this.modal.createTextLine();
     }
 
     @Override
@@ -133,6 +133,6 @@ public class JavaFxPopup implements WindowPopup {
     }
 
     public void createVirtualKeyboard() {
-         this.modal.createVirtualKeyboard();
+        this.modal.createVirtualKeyboard();
     }
 }

@@ -24,9 +24,9 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.input.MouseOverListener;
 import be.yildizgames.module.window.widget.ImageEffect;
 import be.yildizgames.module.window.widget.ImageMetadata;
@@ -62,35 +62,35 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
     @Override
     public final WindowImage setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-            this.imageView.setLayoutX(coordinates.left);
-            this.imageView.setLayoutY(coordinates.top);
-            this.imageView.setFitHeight(coordinates.height);
-            this.imageView.setFitWidth(coordinates.width);
+        this.imageView.setLayoutX(coordinates.getLeft());
+        this.imageView.setLayoutY(coordinates.getTop());
+        this.imageView.setFitHeight(coordinates.getHeight());
+        this.imageView.setFitWidth(coordinates.getWidth());
 
         return this;
     }
 
     @Override
     public final WindowImage setSize(Size size) {
-        this.updateCoordinates(size);
-            this.imageView.setFitHeight(size.height);
-            this.imageView.setFitWidth(size.width);
+        this.updateSize(size);
+        this.imageView.setFitHeight(size.getHeight());
+        this.imageView.setFitWidth(size.getWidth());
 
         return this;
     }
 
     @Override
     public final WindowImage setPosition(Position position) {
-        this.updateCoordinates(position);
-            this.imageView.setLayoutX(position.left);
-            this.imageView.setLayoutY(position.top);
+        this.updatePosition(position);
+        this.imageView.setLayoutX(position.getLeft());
+        this.imageView.setLayoutY(position.getTop());
 
         return this;
     }
 
     @Override
     public final WindowImage setImage(String url) {
-        if(!this.imageFileName.equals(url)) {
+        if (!this.imageFileName.equals(url)) {
             var image = new Image(provider.getImage(url));
             this.metadata = new ImageMetadata(image.getWidth(), image.getHeight());
             this.imageView.setImage(new Image(provider.getImage(url)));
@@ -101,15 +101,15 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     @Override
     public final WindowImage addEffect(ImageEffect effect) {
-            if(effect == ImageEffect.DESATURATE) {
-                ColorAdjust adjust = new ColorAdjust();
-                adjust.setSaturation(-1);
-                this.imageView.setEffect(adjust);
-            } else if(effect == ImageEffect.NORMAL_SATURATION) {
-                ColorAdjust adjust = new ColorAdjust();
-                adjust.setSaturation(0);
-                this.imageView.setEffect(adjust);
-            }
+        if (effect == ImageEffect.DESATURATE) {
+            ColorAdjust adjust = new ColorAdjust();
+            adjust.setSaturation(-1);
+            this.imageView.setEffect(adjust);
+        } else if (effect == ImageEffect.NORMAL_SATURATION) {
+            ColorAdjust adjust = new ColorAdjust();
+            adjust.setSaturation(0);
+            this.imageView.setEffect(adjust);
+        }
 
         return this;
     }

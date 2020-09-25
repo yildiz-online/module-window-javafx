@@ -25,9 +25,9 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
-import be.yildizgames.module.coordinate.Coordinates;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WindowFont;
 import be.yildizgames.module.window.widget.WindowTextLine;
 import javafx.scene.control.Label;
@@ -46,16 +46,16 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
 
     JavaFxLabel(Pane pane) {
         super();
-            this.label = new Label();
-            pane.getChildren().add(this.label);
-            this.setReady(this.label);
+        this.label = new Label();
+        pane.getChildren().add(this.label);
+        this.setReady(this.label);
 
     }
 
     @Override
     public final WindowTextLine setText(String text) {
-            this.label.setText(text);
-            this.text = text;
+        this.label.setText(text);
+        this.text = text;
 
         return this;
     }
@@ -68,9 +68,12 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
 
     @Override
     public final WindowTextLine setColor(Color color) {
-        if(!color.equals(this.color)) {
-                this.label.setTextFill(new javafx.scene.paint.Color(
-                        color.normalizedRedValue, color.normalizedGreenValue, color.normalizedBlueValue, color.normalizedAlphaValue));
+        if (!color.equals(this.color)) {
+            this.label.setTextFill(new javafx.scene.paint.Color(
+                    color.normalizedRedValue,
+                    color.normalizedGreenValue,
+                    color.normalizedBlueValue,
+                    color.normalizedAlphaValue));
 
         }
         this.color = color;
@@ -97,28 +100,28 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
     @Override
     public final WindowTextLine setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
-            this.label.setLayoutX(coordinates.left);
-            this.label.setLayoutY(coordinates.top);
-            this.label.setMaxHeight(coordinates.height);
-            this.label.setMaxWidth(coordinates.width);
+        this.label.setLayoutX(coordinates.getLeft());
+        this.label.setLayoutY(coordinates.getTop());
+        this.label.setMaxHeight(coordinates.getHeight());
+        this.label.setMaxWidth(coordinates.getWidth());
 
         return this;
     }
 
     @Override
     public final WindowTextLine setSize(Size size) {
-        this.updateCoordinates(size);
-            this.label.setMaxWidth(size.width);
-            this.label.setMaxHeight(size.height);
+        this.updateSize(size);
+        this.label.setMaxWidth(size.getWidth());
+        this.label.setMaxHeight(size.getHeight());
 
         return this;
     }
 
     @Override
     public final WindowTextLine setPosition(Position position) {
-        this.updateCoordinates(position);
-            this.label.setLayoutX(position.left);
-            this.label.setLayoutY(position.top);
+        this.updatePosition(position);
+        this.label.setLayoutX(position.getLeft());
+        this.label.setLayoutY(position.getTop());
 
         return this;
     }

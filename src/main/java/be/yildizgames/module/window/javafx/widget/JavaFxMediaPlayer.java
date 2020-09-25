@@ -27,9 +27,9 @@
 package be.yildizgames.module.window.javafx.widget;
 
 
-import be.yildizgames.module.coordinate.BaseCoordinate;
-import be.yildizgames.module.coordinate.Position;
-import be.yildizgames.module.coordinate.Size;
+import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WindowMediaPlayer;
 import javafx.scene.layout.Pane;
 
@@ -48,7 +48,7 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
     private final YoutubeMediaPlayer youtubeMediaPlayer;
 
     private boolean playing;
-    
+
     JavaFxMediaPlayer(Pane pane) {
         super();
         this.fileMediaPlayer = new FileMediaPlayer(pane);
@@ -71,7 +71,7 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
     }
 
     @Override
-    public final JavaFxMediaPlayer setCoordinates(BaseCoordinate coordinates) {
+    public final JavaFxMediaPlayer setCoordinates(Coordinates coordinates) {
         this.youtubeMediaPlayer.updateCoordinates(coordinates);
         this.youtubeMediaPlayer.setCoordinates(coordinates);
         this.fileMediaPlayer.updateCoordinates(coordinates);
@@ -81,8 +81,8 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
 
     @Override
     public final JavaFxMediaPlayer setSize(Size size) {
-        this.youtubeMediaPlayer.updateCoordinates(size);
-        this.fileMediaPlayer.updateCoordinates(size);
+        this.youtubeMediaPlayer.updateSize(size);
+        this.fileMediaPlayer.updateSize(size);
         this.youtubeMediaPlayer.setSize(size);
         this.fileMediaPlayer.setSize(size);
         return this;
@@ -90,8 +90,8 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
 
     @Override
     public final JavaFxMediaPlayer setPosition(Position position) {
-        this.youtubeMediaPlayer.updateCoordinates(position);
-        this.fileMediaPlayer.updateCoordinates(position);
+        this.youtubeMediaPlayer.updatePosition(position);
+        this.fileMediaPlayer.updatePosition(position);
         this.youtubeMediaPlayer.setPosition(position);
         this.fileMediaPlayer.setPosition(position);
         return this;
