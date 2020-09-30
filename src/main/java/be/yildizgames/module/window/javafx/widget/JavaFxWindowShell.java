@@ -46,6 +46,7 @@ import be.yildizgames.module.window.widget.WindowModal;
 import be.yildizgames.module.window.widget.WindowModalFile;
 import be.yildizgames.module.window.widget.WindowNotification;
 import be.yildizgames.module.window.widget.WindowPopup;
+import be.yildizgames.module.window.widget.WindowShape;
 import be.yildizgames.module.window.widget.WindowShell;
 import be.yildizgames.module.window.widget.WindowShellOptions;
 import be.yildizgames.module.window.widget.WindowTextArea;
@@ -266,6 +267,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public void checkForEvent() {
 
+    }
+
+    @Override
+    public WindowShape createRectangle() {
+        this.update();
+        return new JavaFxShape(this.pane);
     }
 
     @Override
