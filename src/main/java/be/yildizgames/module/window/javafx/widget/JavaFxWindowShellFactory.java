@@ -45,16 +45,19 @@ public class JavaFxWindowShellFactory implements WindowShellFactory {
 
     private final Stage primary;
 
-    public JavaFxWindowShellFactory(WindowImageProvider imageProvider, Stage primary) {
+    private final String loadingImage;
+
+    public JavaFxWindowShellFactory(WindowImageProvider imageProvider, String loadingImage, Stage primary) {
         this.imageProvider = imageProvider;
         this.primary = primary;
+        this.loadingImage = loadingImage;
     }
 
     @Override
     public JavaFxWindowShell buildShell(WindowShellOptions... options) {
         if (p) {
             p = false;
-            return new JavaFxWindowShell(primary, this.imageProvider, options);
+            return new JavaFxWindowShell(primary, this.imageProvider, this.loadingImage, options);
         } else {
             return new JavaFxWindowShell(this.imageProvider, options);
         }

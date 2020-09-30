@@ -65,6 +65,8 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     private Cursor currentCursor;
 
+    private String loadingImage = "";
+
     public JavaFxWindowEngine() {
         this(new WindowImageProviderClassPath());
     }
@@ -91,7 +93,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
                     @Override
                     public void start(Stage stage) {
-                        JavaFxWindowShellFactory factory = new JavaFxWindowShellFactory(imageProvider, stage);
+                        JavaFxWindowShellFactory factory = new JavaFxWindowShellFactory(imageProvider, loadingImage, stage);
                         for (RegisteredView view : views) {
                             view.build(factory);
                         }
@@ -101,12 +103,20 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
                 };
                 try {
                     application.init();
-                    application.start(new Stage());
+                    var s = new Stage();
+                    s.hide();
+                    application.start(s);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
         }
+        return this;
+    }
+
+    @Override
+    public JavaFxWindowEngine setLoadingImage(String image) {
+        this.loadingImage = image;
         return this;
     }
 

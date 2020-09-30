@@ -105,7 +105,14 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         super();
         this.stage = stage;
         this.imageProvider = imageProvider;
-        this.handleOptions(stage, options);
+        this.handleOptions(stage, "", options);
+    }
+
+    JavaFxWindowShell(Stage stage, WindowImageProvider imageProvider, String loadingImage, WindowShellOptions... options) {
+        super();
+        this.stage = stage;
+        this.imageProvider = imageProvider;
+        this.handleOptions(stage, loadingImage, options);
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, WindowShellOptions... options) {
@@ -132,12 +139,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     private void createStage(WindowShellOptions... options) {
         this.stage = new Stage();
-        this.handleOptions(stage, options);
+        this.handleOptions(stage, "", options);
     }
 
-    private void handleOptions(Stage stage, WindowShellOptions... options) {
-
+    private void handleOptions(Stage stage, String loadingImage, WindowShellOptions... options) {
         this.pane = new Pane();
+        this.setBackground(loadingImage);
         Scene scene = new Scene(pane);
         this.panes.put("primary", pane);
         stage.setScene(scene);
