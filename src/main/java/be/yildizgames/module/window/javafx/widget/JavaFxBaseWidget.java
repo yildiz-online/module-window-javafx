@@ -84,6 +84,11 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget> {
         this.coordinates = FullCoordinates.full(c.getWidth(), c.getHeight(), this.coordinates.getLeft(), this.coordinates.getTop());
     }
 
+    public final T setOpacity(float opacity) {
+        this.node.setOpacity(opacity);
+        return (T) this;
+    }
+
     public T setVisible(boolean visible) {
         this.node.setVisible(visible);
         return (T) this;
