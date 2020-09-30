@@ -50,6 +50,7 @@ import be.yildizgames.module.window.widget.WindowShape;
 import be.yildizgames.module.window.widget.WindowShell;
 import be.yildizgames.module.window.widget.WindowShellOptions;
 import be.yildizgames.module.window.widget.WindowTextArea;
+import be.yildizgames.module.window.widget.WindowToggle;
 import be.yildizgames.module.window.widget.WindowTreeElement;
 import be.yildizgames.module.window.widget.WindowTreeRoot;
 import com.sun.jna.Pointer;
@@ -273,6 +274,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public WindowShape createRectangle() {
         this.update();
         return new JavaFxShape(this.pane);
+    }
+
+    @Override
+    public WindowToggle createToggle() {
+        this.update();
+        return new JavaFxToggle(this.pane);
     }
 
     @Override
