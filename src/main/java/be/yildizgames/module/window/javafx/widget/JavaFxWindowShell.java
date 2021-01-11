@@ -97,8 +97,6 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     private Pane pane;
 
-    private boolean increase;
-
     private String title;
 
     private String background = "";
@@ -195,7 +193,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public JavaFxWindowShell setIcon(String file) {
-        //FIXME implements
+        this.stage.getIcons().add(new Image(file));
         return this;
     }
 
@@ -257,12 +255,10 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public void update() {
-
         //hack to ensure to refresh the view in case of non full screen.
         // if the screen is not maximized/resized, the view is not correctly updated.
-        this.stage.setHeight(this.stage.getHeight() + (increase ? 1 : -1));
-        increase = !increase;
-
+        this.stage.setHeight(this.stage.getHeight() - 1);
+        this.stage.setHeight(this.stage.getHeight() + 1);
     }
 
     @Override
