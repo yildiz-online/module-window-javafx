@@ -23,11 +23,13 @@
  */
 package be.yildizgames.module.window.javafx.widget;
 
+import be.yildizgames.module.color.Color;
 import be.yildizgames.module.coordinates.Coordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WidgetEvent;
 import be.yildizgames.module.window.widget.WindowCheckBox;
+import be.yildizgames.module.window.widget.WindowFont;
 import be.yildizgames.module.window.widget.WindowWidgetChangeListener;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -70,6 +72,28 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
     @Override
     public final WindowCheckBox setCaption(String text) {
         this.caption.setText(text);
+        return this;
+    }
+
+    @Override
+    public final WindowCheckBox setCaptionUnderlined(boolean underlined) {
+        this.caption.setUnderline(underlined);
+        return this;
+    }
+
+    @Override
+    public final WindowCheckBox setCaptionFont(WindowFont font) {
+        this.caption.setFont(JavaFxFont.getById(font.getId()).getInnerFont());
+        return this;
+    }
+
+    @Override
+    public final WindowCheckBox setCaptionColor(Color color) {
+        this.caption.setTextFill(new javafx.scene.paint.Color(
+                color.normalizedRedValue,
+                color.normalizedGreenValue,
+                color.normalizedBlueValue,
+                color.normalizedAlphaValue));
         return this;
     }
 
