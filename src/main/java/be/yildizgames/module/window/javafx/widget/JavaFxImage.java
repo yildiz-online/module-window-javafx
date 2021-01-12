@@ -93,7 +93,7 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
         if (!this.imageFileName.equals(url)) {
             var image = new Image(provider.getImage(url));
             this.metadata = new ImageMetadata(image.getWidth(), image.getHeight());
-            this.imageView.setImage(new Image(provider.getImage(url)));
+            this.imageView.setImage(image);
             this.imageFileName = url;
         }
         return this;
@@ -109,8 +109,15 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
             ColorAdjust adjust = new ColorAdjust();
             adjust.setSaturation(0);
             this.imageView.setEffect(adjust);
+        } else if (effect == ImageEffect.BRIGHTNESS_DARK) {
+            ColorAdjust adjust = new ColorAdjust();
+            adjust.setBrightness(-0.5);
+            this.imageView.setEffect(adjust);
+        } else if (effect == ImageEffect.BRIGHTNESS_NORMAL) {
+            ColorAdjust adjust = new ColorAdjust();
+            adjust.setBrightness(0.0);
+            this.imageView.setEffect(adjust);
         }
-
         return this;
     }
 
