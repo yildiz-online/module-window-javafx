@@ -59,6 +59,7 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
@@ -528,5 +529,17 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public final JavaFxDirectoryChooser createDirectoryChooser() {
         this.update();
         return new JavaFxDirectoryChooser(this.stage);
+    }
+
+    @Override
+    public final WindowShell showCursor() {
+        Platform.runLater(() -> this.stage.getScene().setCursor(Cursor.DEFAULT));
+        return this;
+    }
+
+    @Override
+    public final WindowShell hideCursor() {
+        Platform.runLater(() -> this.stage.getScene().setCursor(javafx.scene.Cursor.NONE));
+        return this;
     }
 }
