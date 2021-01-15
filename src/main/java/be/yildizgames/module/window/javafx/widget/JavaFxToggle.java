@@ -12,10 +12,14 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
+import be.yildizgames.module.color.Color;
 import be.yildizgames.module.coordinates.Coordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
+import be.yildizgames.module.window.widget.WindowFont;
 import be.yildizgames.module.window.widget.WindowToggle;
+import be.yildizgames.module.window.widget.WindowWidgetChangeListener;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import org.controlsfx.control.ToggleSwitch;
 
@@ -26,10 +30,13 @@ public class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements Wind
 
     private final ToggleSwitch toggle;
 
+    private final Label caption;
+
     JavaFxToggle(Pane pane) {
         super();
         this.toggle = new ToggleSwitch();
-        pane.getChildren().add(this.toggle);
+        this.caption = new Label();
+        pane.getChildren().addAll(this.toggle, this.caption);
         this.setReady(this.toggle);
     }
 
@@ -40,6 +47,8 @@ public class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements Wind
         this.toggle.setLayoutY(coordinates.getTop());
         this.toggle.setMinSize(coordinates.getWidth(), coordinates.getHeight());
         this.toggle.setMaxSize(coordinates.getWidth(), coordinates.getHeight());
+        this.caption.setLayoutX(coordinates.getLeft() + 20);
+        this.caption.setLayoutY(coordinates.getTop() - 8);
         return this;
     }
 
@@ -56,6 +65,8 @@ public class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements Wind
         this.updatePosition(position);
         this.toggle.setLayoutX(position.getLeft());
         this.toggle.setLayoutY(position.getTop());
+        this.caption.setLayoutX(position.getLeft() + 20);
+        this.caption.setLayoutY(position.getTop() - 8);
         return this;
     }
 
@@ -68,6 +79,51 @@ public class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements Wind
     @Override
     public final JavaFxToggle uncheck() {
         this.toggle.setSelected(false);
+        return this;
+    }
+
+    @Override
+    public final boolean isChecked() {
+        return this.toggle.isSelected();
+    }
+
+    @Override
+    public final JavaFxToggle onChange(WindowWidgetChangeListener<Boolean> listener) {
+        this.toggle.selectedProperty().addListener((observable, oldValue, newValue) -> listener.changed(newValue));
+        return this;
+    }
+
+    public final JavaFxToggle setVisible(boolean visible) {
+        this.caption.setVisible(visible);
+        this.toggle.setVisible(visible);
+        return this;
+    }
+
+    @Override
+    public final JavaFxToggle setCaption(String text) {
+        this.caption.setText(text);
+        return this;
+    }
+
+    @Override
+    public final JavaFxToggle setCaptionUnderlined(boolean underlined) {
+        this.caption.setUnderline(underlined);
+        return this;
+    }
+
+    @Override
+    public final JavaFxToggle setCaptionFont(WindowFont font) {
+        this.caption.setFont(JavaFxFont.getById(font.getId()).getInnerFont());
+        return this;
+    }
+
+    @Override
+    public final JavaFxToggle setCaptionColor(Color color) {
+        this.caption.setTextFill(new javafx.scene.paint.Color(
+                color.normalizedRedValue,
+                color.normalizedGreenValue,
+                color.normalizedBlueValue,
+                color.normalizedAlphaValue));
         return this;
     }
 }
