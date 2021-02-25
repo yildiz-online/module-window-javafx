@@ -532,6 +532,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
+    public final JavaFxNotificationPane createNotificationPane() {
+        this.update();
+        return new JavaFxNotificationPane(this.pane);
+    }
+
+    @Override
     public final WindowShell showCursor() {
         Platform.runLater(() -> this.stage.getScene().setCursor(Cursor.DEFAULT));
         return this;
