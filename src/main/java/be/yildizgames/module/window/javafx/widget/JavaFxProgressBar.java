@@ -48,7 +48,7 @@ class JavaFxProgressBar extends JavaFxBaseWidget<JavaFxProgressBar> implements W
 
     @Override
     public WindowProgressBar setProgress(int progress) {
-        this.progressBar.setProgress(progress);
+        this.progressBar.setProgress(progress * 0.01);
         return this;
     }
 
