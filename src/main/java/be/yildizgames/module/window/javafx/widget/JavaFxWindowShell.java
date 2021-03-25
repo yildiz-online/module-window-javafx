@@ -36,6 +36,7 @@ import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
 import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.javafx.widget.experimental.VirtualKeyboard;
+import be.yildizgames.module.window.widget.WindowFileChooser;
 import be.yildizgames.module.window.widget.OnMinimize;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowCheckBox;
@@ -538,6 +539,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
+    public final JavaFxAlert createAlert() {
+        this.update();
+        return new JavaFxAlert(this.stage);
+    }
+
+    @Override
     public final WindowShell showCursor() {
         Platform.runLater(() -> this.stage.getScene().setCursor(Cursor.DEFAULT));
         return this;
@@ -547,5 +554,11 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public final WindowShell hideCursor() {
         Platform.runLater(() -> this.stage.getScene().setCursor(javafx.scene.Cursor.NONE));
         return this;
+    }
+
+    @Override
+    public WindowFileChooser createFileChooser() {
+        this.update();
+        return new JavaFxFileChooser(this.stage);
     }
 }
