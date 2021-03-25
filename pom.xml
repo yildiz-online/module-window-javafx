@@ -35,7 +35,7 @@
   <url>https://engine.yildiz-games.be</url>
 
   <artifactId>module-window-javafx</artifactId>
-  <version>3.1.0</version>
+  <version>3.1.1-SNAPSHOT</version>
 
   <parent>
     <groupId>be.yildiz-games</groupId>
