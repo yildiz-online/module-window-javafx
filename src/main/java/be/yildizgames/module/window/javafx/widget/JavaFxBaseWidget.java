@@ -29,6 +29,9 @@ import be.yildizgames.module.coordinates.FullCoordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WidgetEvent;
+import be.yildizgames.module.window.widget.animation.AnimationBehavior;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
@@ -45,11 +48,69 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget> {
 
     private Node node;
 
+    private final ScaleTransition scaleAnimation = new ScaleTransition();
+
+    private final TranslateTransition translateAnimation = new TranslateTransition();
+
     /**
      * Set ready is to be invoked once the widget is completely built.
      */
     protected final void setReady(Node node) {
-        this.node = node;
+        if(this.node == null) {
+            this.node = node;
+            this.scaleAnimation.setNode(this.node);
+            this.translateAnimation.setNode(this.node);
+        }
+    }
+
+    public final T setTranslationAnimation(AnimationBehavior animation) {
+        this.translateAnimation.setFromX(animation.getFromX());
+        this.translateAnimation.setFromY(animation.getFromY());
+        this.translateAnimation.setFromZ(animation.getFromZ());
+        this.translateAnimation.setToX(animation.getToX());
+        this.translateAnimation.setToY(animation.getToY());
+        this.translateAnimation.setToZ(animation.getToZ());
+        this.translateAnimation.setByX(animation.getByX());
+        this.translateAnimation.setByY(animation.getByY());
+        this.translateAnimation.setByZ(animation.getByZ());
+        this.translateAnimation.setDuration(javafx.util.Duration.millis(animation.getDuration().toMillis()));
+        return (T) this;
+    }
+
+    public final T setScaleAnimation(AnimationBehavior animation) {
+        this.scaleAnimation.setFromX(animation.getFromX());
+        this.scaleAnimation.setFromY(animation.getFromY());
+        this.scaleAnimation.setFromZ(animation.getFromZ());
+        this.scaleAnimation.setToX(animation.getToX());
+        this.scaleAnimation.setToY(animation.getToY());
+        this.scaleAnimation.setToZ(animation.getToZ());
+        this.scaleAnimation.setByX(animation.getByX());
+        this.scaleAnimation.setByY(animation.getByY());
+        this.scaleAnimation.setByZ(animation.getByZ());
+        this.scaleAnimation.setDuration(javafx.util.Duration.millis(animation.getDuration().toMillis()));
+        return (T) this;
+    }
+
+    public final T playScaleAnimation() {
+        this.scaleAnimation.stop();
+        this.scaleAnimation.play();
+        return (T) this;
+    }
+
+    public final T stopScaleAnimation() {
+        this.scaleAnimation.stop();
+        return (T) this;
+    }
+
+    public final T playTranslationAnimation() {
+        this.translateAnimation.stop();
+        this.translateAnimation.play();
+        return (T) this;
+    }
+
+    public final T stopTranslationAnimation() {
+        this.translateAnimation.stop();
+        return (T) this;
     }
 
     public final Coordinates getCoordinates() {
