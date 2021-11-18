@@ -26,6 +26,7 @@ package be.yildizgames.module.window.javafx;
 
 import be.yildizgames.module.window.WindowThreadManager;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 
 /**
  * @author Grégory Van den Borre
@@ -35,5 +36,17 @@ class JavaFxThreadManager implements WindowThreadManager {
     @Override
     public void runAsync(Runnable r) {
         Platform.runLater(r);
+    }
+
+    @Override
+    public void runLongTask(Runnable r) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                r.run();
+                return null;
+            }
+        };
+        new Thread(task).start();
     }
 }
