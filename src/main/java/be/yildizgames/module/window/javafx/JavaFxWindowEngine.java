@@ -93,7 +93,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
                     @Override
                     public void start(Stage stage) {
-                        JavaFxWindowShellFactory factory = new JavaFxWindowShellFactory(imageProvider, loadingImage, stage);
+                        var factory = new JavaFxWindowShellFactory(imageProvider, loadingImage, stage);
                         for (RegisteredView view : views) {
                             view.build(factory);
                         }

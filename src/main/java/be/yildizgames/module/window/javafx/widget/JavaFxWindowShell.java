@@ -30,16 +30,15 @@ import be.yildizgames.module.coordinates.FullCoordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.ScreenSize;
-import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
 import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.javafx.widget.experimental.VirtualKeyboard;
-import be.yildizgames.module.window.widget.WindowFileChooser;
 import be.yildizgames.module.window.widget.OnMinimize;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowCheckBox;
+import be.yildizgames.module.window.widget.WindowFileChooser;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowMenuBar;
 import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
@@ -54,9 +53,6 @@ import be.yildizgames.module.window.widget.WindowTextArea;
 import be.yildizgames.module.window.widget.WindowToggle;
 import be.yildizgames.module.window.widget.WindowTreeElement;
 import be.yildizgames.module.window.widget.WindowTreeRoot;
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinDef.HWND;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -80,7 +76,6 @@ import javafx.stage.StageStyle;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
@@ -90,6 +85,8 @@ import java.util.Random;
 public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> implements WindowShell {
 
     private static final Map<FontData, JavaFxFont> FONTS = new HashMap<>();
+
+    private final Random random = new Random();
 
     private final WindowImageProvider imageProvider;
 
@@ -152,21 +149,18 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         stage.setScene(scene);
         if (options != null) {
             for (WindowShellOptions o : options) {
-                switch (o) {
-                    case FULLSCREEN:
-                        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-                        stage.setFullScreen(true);
-                        stage.setMaximized(true);
-                        this.updateSize(FullCoordinates.size((int) Screen.getPrimary().getBounds().getWidth(), (int) Screen.getPrimary().getBounds().getHeight()));
-                        break;
-                    case NO_TITLE_BAR:
-                        stage.initStyle(StageStyle.UNDECORATED);
-                        break;
+                if (o == WindowShellOptions.FULLSCREEN) {
+                    stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+                    stage.setFullScreen(true);
+                    stage.setMaximized(true);
+                    this.updateSize(FullCoordinates.size((int) Screen.getPrimary().getBounds().getWidth(), (int) Screen.getPrimary().getBounds().getHeight()));
+                } else if (o == WindowShellOptions.NO_TITLE_BAR) {
+                    stage.initStyle(StageStyle.UNDECORATED);
                 }
             }
         }
         this.stage.show();
-        Random random = new Random();
+
         this.title = "UnnamedWindow" + random.nextInt();
         this.stage.setTitle(this.title);
         this.setReady(this.pane);
@@ -174,9 +168,9 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     public void addScene(String name) {
-        Pane pane = new Pane();
-        new Scene(pane);
-        this.panes.put(name, pane);
+        Pane p = new Pane();
+        new Scene(p);
+        this.panes.put(name, p);
 
     }
 
@@ -247,7 +241,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public void open() {
-
+        //TODO is empty?
     }
 
     @Override
@@ -265,7 +259,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public void checkForEvent() {
-
+        //TODO is empty?
     }
 
     @Override
@@ -304,8 +298,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final JavaFxCanvas createCanvas() {
         this.update();
-        HWND hWnd = User32.INSTANCE.GetForegroundWindow();
-        return new JavaFxCanvas(this.pane, new WindowHandle(Pointer.nativeValue(hWnd.getPointer())));
+        return null;
     }
 
     @Override
@@ -486,38 +479,13 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     public final void addOnHiddenListener(CallBack callBack) {
-        this.stage.setOnHidden((e) -> callBack.onEvent());
+        this.stage.setOnHidden(e -> callBack.onEvent());
     }
 
+    @Override
     public WindowShell hide() {
         this.stage.hide();
         return this;
-    }
-
-    private static class FontData {
-
-        private final String name;
-
-        private final int height;
-
-        private FontData(String name, int height) {
-            this.name = name;
-            this.height = height;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            FontData fontData = (FontData) o;
-            return height == fontData.height &&
-                    Objects.equals(name, fontData.name);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(name, height);
-        }
     }
 
     public final void createVirtualKeyboard() {
@@ -560,5 +528,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public WindowFileChooser createFileChooser() {
         this.update();
         return new JavaFxFileChooser(this.stage);
+    }
+
+    private record FontData(String name, int height) {
     }
 }

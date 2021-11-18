@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 public class JavaFxPopup implements WindowPopup {
 
 
-    private JavaFxWindowShell modal;
+    private final JavaFxWindowShell modal;
 
 
     public JavaFxPopup(WindowImageProvider imageProvider, Stage parent) {
@@ -101,7 +101,7 @@ public class JavaFxPopup implements WindowPopup {
     }
 
     public WindowPopup hide() {
-        this.modal.setVisible(true);
+        this.modal.setVisible(false);
         return this;
     }
 

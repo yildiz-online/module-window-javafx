@@ -93,6 +93,7 @@ public class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements Wind
         return this;
     }
 
+    @Override
     public final JavaFxToggle setVisible(boolean visible) {
         this.caption.setVisible(visible);
         this.toggle.setVisible(visible);

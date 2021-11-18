@@ -143,15 +143,13 @@ public class VirtualKeyboard {
                 Bindings.when(modifiers.shiftDown().or(modifiers.capsLockOn().and(letter)))
                         .then(shifted)
                         .otherwise(unshifted);
-        Button button = createButton(text, code, modifiers, target);
-        return button;
+        return createButton(text, code, modifiers, target);
     }
 
     // Creates a button with fixed text not responding to Shift
     private Button createNonshiftableButton(final String text, final KeyCode code, final Modifiers modifiers, final ReadOnlyObjectProperty<Node> target) {
         StringProperty textProperty = new SimpleStringProperty(text);
-        Button button = createButton(textProperty, code, modifiers, target);
-        return button;
+        return createButton(textProperty, code, modifiers, target);
     }
 
     // Creates a button with mutable text, and registers listener with it

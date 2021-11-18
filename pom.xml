@@ -35,19 +35,18 @@
   <url>https://engine.yildiz-games.be</url>
 
   <artifactId>module-window-javafx</artifactId>
-  <version>3.2.1-SNAPSHOT</version>
+  <version>4.0.0-SNAPSHOT</version>
 
   <parent>
     <groupId>be.yildiz-games</groupId>
     <artifactId>parent</artifactId>
-    <version>4.0.2</version>
+    <version>5.0.2</version>
   </parent>
 
   <packaging>jar</packaging>
 
   <properties>
-    <jna.version>5.9.0</jna.version>
-    <javafx.version>17.0.0.1</javafx.version>
+    <javafx.version>17.0.1</javafx.version>
   </properties>
 
   <scm>
@@ -60,8 +59,39 @@
     <dependency>
       <groupId>be.yildiz-games</groupId>
       <artifactId>module-window</artifactId>
-      <version>5.2.0</version>
+      <version>5.2.1-SNAPSHOT</version>
     </dependency>
+    <!--<dependency>
+      <groupId>io.github.typhon0</groupId>
+      <artifactId>AnimateFX</artifactId>
+      <version>1.2.2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-base</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-graphics</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-controls</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-media</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-web</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-swing</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>-->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-web</artifactId>
@@ -107,16 +137,6 @@
           <artifactId>javafx-swing</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna</artifactId>
-      <version>${jna.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna-platform</artifactId>
-      <version>${jna.version}</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>

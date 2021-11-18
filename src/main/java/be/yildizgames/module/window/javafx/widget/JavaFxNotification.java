@@ -34,20 +34,17 @@ import java.time.Duration;
  */
 class JavaFxNotification implements WindowNotification {
 
-    private boolean ready;
-    private Notifications notification;
+    private final Notifications notification;
 
     JavaFxNotification() {
         super();
         this.notification = Notifications.create();
         this.notification.position(Pos.TOP_RIGHT);
-        this.ready = true;
     }
 
     @Override
     public void show() {
         this.notification.show();
-        ;
     }
 
     @Override
