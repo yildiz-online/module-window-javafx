@@ -26,6 +26,7 @@ package be.yildizgames.module.window.javafx;
 
 import be.yildizgames.module.window.BaseWindowEngine;
 import be.yildizgames.module.window.Cursor;
+import be.yildizgames.module.window.util.image.ImageResizeChecker;
 import be.yildizgames.module.window.RegisteredView;
 import be.yildizgames.module.window.ScreenSize;
 import be.yildizgames.module.window.WindowHandle;
@@ -189,5 +190,10 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
     @Override
     public final WindowThreadManager getThreadManager() {
         return this.threadManager;
+    }
+
+    @Override
+    public final ImageResizeChecker createImageResizeChecker(int width, int height) {
+        return new JavaFxImageResizeChecker(width, height);
     }
 }

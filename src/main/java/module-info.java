@@ -1,4 +1,4 @@
-module be.yildizgames.module.window.javafx {
+open module be.yildizgames.module.window.javafx {
 
     requires be.yildizgames.module.window;
     requires javafx.graphics;
