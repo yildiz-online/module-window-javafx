@@ -413,8 +413,8 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public final JavaFxWindowShell setPosition(Position position) {
         this.updatePosition(position);
-        this.pane.setLayoutX(position.getLeft());
-        this.pane.setLayoutY(position.getTop());
+        this.stage.setX(position.getLeft());
+        this.stage.setX(position.getTop());
 
         return this;
     }
