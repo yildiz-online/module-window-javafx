@@ -100,6 +100,12 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
     }
 
     @Override
+    public final WindowImage preserveRatio() {
+        this.imageView.setPreserveRatio(true);
+        return this;
+    }
+
+    @Override
     public final WindowImage addEffect(ImageEffect effect) {
         if (effect == ImageEffect.DESATURATE) {
             ColorAdjust adjust = new ColorAdjust();
