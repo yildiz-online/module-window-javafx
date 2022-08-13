@@ -414,7 +414,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public final JavaFxWindowShell setPosition(Position position) {
         this.updatePosition(position);
         this.stage.setX(position.getLeft());
-        this.stage.setX(position.getTop());
+        this.stage.setY(position.getTop());
 
         return this;
     }
