@@ -30,7 +30,6 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.coordinates.Coordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
-import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.widget.WindowCanvas;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
@@ -40,20 +39,13 @@ import javafx.scene.layout.Pane;
  */
 public class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements WindowCanvas {
 
-    private final WindowHandle handle;
-
     private final Canvas canvas;
 
-    JavaFxCanvas(Pane pane, WindowHandle handle) {
+    JavaFxCanvas(Pane pane) {
         super();
-        this.handle = handle;
         this.canvas = new Canvas();
         pane.getChildren().add(this.canvas);
         this.setReady(this.canvas);
-    }
-
-    public final WindowHandle getHandle() {
-        return this.handle;
     }
 
     @Override
