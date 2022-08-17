@@ -26,14 +26,13 @@ package be.yildizgames.module.window.javafx;
 
 import be.yildizgames.module.window.BaseWindowEngine;
 import be.yildizgames.module.window.Cursor;
-import be.yildizgames.module.window.util.image.ImageResizeChecker;
 import be.yildizgames.module.window.RegisteredView;
 import be.yildizgames.module.window.ScreenSize;
-import be.yildizgames.module.window.WindowHandle;
 import be.yildizgames.module.window.WindowThreadManager;
 import be.yildizgames.module.window.input.WindowInputListener;
 import be.yildizgames.module.window.javafx.widget.JavaFxWindowShell;
 import be.yildizgames.module.window.javafx.widget.JavaFxWindowShellFactory;
+import be.yildizgames.module.window.util.image.ImageResizeChecker;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowImageProviderClassPath;
 import javafx.application.Application;
@@ -124,12 +123,6 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
     @Override
     public final JavaFxWindowEngine deleteLoadingResources() {
         return this;
-    }
-
-    @Override
-    public final WindowHandle getHandle() {
-        //FIXME IMPLEMENT!
-        return new WindowHandle(0);
     }
 
     @Override
