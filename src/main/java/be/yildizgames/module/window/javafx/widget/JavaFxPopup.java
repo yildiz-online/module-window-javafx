@@ -13,6 +13,7 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
+import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
@@ -23,6 +24,8 @@ import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowInputBox;
 import be.yildizgames.module.window.widget.WindowPopup;
 import be.yildizgames.module.window.widget.WindowTextLine;
+import be.yildizgames.module.window.widget.experimental.VirtualKeyboard;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.stage.Stage;
 
 /**
@@ -38,7 +41,6 @@ public class JavaFxPopup implements WindowPopup {
         super();
         this.modal = new JavaFxWindowShell(imageProvider, parent);
     }
-
 
     @Override
     public final WindowTextLine createTextLine() {
@@ -132,7 +134,12 @@ public class JavaFxPopup implements WindowPopup {
         return this.modal.createImage(image);
     }
 
-    public void createVirtualKeyboard() {
-        this.modal.createVirtualKeyboard();
+    @Override
+    public final VirtualKeyboard createVirtualKeyboard(KeyboardListener listener) {
+        return this.modal.createVirtualKeyboard(listener, this);
+    }
+
+    public ReadOnlyDoubleProperty widthProperty() {
+        return this.modal.widthProperty();
     }
 }

@@ -34,7 +34,7 @@ import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
 import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
-import be.yildizgames.module.window.javafx.widget.experimental.VirtualKeyboard;
+import be.yildizgames.module.window.javafx.widget.experimental.JavaFxVirtualKeyboard;
 import be.yildizgames.module.window.widget.OnMinimize;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowCheckBox;
@@ -54,6 +54,7 @@ import be.yildizgames.module.window.widget.WindowToggle;
 import be.yildizgames.module.window.widget.WindowTreeElement;
 import be.yildizgames.module.window.widget.WindowTreeRoot;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
@@ -488,10 +489,11 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         return this;
     }
 
-    public final void createVirtualKeyboard() {
+    public final JavaFxVirtualKeyboard createVirtualKeyboard(KeyboardListener listener, JavaFxPopup parent) {
         this.update();
-        VirtualKeyboard vk = new VirtualKeyboard();
+        JavaFxVirtualKeyboard vk = new JavaFxVirtualKeyboard(listener, this.imageProvider, parent);
         this.pane.getChildren().addAll(vk.view());
+        return vk;
     }
 
     @Override
@@ -528,6 +530,10 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public WindowFileChooser createFileChooser() {
         this.update();
         return new JavaFxFileChooser(this.stage);
+    }
+
+    ReadOnlyDoubleProperty widthProperty() {
+        return this.stage.widthProperty();
     }
 
     private record FontData(String name, int height) {
