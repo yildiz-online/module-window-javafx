@@ -28,6 +28,7 @@ class FileMediaPlayer extends JavaFxBaseWidget<FileMediaPlayer> implements Media
     private final MediaView mediaView;
 
     FileMediaPlayer(Pane pane) {
+        super();
         this.mediaView = new MediaView();
         pane.getChildren().add(this.mediaView);
         this.setReady(this.mediaView);
