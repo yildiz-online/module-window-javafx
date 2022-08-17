@@ -242,7 +242,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public void open() {
-        //TODO is empty?
+        //Does nothing, already opened at creation.
     }
 
     @Override
@@ -251,7 +251,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public void update() {
+    public final void update() {
         //hack to ensure to refresh the view in case of non full screen.
         // if the screen is not maximized/resized, the view is not correctly updated.
         this.stage.setHeight(this.stage.getHeight() - 1);
@@ -259,18 +259,18 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public void checkForEvent() {
-        //TODO is empty?
+    public final void checkForEvent() {
+        //Does nothing.
     }
 
     @Override
-    public WindowShape createRectangle() {
+    public final WindowShape createRectangle() {
         this.update();
         return new JavaFxShape(this.pane);
     }
 
     @Override
-    public WindowToggle createToggle() {
+    public final WindowToggle createToggle() {
         this.update();
         return new JavaFxToggle(this.pane);
     }
