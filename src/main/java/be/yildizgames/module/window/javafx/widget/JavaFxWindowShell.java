@@ -490,11 +490,10 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         return this;
     }
 
-    public final JavaFxVirtualKeyboard createVirtualKeyboard(KeyboardListener listener, JavaFxPopup parent) {
+    @Override
+    public final JavaFxVirtualKeyboard createVirtualKeyboard(KeyboardListener listener) {
         this.update();
-        JavaFxVirtualKeyboard vk = new JavaFxVirtualKeyboard(listener, this.imageProvider, parent);
-        this.pane.getChildren().addAll(vk.view());
-        return vk;
+        return new JavaFxVirtualKeyboard(listener, this.imageProvider, this.pane);
     }
 
     @Override
