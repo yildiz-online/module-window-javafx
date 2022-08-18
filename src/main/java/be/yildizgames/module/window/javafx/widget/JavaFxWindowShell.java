@@ -176,6 +176,16 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     }
 
+    @Override
+    public final JavaFxWindowShell setVisible(boolean visible) {
+        if (visible) {
+            this.stage.show();
+        } else {
+            this.stage.hide();
+        }
+        return this;
+    }
+
     public void selectScene(String name) {
         this.pane = panes.get(name);
         this.stage.setScene(pane.getScene());
