@@ -32,38 +32,59 @@ import java.util.EnumMap;
 /**
  * @author Grégory Van den Borre
  */
-class JavaFxKeyMapper {
+public class JavaFxKeyMapper {
 
-    protected static final EnumMap<KeyCode, Key> mapping = new EnumMap<>(KeyCode.class);
+    private static final EnumMap<KeyCode, Key> mapping = new EnumMap<>(KeyCode.class);
+    private static final EnumMap<Key, KeyCode> reverse = new EnumMap<>(Key.class);
 
     static {
-        mapping.put(KeyCode.ENTER, Key.ENTER);
-        mapping.put(KeyCode.ESCAPE, Key.ESC);
-        mapping.put(KeyCode.BACK_SPACE, Key.DELETE);
-        mapping.put(KeyCode.UP, Key.UP);
-        mapping.put(KeyCode.DOWN, Key.DOWN);
-        mapping.put(KeyCode.LEFT, Key.LEFT);
-        mapping.put(KeyCode.RIGHT, Key.RIGHT);
-        mapping.put(KeyCode.ALT, Key.ALT);
-        mapping.put(KeyCode.CONTROL, Key.CTRL);
-        mapping.put(KeyCode.SHIFT, Key.SHIFT);
-        mapping.put(KeyCode.PAGE_UP, Key.PAGE_UP);
-        mapping.put(KeyCode.PAGE_DOWN, Key.PAGE_DOWN);
-        mapping.put(KeyCode.F1, Key.F1);
-        mapping.put(KeyCode.F2, Key.F2);
-        mapping.put(KeyCode.F3, Key.F3);
-        mapping.put(KeyCode.F4, Key.F4);
-        mapping.put(KeyCode.F5, Key.F5);
-        mapping.put(KeyCode.F6, Key.F6);
-        mapping.put(KeyCode.F7, Key.F7);
-        mapping.put(KeyCode.F8, Key.F8);
-        mapping.put(KeyCode.F9, Key.F9);
-        mapping.put(KeyCode.F10, Key.F10);
-        mapping.put(KeyCode.F11, Key.F11);
-        mapping.put(KeyCode.F12, Key.F12);
+        put(KeyCode.ENTER, Key.ENTER);
+        put(KeyCode.ESCAPE, Key.ESC);
+        put(KeyCode.BACK_SPACE, Key.BACK_SPACE);
+        put(KeyCode.DELETE, Key.DELETE);
+        put(KeyCode.UP, Key.UP);
+        put(KeyCode.DOWN, Key.DOWN);
+        put(KeyCode.LEFT, Key.LEFT);
+        put(KeyCode.RIGHT, Key.RIGHT);
+        put(KeyCode.ALT, Key.ALT);
+        put(KeyCode.CONTROL, Key.CTRL);
+        put(KeyCode.SHIFT, Key.SHIFT);
+        put(KeyCode.PAGE_UP, Key.PAGE_UP);
+        put(KeyCode.PAGE_DOWN, Key.PAGE_DOWN);
+        put(KeyCode.F1, Key.F1);
+        put(KeyCode.F2, Key.F2);
+        put(KeyCode.F3, Key.F3);
+        put(KeyCode.F4, Key.F4);
+        put(KeyCode.F5, Key.F5);
+        put(KeyCode.F6, Key.F6);
+        put(KeyCode.F7, Key.F7);
+        put(KeyCode.F8, Key.F8);
+        put(KeyCode.F9, Key.F9);
+        put(KeyCode.F10, Key.F10);
+        put(KeyCode.F11, Key.F11);
+        put(KeyCode.F12, Key.F12);
+        put(KeyCode.A, Key.A);
+        put(KeyCode.Q, Key.Q);
+        put(KeyCode.W, Key.W);
+        put(KeyCode.E, Key.E);
+        put(KeyCode.R, Key.R);
+        put(KeyCode.T, Key.T);
     }
 
-    protected JavaFxKeyMapper() {
+    private static void put(KeyCode code, Key key) {
+        mapping.put(code, key);
+        reverse.put(key, code);
+    }
 
+    private JavaFxKeyMapper() {
+
+    }
+
+    public static Key getFromCode(KeyCode code) {
+        return mapping.get(code);
+    }
+
+    public static KeyCode getFromKey(Key key) {
+        return reverse.get(key);
     }
 }

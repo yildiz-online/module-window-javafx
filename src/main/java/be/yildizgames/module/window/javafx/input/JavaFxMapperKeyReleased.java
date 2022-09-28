@@ -4,7 +4,7 @@ import be.yildizgames.module.window.input.KeyboardListener;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
-public class JavaFxMapperKeyReleased extends JavaFxKeyMapper implements EventHandler<KeyEvent> {
+public class JavaFxMapperKeyReleased implements EventHandler<KeyEvent> {
 
     private final KeyboardListener listener;
 
@@ -18,7 +18,7 @@ public class JavaFxMapperKeyReleased extends JavaFxKeyMapper implements EventHan
         if (keyEvent.getCode().isLetterKey() || keyEvent.getCode().isDigitKey() || keyEvent.getCode().isWhitespaceKey()) {
             this.listener.keyReleased(keyEvent.getCode().getChar().charAt(0));
         } else {
-            this.listener.specialKeyReleased(mapping.get(keyEvent.getCode()));
+            this.listener.specialKeyReleased(JavaFxKeyMapper.getFromCode(keyEvent.getCode()));
         }
     }
 }
