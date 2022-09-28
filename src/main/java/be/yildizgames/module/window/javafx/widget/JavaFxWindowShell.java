@@ -91,34 +91,28 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     private final WindowImageProvider imageProvider;
 
+    private Pane pane;
+
     private Stage stage;
 
     private final Map<String, Pane> panes = new HashMap<>();
-
-    private Pane pane;
 
     private String title;
 
     private String background = "";
 
     JavaFxWindowShell(Stage stage, WindowImageProvider imageProvider, WindowShellOptions... options) {
-        super();
-        this.stage = stage;
-        this.imageProvider = imageProvider;
-        this.handleOptions(stage, "", options);
+        this(stage, imageProvider, "", options);
     }
 
     JavaFxWindowShell(Stage stage, WindowImageProvider imageProvider, String loadingImage, WindowShellOptions... options) {
         super();
-        this.stage = stage;
         this.imageProvider = imageProvider;
         this.handleOptions(stage, loadingImage, options);
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, WindowShellOptions... options) {
-        super();
-        this.imageProvider = imageProvider;
-        createStage(options);
+        this(new Stage(), imageProvider, options);
     }
 
     JavaFxWindowShell(WindowImageProvider imageProvider, Stage parent) {
@@ -126,7 +120,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.imageProvider = imageProvider;
         this.stage = new Stage();
         this.pane = new Pane();
-        Scene scene = new Scene(pane);
+        var scene = new Scene(pane);
         this.panes.put("primary", pane);
         this.stage.setScene(scene);
         this.stage.initModality(Modality.WINDOW_MODAL);
@@ -137,26 +131,23 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.setReady(this.pane);
     }
 
-    private void createStage(WindowShellOptions... options) {
-        this.stage = new Stage();
-        this.handleOptions(stage, "", options);
-    }
-
     private void handleOptions(Stage stage, String loadingImage, WindowShellOptions... options) {
+        this.stage = stage;
         this.pane = new Pane();
         this.setBackground(loadingImage);
-        Scene scene = new Scene(pane);
-        this.panes.put("primary", pane);
-        stage.setScene(scene);
+        var scene = new Scene(this.pane);
+        this.panes.put("primary", this.pane);
+        this.stage.setScene(scene);
+
         if (options != null) {
             for (WindowShellOptions o : options) {
                 if (o == WindowShellOptions.FULLSCREEN) {
-                    stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-                    stage.setFullScreen(true);
-                    stage.setMaximized(true);
+                    this.stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+                    this.stage.setFullScreen(true);
+                    this.stage.setMaximized(true);
                     this.updateSize(FullCoordinates.size((int) Screen.getPrimary().getBounds().getWidth(), (int) Screen.getPrimary().getBounds().getHeight()));
                 } else if (o == WindowShellOptions.NO_TITLE_BAR) {
-                    stage.initStyle(StageStyle.UNDECORATED);
+                    this.stage.initStyle(StageStyle.UNDECORATED);
                 }
             }
         }

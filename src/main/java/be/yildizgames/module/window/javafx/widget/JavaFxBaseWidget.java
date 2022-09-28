@@ -26,6 +26,7 @@ package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.coordinates.Coordinates;
 import be.yildizgames.module.coordinates.FullCoordinates;
+import be.yildizgames.module.coordinates.ParentRelativePosition;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WidgetEvent;
@@ -52,15 +53,41 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget> {
 
     private final TranslateTransition translateAnimation = new TranslateTransition();
 
+    JavaFxBaseWidget() {
+        super();
+    }
+
     /**
      * Set ready is to be invoked once the widget is completely built.
      */
     protected final void setReady(Node node) {
-        if(this.node == null) {
+        if (this.node == null) {
             this.node = node;
             this.scaleAnimation.setNode(this.node);
             this.translateAnimation.setNode(this.node);
         }
+    }
+
+    public final int getHeight() {
+        return this.coordinates.getHeight();
+    }
+
+    public final int getWidth() {
+        return this.coordinates.getHeight();
+    }
+
+    public T setPosition(ParentRelativePosition position, int distance) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public final T setPositionTop(int top) {
+        this.coordinates = FullCoordinates.full(this.getWidth(), this.getHeight(), this.getLeft(), top);
+        return (T) this;
+    }
+
+    public final T setPositionLeft(int left) {
+        this.coordinates = FullCoordinates.full(this.getWidth(), this.getHeight(), left, this.getTop());
+        return (T) this;
     }
 
     public final T setTranslationAnimation(AnimationBehavior animation) {

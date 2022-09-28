@@ -12,10 +12,11 @@
 
 package be.yildizgames.module.window.javafx.widget.experimental;
 
+import be.yildizgames.module.color.Color;
+import be.yildizgames.module.coordinates.Position;
+import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.input.Key;
 import be.yildizgames.module.window.input.KeyboardListener;
-import be.yildizgames.module.window.input.KeyboardState;
-import be.yildizgames.module.window.javafx.widget.JavaFxPopup;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.experimental.KeyboardLayout;
 import be.yildizgames.module.window.widget.experimental.KeyboardLayoutKey;
@@ -35,14 +36,15 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
@@ -59,11 +61,9 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
     private final Map<Key, Button> keys = new HashMap<>();
     private final WindowImageProvider imageProvider;
-    private final JavaFxPopup parent;
+    private final Pane pane;
 
-    private int positionInRow;
-
-    private int positionInColumn;
+    private final Modifiers modifiers;
 
     /**
      * Creates a Virtual Keyboard.
@@ -71,16 +71,15 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
      * @param target The node that will receive KeyEvents from this keyboard.
      *               If target is null, KeyEvents will be dynamically forwarded to the focus owner
      *               in the Scene containing this keyboard.
-     * @param parent
      */
-    public JavaFxVirtualKeyboard(KeyboardListener target, WindowImageProvider imageProvider, JavaFxPopup parent) {
+    public JavaFxVirtualKeyboard(KeyboardListener target, WindowImageProvider imageProvider, Pane pane) {
         super();
-        this.parent = parent;
+        this.pane = pane;
         this.imageProvider = imageProvider;
         this.root = new VBox(5);
-        this.root.prefWidthProperty().bind(parent.widthProperty().multiply(0.95));
+
         root.setPadding(new Insets(10));
-        final Modifiers modifiers = new Modifiers();
+        this.modifiers = new Modifiers();
 
         // non-regular buttons (don't respond to Shift)
         final Button escape = createNonshiftableButton("Esc", Key.ESC, modifiers, target);
@@ -106,34 +105,21 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
             //  hbox.getChildren().addAll(extraRightButtons[row]);
         }
 
-        final Button spaceBar = createNonshiftableButton(" ", Key.SPACE, modifiers, target);
-        spaceBar.setMaxWidth(Double.POSITIVE_INFINITY);
-        HBox.setHgrow(spaceBar, Priority.ALWAYS);
-
-        final HBox bottomRow = new HBox(5);
-        bottomRow.setAlignment(Pos.CENTER);
-        bottomRow.getChildren().addAll(/*modifiers.ctrlKey(), modifiers.altKey(),
-                modifiers.metaKey(),*/ spaceBar);
-        root.getChildren().add(bottomRow);
-    }
-
-    /**
-     * Visual component displaying this keyboard. The returned node has a style class of "virtual-keyboard".
-     * Buttons in the view have a style class of "virtual-keyboard-button".
-     *
-     * @return a view of the keyboard.
-     */
-    public Node view() {
-        return root;
+        /*final HBox bottomRow = new HBox(5);
+         bottomRow.setAlignment(Pos.CENTER);
+        bottomRow.getChildren().addAll(modifiers.ctrlKey(), modifiers.altKey(),
+                modifiers.metaKey(), spaceBar);
+        root.getChildren().add(bottomRow);*/
+        this.pane.getChildren().addAll(this.root);
     }
 
     private Button createShiftableButton(final KeyboardLayoutKey key, Modifiers modifiers, final KeyboardListener target) {
         final ReadOnlyBooleanProperty letter = new SimpleBooleanProperty(key.isLetter());
         final StringBinding text =
                 Bindings.when(modifiers.shiftDown().or(modifiers.capsLockOn().and(letter)))
-                        .then(key.getShifted())
-                        .otherwise(key.getUnshifted());
-        return createButton(text, key.getCode(), modifiers, target);
+                        .then(key.shifted())
+                        .otherwise(key.unshifted());
+        return createButton(text, key.code(), modifiers, target);
     }
 
     private Button createNonshiftableButton(final String text, final Key code, final Modifiers modifiers, final KeyboardListener target) {
@@ -149,10 +135,8 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
             final String character;
             if (text.get().length() == 1) {
                 character = text.get();
-                target.keyPressed(character.charAt(0), modifiers);
-                target.keyReleased(character.charAt(0), modifiers);
-            } else {
-                character = KeyEvent.CHAR_UNDEFINED;
+                target.keyPressed(character.charAt(0));
+                target.keyReleased(character.charAt(0));
             }
 
             modifiers.releaseKeys();
@@ -162,14 +146,30 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
-    public VirtualKeyboard setSize(Key key, int width, int height) {
+    public final VirtualKeyboard setSize(Key key, int width, int height) {
         this.keys.get(key).setMinSize(width, height);
         this.keys.get(key).setMaxSize(width, height);
         return this;
     }
 
     @Override
-    public VirtualKeyboard setImage(Key key, String image) {
+    public VirtualKeyboard setPosition(Position position) {
+        this.root.setLayoutX(position.getLeft());
+        this.root.setLayoutY(position.getTop());
+        return this;
+    }
+
+    @Override
+    public VirtualKeyboard setSize(Size size) {
+        this.root.setMinWidth(size.getWidth());
+        this.root.setMaxWidth(size.getWidth());
+        this.root.setMinHeight(size.getHeight());
+        this.root.setMaxHeight(size.getHeight());
+        return this;
+    }
+
+    @Override
+    public final VirtualKeyboard setImage(Key key, String image) {
         var myBI = new BackgroundImage(
                 new Image(this.imageProvider.getImage(image)),
                 BackgroundRepeat.SPACE, BackgroundRepeat.SPACE, BackgroundPosition.CENTER,
@@ -178,7 +178,75 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         return this;
     }
 
-    private static class Modifiers implements KeyboardState {
+    @Override
+    public VirtualKeyboard setColor(Key key, Color color) {
+        this.keys.get(key).setBackground(new Background(
+                new BackgroundFill(new javafx.scene.paint.Color(
+                        color.normalizedRedValue,
+                        color.normalizedGreenValue,
+                        color.normalizedBlueValue,
+                        color.normalizedAlphaValue),
+                        CornerRadii.EMPTY, Insets.EMPTY)));
+        return this;
+    }
+
+    @Override
+    public final VirtualKeyboard press(Key key) {
+        this.keys.get(key).fire();
+        return this;
+    }
+
+    @Override
+    public final VirtualKeyboard setBackground(String image) {
+        BackgroundImage myBI = new BackgroundImage(new Image(this.imageProvider.getImage(image)),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(100, 100, true, true, true, true));
+        this.pane.setBackground(new Background(myBI));
+
+        return this;
+    }
+
+    @Override
+    public final int getWidth() {
+        return (int) this.pane.getWidth();
+    }
+
+    @Override
+    public final VirtualKeyboard setBackground(Color color) {
+        this.root.setBackground(new Background(
+                new BackgroundFill(new javafx.scene.paint.Color(
+                        color.normalizedRedValue,
+                        color.normalizedGreenValue,
+                        color.normalizedBlueValue,
+                        color.normalizedAlphaValue),
+                        CornerRadii.EMPTY, Insets.EMPTY)));
+        return this;
+    }
+
+    @Override
+    public final KeyboardLayout getLayout() {
+        return this.layout;
+    }
+
+    @Override
+    public final VirtualKeyboard setVisible(boolean visible) {
+        this.root.setVisible(visible);
+        return this;
+    }
+
+    @Override
+    public final VirtualKeyboard shift(boolean selected) {
+        this.modifiers.shift.setSelected(selected);
+        return this;
+    }
+
+    @Override
+    public final VirtualKeyboard capsLock(boolean selected) {
+        this.modifiers.capsLock.setSelected(selected);
+        return this;
+    }
+
+    private static class Modifiers {
         private final ToggleButton shift;
         private final ToggleButton shift2;
         private final ToggleButton ctrl;

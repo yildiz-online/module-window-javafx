@@ -13,7 +13,7 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
-import be.yildizgames.module.window.input.KeyboardListener;
+import be.yildizgames.module.coordinates.ParentRelativePosition;
 import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
@@ -24,7 +24,6 @@ import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowInputBox;
 import be.yildizgames.module.window.widget.WindowPopup;
 import be.yildizgames.module.window.widget.WindowTextLine;
-import be.yildizgames.module.window.widget.experimental.VirtualKeyboard;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.stage.Stage;
 
@@ -135,8 +134,15 @@ public class JavaFxPopup implements WindowPopup {
     }
 
     @Override
-    public final VirtualKeyboard createVirtualKeyboard(KeyboardListener listener) {
-        return this.modal.createVirtualKeyboard(listener, this);
+    public JavaFxPopup setPosition(ParentRelativePosition parentRelativePosition) {
+        this.modal.setPosition(parentRelativePosition, 0);
+        return this;
+    }
+
+    @Override
+    public final WindowPopup setVisible(boolean visible) {
+        this.modal.setVisible(visible);
+        return this;
     }
 
     public ReadOnlyDoubleProperty widthProperty() {
