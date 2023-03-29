@@ -29,9 +29,7 @@ import be.yildizgames.module.window.Cursor;
 import be.yildizgames.module.window.RegisteredView;
 import be.yildizgames.module.window.ScreenSize;
 import be.yildizgames.module.window.WindowThreadManager;
-import be.yildizgames.module.window.audio.AudioEffect;
 import be.yildizgames.module.window.input.WindowInputListener;
-import be.yildizgames.module.window.javafx.audio.JavaFxAudioEffect;
 import be.yildizgames.module.window.javafx.widget.JavaFxWindowShell;
 import be.yildizgames.module.window.javafx.widget.JavaFxWindowShellFactory;
 import be.yildizgames.module.window.util.image.ImageResizeChecker;
@@ -85,11 +83,6 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
     public final JavaFxWindowEngine registerView(RegisteredView view) {
         this.views.add(view);
         return this;
-    }
-
-    @Override
-    public final AudioEffect createAudioEffect(String file) {
-        return new JavaFxAudioEffect(file);
     }
 
     @Override

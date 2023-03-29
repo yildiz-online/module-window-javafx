@@ -30,7 +30,9 @@ import be.yildizgames.module.coordinates.FullCoordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.ScreenSize;
+import be.yildizgames.module.window.audio.AudioEffect;
 import be.yildizgames.module.window.input.KeyboardListener;
+import be.yildizgames.module.window.javafx.audio.JavaFxAudioEffect;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
 import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
@@ -428,6 +430,11 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.stage.getScene().setOnKeyReleased(new JavaFxMapperKeyReleased(listener));
 
         return this;
+    }
+
+    @Override
+    public final AudioEffect createAudioEffect(String file) {
+        return new JavaFxAudioEffect(file);
     }
 
     @Override
