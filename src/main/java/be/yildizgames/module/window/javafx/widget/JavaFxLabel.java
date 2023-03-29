@@ -40,12 +40,15 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
 
     private final Label label;
 
+    private final JavaFxWindowShell parent;
+
     private String text = "";
 
     private Color color = Color.BLACK;
 
-    JavaFxLabel(Pane pane) {
+    JavaFxLabel(Pane pane, JavaFxWindowShell parent) {
         super();
+        this.parent = parent;
         this.label = new Label();
         pane.getChildren().add(this.label);
         this.setReady(this.label);
@@ -95,6 +98,11 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
     public final WindowTextLine setFont(WindowFont font) {
         this.label.setFont(JavaFxFont.getById(font.getId()).getInnerFont());
         return this;
+    }
+
+    @Override
+    public WindowTextLine setFont(String path, int height) {
+        return this.setFont(this.parent.createFont(path, height));
     }
 
     @Override

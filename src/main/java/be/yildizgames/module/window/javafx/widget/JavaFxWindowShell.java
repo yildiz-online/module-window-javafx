@@ -309,7 +309,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     @Override
     public JavaFxLabel createTextLine() {
         this.update();
-        return new JavaFxLabel(this.pane);
+        return new JavaFxLabel(this.pane, this);
     }
 
     @Override
