@@ -27,6 +27,8 @@ package be.yildizgames.module.window.javafx.audio;
 import be.yildizgames.module.window.audio.AudioEffect;
 import javafx.scene.media.AudioClip;
 
+import java.nio.file.Path;
+
 /**
  * @author Grégory Van den Borre
  */
@@ -36,7 +38,7 @@ public class JavaFxAudioEffect implements AudioEffect {
 
     public JavaFxAudioEffect(String file) {
         super();
-        this.clip = new AudioClip(file);
+        this.clip = new AudioClip(Path.of(file).toAbsolutePath().toUri().toString());
     }
 
     @Override
