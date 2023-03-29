@@ -139,4 +139,16 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
     public final ImageMetadata getLoadedImageMetadata() {
         return this.metadata;
     }
+
+    @Override
+    public final WindowImage toFront() {
+        this.imageView.toFront();
+        return this;
+    }
+
+    @Override
+    public final WindowImage toBack() {
+        this.imageView.toBack();
+        return this;
+    }
 }
