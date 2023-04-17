@@ -77,7 +77,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     /**
      * This constructor will build an instance associated with the provided image provider.
-     * @parameter imageProvider Provider for the images, cannot be null.
+     * @param imageProvider Provider for the images, cannot be null.
      */
     public JavaFxWindowEngine(WindowImageProvider imageProvider) {
         super();
