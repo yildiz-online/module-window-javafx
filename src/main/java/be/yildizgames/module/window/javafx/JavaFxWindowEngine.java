@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * JavaFX implementation for the WindowEngine.
  * @author Grégory Van den Borre
  */
 public class JavaFxWindowEngine implements BaseWindowEngine {
@@ -67,10 +68,17 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     private String loadingImage = "";
 
+    /**
+     * This constructor will build an instance associated with a class path provider image.
+     */
     public JavaFxWindowEngine() {
         this(new WindowImageProviderClassPath());
     }
 
+    /**
+     * This constructor will build an instance associated with the provided image provider.
+     * @parameter imageProvider Provider for the images, cannot be null.
+     */
     public JavaFxWindowEngine(WindowImageProvider imageProvider) {
         super();
         System.Logger logger = System.getLogger(JavaFxWindowShell.class.getName());
