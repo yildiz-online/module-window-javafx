@@ -124,7 +124,8 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
         return this;
     }
 
-    public JavaFxMediaPlayer setVisible(boolean visible) {
+    @Override
+    public final JavaFxMediaPlayer setVisible(boolean visible) {
         this.current.setVisible(visible);
         return this;
     }
