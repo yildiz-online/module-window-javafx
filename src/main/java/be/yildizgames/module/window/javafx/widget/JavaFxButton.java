@@ -84,7 +84,7 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
     }
 
     @Override
-    public WindowButton setPosition(Position position) {
+    public final WindowButton setPosition(Position position) {
         this.updatePosition(position);
         this.button.setLayoutX(position.getLeft());
         this.button.setLayoutY(position.getTop());
@@ -93,7 +93,19 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
     }
 
     @Override
-    public WindowButton addMouseLeftClickListener(MouseLeftClickListener l) {
+    public final WindowButton toFront() {
+        this.button.toFront();
+        return this;
+    }
+
+    @Override
+    public final WindowButton toBack() {
+        this.button.toBack();
+        return this;
+    }
+
+    @Override
+    public final WindowButton addMouseLeftClickListener(MouseLeftClickListener l) {
         this.button.setOnAction(new JavaFxMapperMouseLeftClick(l));
         return this;
     }

@@ -157,4 +157,18 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
         return this;
     }
 
+    @Override
+    public final WindowCheckBox toFront() {
+        this.caption.toFront();
+        this.checkBox.toFront();
+        return this;
+    }
+
+    @Override
+    public final WindowCheckBox toBack() {
+        this.caption.toBack();
+        this.checkBox.toBack();
+        return this;
+    }
+
 }

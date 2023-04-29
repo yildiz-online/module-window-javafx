@@ -101,6 +101,20 @@ public class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements Wind
     }
 
     @Override
+    public WindowToggle toFront() {
+        this.caption.toFront();
+        this.toggle.toFront();
+        return this;
+    }
+
+    @Override
+    public WindowToggle toBack() {
+        this.caption.toBack();
+        this.toggle.toBack();
+        return this;
+    }
+
+    @Override
     public final JavaFxToggle setCaption(String text) {
         this.caption.setText(text);
         return this;

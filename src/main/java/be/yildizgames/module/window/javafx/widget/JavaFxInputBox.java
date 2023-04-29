@@ -82,6 +82,18 @@ class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowI
     }
 
     @Override
+    public final WindowInputBox toFront() {
+        this.textField.toFront();
+        return this;
+    }
+
+    @Override
+    public final WindowInputBox toBack() {
+        this.textField.toBack();
+        return this;
+    }
+
+    @Override
     public final WindowInputBox setText(String text) {
         this.textField.setText(text);
         return this;

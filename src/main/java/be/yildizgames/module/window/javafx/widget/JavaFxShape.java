@@ -61,6 +61,18 @@ public class JavaFxShape extends JavaFxBaseWidget<JavaFxShape> implements Window
     }
 
     @Override
+    public WindowShape toFront() {
+        this.rectangle.toFront();
+        return this;
+    }
+
+    @Override
+    public WindowShape toBack() {
+        this.rectangle.toBack();
+        return this;
+    }
+
+    @Override
     public JavaFxShape setColor(Color color) {
         this.rectangle.setFill(new javafx.scene.paint.Color(
                 color.normalizedRedValue,

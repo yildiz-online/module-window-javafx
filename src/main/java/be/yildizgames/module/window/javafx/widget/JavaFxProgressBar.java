@@ -84,4 +84,16 @@ class JavaFxProgressBar extends JavaFxBaseWidget<JavaFxProgressBar> implements W
 
         return this;
     }
+
+    @Override
+    public WindowProgressBar toFront() {
+        this.progressBar.toFront();
+        return this;
+    }
+
+    @Override
+    public WindowProgressBar toBack() {
+        this.progressBar.toBack();
+        return this;
+    }
 }

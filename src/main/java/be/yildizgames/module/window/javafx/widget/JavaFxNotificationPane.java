@@ -48,4 +48,16 @@ public class JavaFxNotificationPane extends JavaFxBaseWidget<JavaFxNotificationP
     public WindowNotificationPane setPosition(Position position) {
         return this;
     }
+
+    @Override
+    public WindowNotificationPane toFront() {
+        this.notificationPane.toFront();
+        return this;
+    }
+
+    @Override
+    public WindowNotificationPane toBack() {
+        this.notificationPane.toBack();
+        return this;
+    }
 }

@@ -135,6 +135,18 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
     }
 
     @Override
+    public final WindowTextLine toFront() {
+        this.label.toFront();
+        return this;
+    }
+
+    @Override
+    public final WindowTextLine toBack() {
+        this.label.toBack();
+        return this;
+    }
+
+    @Override
     public final WindowTextLine alignText(TextAlignment alignment) {
         switch (alignment) {
             case RIGHT:

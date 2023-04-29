@@ -136,6 +136,20 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
     }
 
     @Override
+    public final WindowDropdown toFront() {
+        this.caption.toFront();
+        this.comboBox.toFront();
+        return this;
+    }
+
+    @Override
+    public final WindowDropdown toBack() {
+        this.caption.toBack();
+        this.comboBox.toBack();
+        return this;
+    }
+
+    @Override
     public final JavaFxDropDown setCaption(String text) {
         this.caption.setText(text);
         return this;
