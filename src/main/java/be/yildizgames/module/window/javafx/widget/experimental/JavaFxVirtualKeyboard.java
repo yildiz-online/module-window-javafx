@@ -53,6 +53,8 @@ import java.util.Map;
 /**
  * @author Grégory Van den Borre
  */
+public class JavaFxVirtualKeyboard implements VirtualKeyboard {
+
 private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
 
     private final Map<Key, Button> keys = new HashMap<>();
@@ -323,4 +325,5 @@ private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
             meta.setSelected(false);
         }
     }
+}
 }
