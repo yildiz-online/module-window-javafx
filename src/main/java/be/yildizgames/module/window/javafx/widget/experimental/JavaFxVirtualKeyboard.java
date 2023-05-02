@@ -20,7 +20,7 @@ import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.experimental.KeyboardLayout;
 import be.yildizgames.module.window.widget.experimental.KeyboardLayoutKey;
-import be.yildizgames.module.window.widget.experimental.QwertyKeyboardLayout;
+import be.yildizgames.module.window.widget.experimental.SimpleQwertyKeyboardLayout;
 import be.yildizgames.module.window.widget.experimental.VirtualKeyboard;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
@@ -53,17 +53,21 @@ import java.util.Map;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxVirtualKeyboard implements VirtualKeyboard {
-
-    private final VBox root;
-
-    private final KeyboardLayout layout = new QwertyKeyboardLayout();
+private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
 
     private final Map<Key, Button> keys = new HashMap<>();
     private final WindowImageProvider imageProvider;
     private final Pane pane;
 
     private final Modifiers modifiers;
+
+    private int x;
+
+    private int y;
+
+    private int keyWidth = 30;
+
+    private int keyHeight = 30;
 
     /**
      * Creates a Virtual Keyboard.
@@ -76,9 +80,6 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         super();
         this.pane = pane;
         this.imageProvider = imageProvider;
-        this.root = new VBox(5);
-
-        root.setPadding(new Insets(10));
         this.modifiers = new Modifiers();
 
         // non-regular buttons (don't respond to Shift)
@@ -88,29 +89,32 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         final Button enter = createNonshiftableButton("Enter", Key.ENTER, modifiers, target);
         final Button tab = createNonshiftableButton("Tab", Key.TAB, modifiers, target);
 
-        // "Extras" to go at the left or right end of each row of buttons.
-        final Node[][] extraLeftButtons = new Node[][]{{escape}, {tab}, {modifiers.capsLockKey()}, {modifiers.shiftKey()}};
-        final Node[][] extraRightButtons = new Node[][]{{backspace}, {delete}, {enter}, {modifiers.secondShiftKey()}};
-
-        // build layout
-        for (int row = 0; row < layout.getNumberOfRows(); row++) {
-            HBox hbox = new HBox(5);
-            hbox.setAlignment(Pos.CENTER);
-            root.getChildren().add(hbox);
-
-            //  hbox.getChildren().addAll(extraLeftButtons[row]);
-            for (int k = 0; k < this.layout.getNumberOfKeyForRow(row); k++) {
-                hbox.getChildren().add(createShiftableButton(layout.getKey(row, k), modifiers, target));
-            }
-            //  hbox.getChildren().addAll(extraRightButtons[row]);
+        for(var layoutKey: this.layout.getKeys()) {
+            var key = createShiftableButton(layoutKey, modifiers, target);
+            this.pane.getChildren().addAll(key);
+            this.keys.put(layoutKey.code(), key);
         }
+        updateLayout();
+    }
 
-        /*final HBox bottomRow = new HBox(5);
-         bottomRow.setAlignment(Pos.CENTER);
-        bottomRow.getChildren().addAll(modifiers.ctrlKey(), modifiers.altKey(),
-                modifiers.metaKey(), spaceBar);
-        root.getChildren().add(bottomRow);*/
-        this.pane.getChildren().addAll(this.root);
+    private void updateLayout() {
+        int inset = 10;
+        var max = 0;
+        for (int row = 0; row < this.layout.getNumberOfRows(); row++) {
+             var c = this.layout.getNumberOfKeyForRow(row);
+             if(c > max) {
+                 max = c;
+             }
+        }
+        for (int row = 0; row < this.layout.getNumberOfRows(); row++) {
+            int keys = this.layout.getNumberOfKeyForRow(row);
+            int spaces = ((max - keys) >> 1) * keyWidth;
+            for (int colums = 0; colums < keys; colums++) {
+                var key = this.keys.get(layout.getKey(row, colums).code());
+                key.setLayoutY((row * keyHeight) + inset + y);
+                key.setLayoutX((colums * keyWidth) + inset + spaces + x);
+            }
+        }
     }
 
     private Button createShiftableButton(final KeyboardLayoutKey key, Modifiers modifiers, final KeyboardListener target) {
@@ -119,7 +123,10 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
                 Bindings.when(modifiers.shiftDown().or(modifiers.capsLockOn().and(letter)))
                         .then(key.shifted())
                         .otherwise(key.unshifted());
-        return createButton(text, key.code(), modifiers, target);
+        var button = createButton(text, key.code(), modifiers, target);
+        button.setMinSize(this.keyWidth, this.keyHeight);
+        button.setMaxSize(this.keyWidth, this.keyHeight);
+        return button;
     }
 
     private Button createNonshiftableButton(final String text, final Key code, final Modifiers modifiers, final KeyboardListener target) {
@@ -154,17 +161,14 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
     @Override
     public VirtualKeyboard setPosition(Position position) {
-        this.root.setLayoutX(position.getLeft());
-        this.root.setLayoutY(position.getTop());
+        this.x = position.getLeft();
+        this.y = position.getTop();
+        this.updateLayout();
         return this;
     }
 
     @Override
     public VirtualKeyboard setSize(Size size) {
-        this.root.setMinWidth(size.getWidth());
-        this.root.setMaxWidth(size.getWidth());
-        this.root.setMinHeight(size.getHeight());
-        this.root.setMaxHeight(size.getHeight());
         return this;
     }
 
@@ -213,13 +217,6 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
     @Override
     public final VirtualKeyboard setBackground(Color color) {
-        this.root.setBackground(new Background(
-                new BackgroundFill(new javafx.scene.paint.Color(
-                        color.normalizedRedValue,
-                        color.normalizedGreenValue,
-                        color.normalizedBlueValue,
-                        color.normalizedAlphaValue),
-                        CornerRadii.EMPTY, Insets.EMPTY)));
         return this;
     }
 
@@ -230,7 +227,11 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
     @Override
     public final VirtualKeyboard setVisible(boolean visible) {
-        this.root.setVisible(visible);
+        this.pane.setVisible(visible);
+        if(visible) {
+            this.pane.toFront();
+            this.keys.values().forEach(Node::toFront);
+        }
         return this;
     }
 
