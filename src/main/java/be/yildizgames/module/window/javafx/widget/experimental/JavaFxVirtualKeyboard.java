@@ -326,4 +326,3 @@ private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
         }
     }
 }
-}
