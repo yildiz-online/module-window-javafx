@@ -31,7 +31,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableStringValue;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
@@ -43,9 +42,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +52,7 @@ import java.util.Map;
  */
 public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
-private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
+    private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
 
     private final Map<Key, Button> keys = new HashMap<>();
     private final WindowImageProvider imageProvider;
@@ -63,9 +60,9 @@ private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
 
     private final Modifiers modifiers;
 
-    private int x;
+    private int positionX;
 
-    private int y;
+    private int positionY;
 
     private int keyWidth = 30;
 
@@ -113,8 +110,8 @@ private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
             int spaces = ((max - keys) >> 1) * keyWidth;
             for (int colums = 0; colums < keys; colums++) {
                 var key = this.keys.get(layout.getKey(row, colums).code());
-                key.setLayoutY((row * keyHeight) + inset + y);
-                key.setLayoutX((colums * keyWidth) + inset + spaces + x);
+                key.setLayoutY((row * keyHeight) + inset + positionY);
+                key.setLayoutX((colums * keyWidth) + inset + spaces + positionX);
             }
         }
     }
@@ -158,13 +155,18 @@ private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
     public final VirtualKeyboard setSize(Key key, int width, int height) {
         this.keys.get(key).setMinSize(width, height);
         this.keys.get(key).setMaxSize(width, height);
+        if(key != Key.SPACE) {
+            this.keyWidth = width;
+            this.keyHeight = height;
+            this.updateLayout();
+        }
         return this;
     }
 
     @Override
     public VirtualKeyboard setPosition(Position position) {
-        this.x = position.getLeft();
-        this.y = position.getTop();
+        this.positionX = position.getLeft();
+        this.positionY = position.getTop();
         this.updateLayout();
         return this;
     }
@@ -204,10 +206,6 @@ private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
 
     @Override
     public final VirtualKeyboard setBackground(String image) {
-        BackgroundImage myBI = new BackgroundImage(new Image(this.imageProvider.getImage(image)),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,
-                new BackgroundSize(100, 100, true, true, true, true));
-        this.pane.setBackground(new Background(myBI));
 
         return this;
     }
@@ -229,9 +227,8 @@ private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
 
     @Override
     public final VirtualKeyboard setVisible(boolean visible) {
-        this.pane.setVisible(visible);
+        this.keys.values().forEach(k -> k.setVisible(visible));
         if(visible) {
-            this.pane.toFront();
             this.keys.values().forEach(Node::toFront);
         }
         return this;
