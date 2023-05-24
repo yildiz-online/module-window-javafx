@@ -37,6 +37,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.io.IOException;
+
 /**
  * @author Grégory Van den Borre
  */
@@ -91,10 +93,16 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
     @Override
     public final WindowImage setImage(String url) {
         if (!this.imageFileName.equals(url)) {
-            var image = new Image(provider.getImage(url));
-            this.metadata = new ImageMetadata(image.getWidth(), image.getHeight());
-            this.imageView.setImage(image);
-            this.imageFileName = url;
+            try  {
+                var is = provider.getImage(url);
+                var image = new Image(is);
+                this.metadata = new ImageMetadata(image.getWidth(), image.getHeight());
+                this.imageView.setImage(image);
+                this.imageFileName = url;
+                is.close();
+            } catch (IOException e) {
+                throw new IllegalArgumentException(e);
+            }
         }
         return this;
     }
