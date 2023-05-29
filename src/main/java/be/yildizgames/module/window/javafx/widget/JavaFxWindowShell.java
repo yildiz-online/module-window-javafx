@@ -149,8 +149,10 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.title = "UnnamedWindow" + random.nextInt();
         this.stage.setTitle(this.title);
         this.setReady(this.pane);
-        this.setSize((int) stage.getWidth(), (int) stage.getHeight());
-        this.setPosition((int) stage.getX(), (int) stage.getY());
+        if(!this.stage.isFullScreen()) {
+            this.setSize((int) scene.getWidth(), (int) scene.getHeight());
+            this.setPosition((int) scene.getX(), (int) scene.getY());
+        }
     }
 
     public void addScene(String name) {
