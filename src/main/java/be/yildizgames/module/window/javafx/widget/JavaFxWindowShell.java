@@ -132,6 +132,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         this.panes.put("primary", this.pane);
         this.stage.setScene(scene);
 
+        this.stage.show();
         if (options != null) {
             for (WindowShellOptions o : options) {
                 if (o == WindowShellOptions.FULLSCREEN) {
@@ -144,7 +145,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
                 }
             }
         }
-        this.stage.show();
+
 
         this.title = "UnnamedWindow" + random.nextInt();
         this.stage.setTitle(this.title);

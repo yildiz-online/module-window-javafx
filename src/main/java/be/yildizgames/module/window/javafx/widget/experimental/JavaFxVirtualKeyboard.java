@@ -44,7 +44,9 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,6 +70,8 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
     private int keyHeight = 30;
 
+    private final List<KeyboardListener> listenerList = new ArrayList<>();
+
     /**
      * Creates a Virtual Keyboard.
      *
@@ -80,16 +84,17 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         this.pane = pane;
         this.imageProvider = imageProvider;
         this.modifiers = new Modifiers();
+        this.listenerList.add(target);
 
         // non-regular buttons (don't respond to Shift)
-        final Button escape = createNonshiftableButton("Esc", Key.ESC, modifiers, target);
-        final Button backspace = createNonshiftableButton("Backspace", Key.BACK_SPACE, modifiers, target);
-        final Button delete = createNonshiftableButton("Del", Key.DELETE, modifiers, target);
-        final Button enter = createNonshiftableButton("Enter", Key.ENTER, modifiers, target);
-        final Button tab = createNonshiftableButton("Tab", Key.TAB, modifiers, target);
+        final Button escape = createNonshiftableButton("Esc", Key.ESC, modifiers);
+        final Button backspace = createNonshiftableButton("Backspace", Key.BACK_SPACE, modifiers);
+        final Button delete = createNonshiftableButton("Del", Key.DELETE, modifiers);
+        final Button enter = createNonshiftableButton("Enter", Key.ENTER, modifiers);
+        final Button tab = createNonshiftableButton("Tab", Key.TAB, modifiers);
 
         for(var layoutKey: this.layout.getKeys()) {
-            var key = createShiftableButton(layoutKey, modifiers, target);
+            var key = createShiftableButton(layoutKey, modifiers);
             this.pane.getChildren().addAll(key);
             this.keys.put(layoutKey.code(), key);
         }
@@ -116,24 +121,24 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         }
     }
 
-    private Button createShiftableButton(final KeyboardLayoutKey key, Modifiers modifiers, final KeyboardListener target) {
+    private Button createShiftableButton(final KeyboardLayoutKey key, Modifiers modifiers) {
         final ReadOnlyBooleanProperty letter = new SimpleBooleanProperty(key.isLetter());
         final StringBinding text =
                 Bindings.when(modifiers.shiftDown().or(modifiers.capsLockOn().and(letter)))
                         .then(key.shifted())
                         .otherwise(key.unshifted());
-        var button = createButton(text, key.code(), modifiers, target);
+        var button = createButton(text, key.code(), modifiers);
         button.setMinSize(this.keyWidth, this.keyHeight);
         button.setMaxSize(this.keyWidth, this.keyHeight);
         return button;
     }
 
-    private Button createNonshiftableButton(final String text, final Key code, final Modifiers modifiers, final KeyboardListener target) {
+    private Button createNonshiftableButton(final String text, final Key code, final Modifiers modifiers) {
         StringProperty textProperty = new SimpleStringProperty(text);
-        return createButton(textProperty, code, modifiers, target);
+        return createButton(textProperty, code, modifiers);
     }
 
-    private Button createButton(final ObservableStringValue text, final Key code, final Modifiers modifiers, final KeyboardListener target) {
+    private Button createButton(final ObservableStringValue text, final Key code, final Modifiers modifiers) {
         final Button button = new Button();
         button.textProperty().bind(text);
         button.setFocusTraversable(false);
@@ -141,8 +146,8 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
             final String character;
             if (text.get().length() == 1) {
                 character = text.get();
-                target.keyPressed(character.charAt(0));
-                target.keyReleased(character.charAt(0));
+                listenerList.forEach(l -> l.keyPressed(character.charAt(0)));
+                listenerList.forEach(l -> l.keyReleased(character.charAt(0)));
             }
 
             modifiers.releaseKeys();
@@ -164,7 +169,13 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
-    public VirtualKeyboard setPosition(Position position) {
+    public VirtualKeyboard addListener(KeyboardListener listener) {
+        this.listenerList.add(listener);
+        return this;
+    }
+
+    @Override
+    public final VirtualKeyboard setPosition(Position position) {
         this.positionX = position.getLeft();
         this.positionY = position.getTop();
         this.updateLayout();
@@ -172,7 +183,17 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
-    public VirtualKeyboard setSize(Size size) {
+    public final int getLeft() {
+        return this.positionX;
+    }
+
+    @Override
+    public final int getTop() {
+        return this.positionY;
+    }
+
+    @Override
+    public final VirtualKeyboard setSize(Size size) {
         return this;
     }
 
@@ -223,6 +244,12 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     @Override
     public final KeyboardLayout getLayout() {
         return this.layout;
+    }
+
+    @Override
+    public VirtualKeyboard toFront() {
+        this.keys.values().forEach(Node::toFront);
+        return this;
     }
 
     @Override
