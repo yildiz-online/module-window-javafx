@@ -59,39 +59,8 @@
     <dependency>
       <groupId>be.yildiz-games</groupId>
       <artifactId>module-window</artifactId>
-      <version>5.5.1</version>
+      <version>5.5.2-SNAPSHOT</version>
     </dependency>
-    <!--<dependency>
-  <groupId>io.github.typhon0</groupId>
-  <artifactId>AnimateFX</artifactId>
-  <version>1.2.2</version>
-  <exclusions>
-    <exclusion>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-base</artifactId>
-    </exclusion>
-    <exclusion>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-    </exclusion>
-    <exclusion>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-    </exclusion>
-    <exclusion>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-media</artifactId>
-    </exclusion>
-    <exclusion>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-web</artifactId>
-    </exclusion>
-    <exclusion>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-swing</artifactId>
-    </exclusion>
-  </exclusions>
-</dependency>-->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-web</artifactId>
