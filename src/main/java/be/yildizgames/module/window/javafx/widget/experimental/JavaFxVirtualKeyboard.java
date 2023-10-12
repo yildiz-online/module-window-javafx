@@ -13,6 +13,7 @@
 package be.yildizgames.module.window.javafx.widget.experimental;
 
 import be.yildizgames.module.color.Color;
+import be.yildizgames.module.coordinates.FullCoordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.input.Key;
@@ -169,7 +170,7 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
-    public VirtualKeyboard addListener(KeyboardListener listener) {
+    public final VirtualKeyboard addListener(KeyboardListener listener) {
         this.listenerList.add(listener);
         return this;
     }
@@ -180,6 +181,11 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         this.positionY = position.getTop();
         this.updateLayout();
         return this;
+    }
+
+    @Override
+    public final Size getSize() {
+        return FullCoordinates.size((int) this.pane.getWidth(), (int) this.pane.getHeight());
     }
 
     @Override
@@ -194,6 +200,8 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
     @Override
     public final VirtualKeyboard setSize(Size size) {
+        this.pane.setMinSize(size.getWidth(), size.getHeight());
+        this.pane.setMaxSize(size.getWidth(), size.getHeight());
         return this;
     }
 
