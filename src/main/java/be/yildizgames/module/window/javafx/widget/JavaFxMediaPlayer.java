@@ -58,7 +58,7 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
     }
 
     @Override
-    public JavaFxMediaPlayer setMedia(String url) {
+    public final JavaFxMediaPlayer setMedia(String url) {
         this.defineStrategy(url);
         this.current.setMedia(url);
         return this;
@@ -80,6 +80,26 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
     }
 
     @Override
+    public final int getLeft() {
+        return this.youtubeMediaPlayer.getLeft();
+    }
+
+    @Override
+    public final int getRight() {
+        return this.youtubeMediaPlayer.getRight();
+    }
+
+    @Override
+    public final int getTop() {
+        return this.youtubeMediaPlayer.getTop();
+    }
+
+    @Override
+    public final int getBottom() {
+        return this.youtubeMediaPlayer.getBottom();
+    }
+
+    @Override
     public final JavaFxMediaPlayer setSize(Size size) {
         this.youtubeMediaPlayer.updateSize(size);
         this.fileMediaPlayer.updateSize(size);
@@ -98,7 +118,7 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
     }
 
     @Override
-    public WindowMediaPlayer setMedia(Path path) {
+    public final WindowMediaPlayer setMedia(Path path) {
         try {
             this.setMedia(path.toUri().toURL().toString());
         } catch (MalformedURLException e) {
@@ -108,14 +128,14 @@ public class JavaFxMediaPlayer implements WindowMediaPlayer {
     }
 
     @Override
-    public WindowMediaPlayer play() {
+    public final WindowMediaPlayer play() {
         this.current.play();
         playing = true;
         return this;
     }
 
     @Override
-    public WindowMediaPlayer stop() {
+    public final WindowMediaPlayer stop() {
         if (playing) {
             this.current.stop();
             playing = false;
