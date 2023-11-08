@@ -176,6 +176,12 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
+    public final VirtualKeyboard clearListeners() {
+        this.listenerList.clear();
+        return this;
+    }
+
+    @Override
     public final VirtualKeyboard setPosition(Position position) {
         this.positionX = position.getLeft();
         this.positionY = position.getTop();
