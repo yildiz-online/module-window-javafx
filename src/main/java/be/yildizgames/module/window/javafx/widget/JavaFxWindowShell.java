@@ -28,21 +28,29 @@ import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyPressed;
 import be.yildizgames.module.window.javafx.input.JavaFxMapperKeyReleased;
 import be.yildizgames.module.window.javafx.widget.experimental.CallBack;
 import be.yildizgames.module.window.javafx.widget.experimental.JavaFxVirtualKeyboard;
+import be.yildizgames.module.window.widget.DirectoryChooser;
 import be.yildizgames.module.window.widget.OnMinimize;
+import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowButtonText;
 import be.yildizgames.module.window.widget.WindowCheckBox;
+import be.yildizgames.module.window.widget.WindowDropdown;
 import be.yildizgames.module.window.widget.WindowFileChooser;
+import be.yildizgames.module.window.widget.WindowFont;
+import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.WindowInputBox;
 import be.yildizgames.module.window.widget.WindowMenuBar;
 import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
 import be.yildizgames.module.window.widget.WindowModal;
 import be.yildizgames.module.window.widget.WindowModalFile;
 import be.yildizgames.module.window.widget.WindowNotification;
 import be.yildizgames.module.window.widget.WindowPopup;
+import be.yildizgames.module.window.widget.WindowProgressBar;
 import be.yildizgames.module.window.widget.WindowShape;
 import be.yildizgames.module.window.widget.WindowShell;
 import be.yildizgames.module.window.widget.WindowShellOptions;
 import be.yildizgames.module.window.widget.WindowTextArea;
+import be.yildizgames.module.window.widget.WindowTextLine;
 import be.yildizgames.module.window.widget.WindowToggle;
 import be.yildizgames.module.window.widget.WindowTreeElement;
 import be.yildizgames.module.window.widget.WindowTreeRoot;
@@ -301,30 +309,30 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public JavaFxLabel createTextLine() {
+    public WindowTextLine createTextLine() {
         this.update();
         return new JavaFxLabel(this.pane, this);
     }
 
     @Override
-    public JavaFxButton createButton() {
+    public WindowButton createButton() {
         this.update();
         return new JavaFxButton(this.pane, this.imageProvider);
     }
 
     @Override
-    public JavaFxButton createButton(String background, String hover) {
+    public WindowButton createButton(String background, String hover) {
         return null;
     }
 
     @Override
-    public JavaFxImage createImage(String image) {
+    public WindowImage createImage(String image) {
         this.update();
         return new JavaFxImage(this.pane, this.imageProvider, image);
     }
 
     @Override
-    public JavaFxProgressBar createProgressBar() {
+    public WindowProgressBar createProgressBar() {
         this.update();
         return new JavaFxProgressBar(this.pane);
     }
@@ -335,7 +343,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public JavaFxDropDown createDropdown() {
+    public WindowDropdown createDropdown() {
         this.update();
         return new JavaFxDropDown(this.pane);
     }
@@ -347,7 +355,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public JavaFxInputBox createInputBox() {
+    public WindowInputBox createInputBox() {
         this.update();
         return new JavaFxInputBox(this.pane);
     }
@@ -381,7 +389,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public JavaFxFont createFont(String path, int height) {
+    public WindowFont createFont(String path, int height) {
         return FONTS.computeIfAbsent(new FontData(path, height), k -> new JavaFxFont(path, height));
     }
 
@@ -499,7 +507,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public final JavaFxDirectoryChooser createDirectoryChooser() {
+    public final DirectoryChooser createDirectoryChooser() {
         this.update();
         return new JavaFxDirectoryChooser(this.stage);
     }
@@ -529,7 +537,7 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     }
 
     @Override
-    public WindowFileChooser createFileChooser() {
+    public final WindowFileChooser createFileChooser() {
         this.update();
         return new JavaFxFileChooser(this.stage);
     }
