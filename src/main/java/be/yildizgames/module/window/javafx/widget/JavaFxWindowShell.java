@@ -139,7 +139,6 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
         var scene = new Scene(this.pane);
         this.panes.put("primary", this.pane);
         this.stage.setScene(scene);
-
         this.stage.show();
         if (options != null) {
             for (WindowShellOptions o : options) {
@@ -153,8 +152,6 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
                 }
             }
         }
-
-
         this.title = "UnnamedWindow" + random.nextInt();
         this.stage.setTitle(this.title);
         this.setReady(this.pane);
@@ -327,7 +324,9 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
 
     @Override
     public WindowImage createImage(String image) {
-        this.update();
+        if(!image.isEmpty()) {
+            this.update();
+        }
         return new JavaFxImage(this.pane, this.imageProvider, image);
     }
 
