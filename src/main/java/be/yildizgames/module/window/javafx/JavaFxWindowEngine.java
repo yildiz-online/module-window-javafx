@@ -86,7 +86,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
 
     @Override
     public final JavaFxWindowEngine update() {
-        if (!started) {
+        if (!this.started) {
             Platform.startup(() -> {
                 Application application = new Application() {
 
@@ -106,7 +106,7 @@ public class JavaFxWindowEngine implements BaseWindowEngine {
                     s.hide();
                     application.start(s);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.getLogger(this.getClass().getName()).log(System.Logger.Level.ERROR, "Error updating javafx window", e);
                 }
             });
         }
