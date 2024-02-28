@@ -92,7 +92,7 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     @Override
     public final WindowImage setImage(String url) {
-        if (!this.imageFileName.equals(url)) {
+        if (!this.imageFileName.equals(url) && !url.isEmpty()) {
             try  {
                 var is = provider.getImage(url);
                 var image = new Image(is);
@@ -103,6 +103,9 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
             } catch (IOException e) {
                 throw new IllegalArgumentException(e);
             }
+        } else if (url.isEmpty()) {
+            this.imageView.setImage(null);
+            this.imageFileName = "";
         }
         return this;
     }
