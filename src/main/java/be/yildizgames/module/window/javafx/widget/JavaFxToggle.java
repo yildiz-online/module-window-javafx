@@ -47,8 +47,8 @@ public class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements Wind
         this.toggle.setLayoutY(coordinates.getTop());
         this.toggle.setMinSize(coordinates.getWidth(), coordinates.getHeight());
         this.toggle.setMaxSize(coordinates.getWidth(), coordinates.getHeight());
-        this.caption.setLayoutX(coordinates.getLeft() + 20);
-        this.caption.setLayoutY(coordinates.getTop() - 8);
+        this.caption.setLayoutX(coordinates.getLeft() + 20.0);
+        this.caption.setLayoutY(coordinates.getTop() - 8.0);
         return this;
     }
 
@@ -65,8 +65,8 @@ public class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements Wind
         this.updatePosition(position);
         this.toggle.setLayoutX(position.getLeft());
         this.toggle.setLayoutY(position.getTop());
-        this.caption.setLayoutX(position.getLeft() + 20);
-        this.caption.setLayoutY(position.getTop() - 8);
+        this.caption.setLayoutX(position.getLeft() + 20.0);
+        this.caption.setLayoutY(position.getTop() - 8.0);
         return this;
     }
 

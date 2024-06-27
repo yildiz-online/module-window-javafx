@@ -94,7 +94,7 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
         this.comboBox.setMaxWidth(coordinates.getWidth());
         this.comboBox.setMinWidth(coordinates.getWidth());
         this.caption.setLayoutX(coordinates.getLeft());
-        this.caption.setLayoutY(coordinates.getTop() - 30);
+        this.caption.setLayoutY(coordinates.getTop() - 30.0);
 
         return this;
     }
@@ -116,7 +116,7 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
         this.comboBox.setLayoutX(position.getLeft());
         this.comboBox.setLayoutY(position.getTop());
         this.caption.setLayoutX(position.getLeft());
-        this.caption.setLayoutY(position.getTop() - 30);
+        this.caption.setLayoutY(position.getTop() - 30.0);
 
         return this;
     }
