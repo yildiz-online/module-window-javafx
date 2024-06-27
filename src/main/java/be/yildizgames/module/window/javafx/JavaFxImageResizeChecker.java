@@ -42,7 +42,7 @@ class JavaFxImageResizeChecker implements ImageResizeChecker {
             this.image = new Image(Files.newInputStream(path));
             return image.getWidth() > this.maxWidth || image.getHeight() > this.maxHeight;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.getLogger(this.getClass().getName()).log(System.Logger.Level.ERROR, "I/O error", e);
         }
         return false;
     }
