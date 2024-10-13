@@ -68,6 +68,12 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget> {
         }
     }
 
+
+    public final T setCssStyleClass(String cssClass) {
+        this.node.getStyleClass().add(cssClass);
+        return (T)this;
+    }
+
     public final int getHeight() {
         return this.coordinates.getHeight();
     }
