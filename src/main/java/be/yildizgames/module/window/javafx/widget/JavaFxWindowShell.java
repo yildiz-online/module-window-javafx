@@ -43,6 +43,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -149,6 +150,12 @@ public class JavaFxWindowShell extends JavaFxBaseWidget<JavaFxWindowShell> imple
     public final void addGridState(StateName name) {
         var p = new GridPane();
         this.states.put(name.name(), p);
+    }
+
+    public final BorderLayout createBorderLayout(StateName name) {
+        var border = new BorderPane();
+        this.getPane(name).getChildren().add(border);
+        return new JavaFxBorderLayout(border);
     }
 
     @Override
