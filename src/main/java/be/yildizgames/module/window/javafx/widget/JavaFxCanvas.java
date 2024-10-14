@@ -37,7 +37,7 @@ import javafx.scene.layout.Pane;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements WindowCanvas {
+class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements WindowCanvas {
 
     private final Canvas canvas;
 
