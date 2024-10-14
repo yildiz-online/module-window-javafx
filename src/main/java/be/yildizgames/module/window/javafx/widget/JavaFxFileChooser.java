@@ -20,13 +20,13 @@ import java.nio.file.Path;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxFileChooser implements WindowFileChooser {
+class JavaFxFileChooser implements WindowFileChooser {
 
     private final javafx.stage.FileChooser fileChooser;
 
     private final Stage stage;
 
-    public JavaFxFileChooser(final Stage stage) {
+    JavaFxFileChooser(final Stage stage) {
         super();
         this.stage = stage;
         this.fileChooser = new javafx.stage.FileChooser();
