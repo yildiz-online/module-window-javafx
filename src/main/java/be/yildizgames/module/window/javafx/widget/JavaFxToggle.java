@@ -26,7 +26,7 @@ import org.controlsfx.control.ToggleSwitch;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements WindowToggle {
+class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements WindowToggle {
 
     private final ToggleSwitch toggle;
 
