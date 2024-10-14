@@ -6,11 +6,11 @@ import javafx.scene.layout.BorderPane;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxBorderLayout implements BorderLayout {
+class JavaFxBorderLayout implements BorderLayout {
 
     private final BorderPane border;
 
-    public JavaFxBorderLayout(BorderPane border) {
+    JavaFxBorderLayout(BorderPane border) {
         super();
         this.border = border;
     }
