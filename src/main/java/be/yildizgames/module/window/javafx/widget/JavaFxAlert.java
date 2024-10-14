@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxAlert implements WindowAlert {
+class JavaFxAlert implements WindowAlert {
 
     private final Alert alert;
 
@@ -42,7 +42,7 @@ public class JavaFxAlert implements WindowAlert {
         BUTTON_TYPE_MAP.put(ButtonType.YES, AlertButtonType.YES);
     }
 
-    public JavaFxAlert(Stage stage) {
+    JavaFxAlert(Stage stage) {
         super();
         this.alert = new Alert(Alert.AlertType.NONE);
         this.alert.initOwner(stage);
