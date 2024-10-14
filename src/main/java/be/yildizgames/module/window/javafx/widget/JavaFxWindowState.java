@@ -20,6 +20,7 @@ import be.yildizgames.module.window.widget.WindowModalFile;
 import be.yildizgames.module.window.widget.WindowNotificationPane;
 import be.yildizgames.module.window.widget.WindowProgressBar;
 import be.yildizgames.module.window.widget.WindowShape;
+import be.yildizgames.module.window.widget.WindowState;
 import be.yildizgames.module.window.widget.WindowTextArea;
 import be.yildizgames.module.window.widget.WindowTextLine;
 import be.yildizgames.module.window.widget.WindowToggle;
