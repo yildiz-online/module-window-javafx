@@ -39,7 +39,7 @@ import java.nio.file.Path;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxMediaPlayer implements WindowMediaPlayer {
+class JavaFxMediaPlayer implements WindowMediaPlayer {
 
     private MediaPlayerStrategy current;
 
