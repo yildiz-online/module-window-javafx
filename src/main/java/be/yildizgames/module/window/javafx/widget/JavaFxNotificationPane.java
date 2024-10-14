@@ -22,11 +22,11 @@ import org.controlsfx.control.NotificationPane;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxNotificationPane extends JavaFxBaseWidget<JavaFxNotificationPane> implements WindowNotificationPane {
+class JavaFxNotificationPane extends JavaFxBaseWidget<JavaFxNotificationPane> implements WindowNotificationPane {
 
     private final NotificationPane notificationPane;
 
-    public JavaFxNotificationPane(final Pane pane) {
+    JavaFxNotificationPane(final Pane pane) {
         super();
         this.notificationPane = new NotificationPane();
         pane.getChildren().add(this.notificationPane);
