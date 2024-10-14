@@ -23,7 +23,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxShape extends JavaFxBaseWidget<JavaFxShape> implements WindowShape {
+class JavaFxShape extends JavaFxBaseWidget<JavaFxShape> implements WindowShape {
 
     private final Rectangle rectangle;
 
