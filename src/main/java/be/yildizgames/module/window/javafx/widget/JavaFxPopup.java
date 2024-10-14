@@ -30,13 +30,13 @@ import javafx.stage.Stage;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxPopup implements WindowPopup {
+class JavaFxPopup implements WindowPopup {
 
 
     private final JavaFxWindowShell modal;
 
 
-    public JavaFxPopup(WindowImageProvider imageProvider, Stage parent) {
+    JavaFxPopup(WindowImageProvider imageProvider, Stage parent) {
         super();
         this.modal = new JavaFxWindowShell(imageProvider, parent);
     }
