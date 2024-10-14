@@ -17,11 +17,11 @@ import javafx.scene.control.ChoiceDialog;
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxChoiceDialog<T> {
+class JavaFxChoiceDialog<T> {
 
     private final ChoiceDialog<T> dialog;
 
-    public JavaFxChoiceDialog() {
+    JavaFxChoiceDialog() {
         this.dialog = new ChoiceDialog<>();
     }
 }
