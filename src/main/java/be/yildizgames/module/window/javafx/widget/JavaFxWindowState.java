@@ -26,8 +26,10 @@ import be.yildizgames.module.window.widget.WindowTextLine;
 import be.yildizgames.module.window.widget.WindowToggle;
 import be.yildizgames.module.window.widget.WindowTreeElement;
 import be.yildizgames.module.window.widget.WindowTreeRoot;
+import be.yildizgames.module.window.widget.WindowWidgetCreator;
 import be.yildizgames.module.window.widget.experimental.VirtualKeyboard;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -38,7 +40,9 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 
-public class JavaFxWindowState implements WindowState {
+class JavaFxWindowState implements WindowState {
+
+    private final Scene root;
 
     private String background = "";
 
@@ -48,10 +52,17 @@ public class JavaFxWindowState implements WindowState {
 
     private final JavaFxWindowShell shell;
 
-    public JavaFxWindowState(Pane pane, WindowImageProvider imageProvider, JavaFxWindowShell shell) {
+    JavaFxWindowState(Pane pane, WindowImageProvider imageProvider, JavaFxWindowShell shell, Scene scene) {
         this.pane = pane;
         this.imageProvider = imageProvider;
         this.shell = shell;
+        this.root = scene;
+    }
+
+    @Override
+    public final WindowState activate() {
+        this.root.setRoot(this.pane);
+        return this;
     }
 
     @Override
