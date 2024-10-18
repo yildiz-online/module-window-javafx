@@ -4,29 +4,7 @@ import be.yildizgames.module.color.Color;
 import be.yildizgames.module.coordinates.Coordinates;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.widget.experimental.JavaFxVirtualKeyboard;
-import be.yildizgames.module.window.widget.WindowButton;
-import be.yildizgames.module.window.widget.WindowButtonText;
-import be.yildizgames.module.window.widget.WindowCanvas;
-import be.yildizgames.module.window.widget.WindowCheckBox;
-import be.yildizgames.module.window.widget.WindowDropdown;
-import be.yildizgames.module.window.widget.WindowImage;
-import be.yildizgames.module.window.widget.WindowImageProvider;
-import be.yildizgames.module.window.widget.WindowInputBox;
-import be.yildizgames.module.window.widget.WindowMediaPlayer;
-import be.yildizgames.module.window.widget.WindowMenuBar;
-import be.yildizgames.module.window.widget.WindowMenuBarElementDefinition;
-import be.yildizgames.module.window.widget.WindowModal;
-import be.yildizgames.module.window.widget.WindowModalFile;
-import be.yildizgames.module.window.widget.WindowNotificationPane;
-import be.yildizgames.module.window.widget.WindowProgressBar;
-import be.yildizgames.module.window.widget.WindowShape;
-import be.yildizgames.module.window.widget.WindowState;
-import be.yildizgames.module.window.widget.WindowTextArea;
-import be.yildizgames.module.window.widget.WindowTextLine;
-import be.yildizgames.module.window.widget.WindowToggle;
-import be.yildizgames.module.window.widget.WindowTreeElement;
-import be.yildizgames.module.window.widget.WindowTreeRoot;
-import be.yildizgames.module.window.widget.WindowWidgetCreator;
+import be.yildizgames.module.window.widget.*;
 import be.yildizgames.module.window.widget.experimental.VirtualKeyboard;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -63,6 +41,11 @@ class JavaFxWindowState implements WindowState {
     public final WindowState activate() {
         this.root.setRoot(this.pane);
         return this;
+    }
+
+    @Override
+    public final WindowShell getWindow() {
+        return this.shell;
     }
 
     @Override
