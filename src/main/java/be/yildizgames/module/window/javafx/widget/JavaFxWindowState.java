@@ -2,10 +2,10 @@ package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
 import be.yildizgames.module.coordinates.Coordinates;
-import be.yildizgames.module.window.input.KeyboardListener;
-import be.yildizgames.module.window.javafx.widget.experimental.JavaFxVirtualKeyboard;
-import be.yildizgames.module.window.widget.*;
-import be.yildizgames.module.window.widget.experimental.VirtualKeyboard;
+import be.yildizgames.module.window.widget.BorderLayout;
+import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.WindowState;
+import be.yildizgames.module.window.widget.WindowWidgetCreator;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -15,10 +15,11 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 
-class JavaFxWindowState implements WindowState {
+class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
 
     private final Scene root;
 
@@ -31,6 +32,7 @@ class JavaFxWindowState implements WindowState {
     private final JavaFxWindowShell shell;
 
     JavaFxWindowState(Pane pane, WindowImageProvider imageProvider, JavaFxWindowShell shell, Scene scene) {
+        super(pane, shell, imageProvider);
         this.pane = pane;
         this.imageProvider = imageProvider;
         this.shell = shell;
@@ -44,8 +46,10 @@ class JavaFxWindowState implements WindowState {
     }
 
     @Override
-    public final WindowShell getWindow() {
-        return this.shell;
+    public final BorderLayout createBorderLayout() {
+        var border = new BorderPane();
+        this.pane.getChildren().add(border);
+        return new JavaFxBorderLayout(border, shell, imageProvider);
     }
 
     @Override
@@ -77,71 +81,6 @@ class JavaFxWindowState implements WindowState {
     }
 
     @Override
-    public final WindowShape createRectangle() {
-        return new JavaFxShape(this.pane);
-    }
-
-    @Override
-    public final WindowToggle createToggle() {
-        return new JavaFxToggle(this.pane);
-    }
-
-    @Override
-    public final WindowTextLine createTextLine() {
-        return new JavaFxLabel(this.pane, shell);
-    }
-
-    @Override
-    public final WindowButton createButton() {
-        return new JavaFxButton(this.pane, this.imageProvider);
-    }
-
-    @Override
-    public final WindowImage createImage(String image) {
-        return new JavaFxImage(this.pane, this.imageProvider, image);
-    }
-
-    @Override
-    public final WindowProgressBar createProgressBar() {
-        return new JavaFxProgressBar(this.pane);
-    }
-
-    @Override
-    public final WindowDropdown createDropdown() {
-        return new JavaFxDropDown(this.pane);
-    }
-
-    @Override
-    public final WindowButtonText createTextButton() {
-        return new JavaFxButton(this.pane, this.imageProvider);
-    }
-
-    @Override
-    public final WindowInputBox createInputBox() {
-        return new JavaFxInputBox(this.pane);
-    }
-
-    @Override
-    public final WindowCheckBox createCheckBox() {
-        return new JavaFxCheckBox(this.pane);
-    }
-
-    @Override
-    public final WindowMediaPlayer createMediaPlayer() {
-        return new JavaFxMediaPlayer(this.pane);
-    }
-
-    @Override
-    public final VirtualKeyboard createVirtualKeyboard(KeyboardListener listener) {
-        return new JavaFxVirtualKeyboard(listener, this.imageProvider, this.pane);
-    }
-
-    @Override
-    public final WindowNotificationPane createNotificationPane() {
-        return new JavaFxNotificationPane(this.pane);
-    }
-
-    @Override
     public final WindowWidgetCreator setCoordinates(Coordinates coordinates) {
   //      this.updateCoordinates(coordinates);
         this.pane.setLayoutX(coordinates.getLeft());
@@ -153,45 +92,4 @@ class JavaFxWindowState implements WindowState {
 
         return this;
     }
-
-    @Override
-    public final WindowModal createMessageBox() {
-        return null;
-    }
-
-    @Override
-    public final WindowModal createMessageButtonBox() {
-        return null;
-    }
-
-    @Override
-    public final WindowTextArea createTextArea() {
-        return null;
-    }
-
-    @Override
-    public final WindowMenuBar createMenuBar(WindowMenuBarElementDefinition... elements) {
-        return null;
-    }
-
-    @Override
-    public final WindowTreeRoot createTreeRoot(int width, int height, WindowTreeElement... elements) {
-        return null;
-    }
-
-    @Override
-    public final WindowModalFile createOpenFileBox() {
-        return null;
-    }
-
-    @Override
-    public final WindowCanvas createCanvas() {
-        return null;
-    }
-
-    @Override
-    public final WindowButton createButton(String background, String hover) {
-        return null;
-    }
-
 }
