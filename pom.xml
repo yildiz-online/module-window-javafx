@@ -46,7 +46,7 @@
   <packaging>jar</packaging>
 
   <properties>
-    <javafx.version>23</javafx.version>
+    <javafx.version>23.0.1</javafx.version>
   </properties>
 
   <scm>
