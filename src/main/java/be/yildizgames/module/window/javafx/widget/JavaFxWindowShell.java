@@ -113,6 +113,11 @@ public class JavaFxWindowShell implements WindowShell {
         return new JavaFxWindowState(new Pane(), this.imageProvider, this, this.stage.getScene());
     }
 
+     @Override
+    public final WindowState createState(Path template) throws IOException  {
+        return new JavaFxWindowState(FXMLLoader.load(template.toUri().toURL()), this.imageProvider, this, this.stage.getScene());
+    }
+
     @Override
     public final WindowShell setVisible(boolean visible) {
         if (visible) {
