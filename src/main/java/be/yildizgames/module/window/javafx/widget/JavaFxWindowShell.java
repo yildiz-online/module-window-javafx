@@ -37,6 +37,7 @@ import be.yildizgames.module.window.widget.WindowShellOptions;
 import be.yildizgames.module.window.widget.WindowState;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
