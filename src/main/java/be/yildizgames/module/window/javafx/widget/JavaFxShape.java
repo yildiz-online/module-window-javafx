@@ -34,6 +34,12 @@ class JavaFxShape extends JavaFxBaseWidget<JavaFxShape> implements WindowShape {
         this.setReady(this.rectangle);
     }
 
+    JavaFxShape(final Rectangle shape) {
+        super();
+        this.rectangle = shape;
+        this.setReady(this.rectangle);
+    }
+
     @Override
     public JavaFxShape setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
