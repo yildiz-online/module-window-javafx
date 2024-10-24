@@ -52,7 +52,13 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
         this.label = new Label();
         pane.getChildren().add(this.label);
         this.setReady(this.label);
+    }
 
+    JavaFxLabel(Label label, JavaFxWindowShell parent) {
+        super();
+        this.parent = parent;
+        this.label = label;
+        this.setReady(this.label);
     }
 
     @Override
