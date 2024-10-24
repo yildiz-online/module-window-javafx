@@ -58,6 +58,12 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
         this.setReady(this.button);
     }
 
+    JavaFxButton(final Button button, WindowImageProvider imageProvider) {
+        super();
+        this.button = button;
+        this.imageProvider = imageProvider;
+        this.setReady(this.button);
+    }
 
     @Override
     public WindowButton setCoordinates(Coordinates coordinates) {
