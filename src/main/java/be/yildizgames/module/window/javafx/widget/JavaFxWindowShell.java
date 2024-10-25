@@ -37,6 +37,7 @@ import be.yildizgames.module.window.widget.WindowShellOptions;
 import be.yildizgames.module.window.widget.WindowState;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -47,6 +48,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -111,6 +113,11 @@ public class JavaFxWindowShell implements WindowShell {
     @Override
     public final WindowState createState() {
         return new JavaFxWindowState(new Pane(), this.imageProvider, this, this.stage.getScene());
+    }
+
+     @Override
+    public final WindowState createState(Path template) throws IOException  {
+        return new JavaFxWindowState(FXMLLoader.load(template.toUri().toURL()), this.imageProvider, this, this.stage.getScene());
     }
 
     @Override

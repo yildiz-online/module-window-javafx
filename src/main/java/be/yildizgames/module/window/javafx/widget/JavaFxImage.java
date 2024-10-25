@@ -61,6 +61,13 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
         this.setReady(this.imageView);
     }
 
+    JavaFxImage(ImageView imageView, WindowImageProvider provider) {
+        super();
+        this.provider = provider;
+        this.imageView = imageView;
+        this.setReady(this.imageView);
+    }
+
     @Override
     public final WindowImage setCoordinates(Coordinates coordinates) {
         this.updateCoordinates(coordinates);
