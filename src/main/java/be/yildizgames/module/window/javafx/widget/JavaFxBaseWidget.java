@@ -43,7 +43,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Grégory Van den Borre
  */
-class JavaFxBaseWidget<T extends JavaFxBaseWidget> {
+class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
 
     private Coordinates coordinates = FullCoordinates.ZERO;
 
@@ -188,7 +188,7 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget> {
         return (T) this;
     }
 
-    public T requestFocus() {
+    public final T requestFocus() {
         this.node.requestFocus();
         return (T) this;
     }
