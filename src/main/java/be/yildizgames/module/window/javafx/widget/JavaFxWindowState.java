@@ -8,6 +8,7 @@ import be.yildizgames.module.window.widget.TileLayout;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.WindowScrollbar;
 import be.yildizgames.module.window.widget.WindowShape;
 import be.yildizgames.module.window.widget.WindowState;
 import be.yildizgames.module.window.widget.WindowTextLine;
@@ -16,6 +17,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -53,6 +55,7 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
     private final Map<String, JavaFxButton> buttons = new HashMap<>();
     private final Map<String, JavaFxGridLayout> grids = new HashMap<>();
     private final Map<String, JavaFxTileLayout> tiles = new HashMap<>();
+    private final Map<String, JavaFxScrollbar> scrollbars = new HashMap<>();
 
 
     JavaFxWindowState(Pane pane, WindowImageProvider imageProvider, JavaFxWindowShell shell, Scene scene) {
@@ -170,6 +173,19 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
     }
 
     @Override
+    public Optional<WindowScrollbar> findScrollbar(String id) {
+        var result = this.scrollbars.get(id);
+        if(result == null) {
+            var item = this.pane.lookup(id);
+            if(item != null && item.getClass() == ScrollPane.class) {
+                result = new JavaFxScrollbar((ScrollPane)item);
+                this.scrollbars.put(id, result);
+            }
+        }
+        return Optional.ofNullable(result);
+    }
+
+    @Override
     public Optional<TileLayout> findTile(String id) {
         var result = this.tiles.get(id);
         if(result == null) {
@@ -177,6 +193,11 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
             if(item != null && item.getClass() == TilePane.class) {
                 result = new JavaFxTileLayout((TilePane) item);
                 this.tiles.put(id, result);
+            } else if(item != null && item.getClass() == ScrollPane.class) {
+                item = ((ScrollPane) item).getContent();
+                result = new JavaFxTileLayout((TilePane) item);
+                this.tiles.put(id, result);
+                this.tiles.put(item.getId(), result);
             }
         }
         return Optional.ofNullable(result);

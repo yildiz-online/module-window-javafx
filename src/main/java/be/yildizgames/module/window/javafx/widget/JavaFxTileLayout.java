@@ -28,27 +28,27 @@ public class JavaFxTileLayout implements TileLayout {
     }
 
     @Override
-    public int numberOfRow() {
+    public final int numberOfRow() {
         try {
             var clazz = this.pane.getClass();
-            var rowField = clazz.getField("actualRows");
+            var rowField = clazz.getDeclaredField("actualRows");
             rowField.setAccessible(true);
             return rowField.getInt(this.pane);
         } catch (Exception e) {
-            System.getLogger(JavaFxTileLayout.class.getName()).log(System.Logger.Level.ERROR, "Failed to get number of rows", e);
+            System.getLogger(JavaFxTileLayout.class.getName()).log(System.Logger.Level.ERROR, "Failed to get number of rows for " + this.pane.getClass(), e);
             return 0;
         }
     }
 
     @Override
-    public int numberOfColumn() {
+    public final int numberOfColumn() {
         try {
             var clazz = this.pane.getClass();
             var columnField = clazz.getDeclaredField("actualColumns");
             columnField.setAccessible(true);
             return columnField.getInt(this.pane);
         } catch (Exception e) {
-            System.getLogger(JavaFxTileLayout.class.getName()).log(System.Logger.Level.ERROR, "Failed to get number of columns", e);
+            System.getLogger(JavaFxTileLayout.class.getName()).log(System.Logger.Level.ERROR, "Failed to get number of columns for " + this.pane.getClass(), e);
             return 0;
         }
     }
