@@ -49,11 +49,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Random;
 
 /**
@@ -118,6 +122,27 @@ public class JavaFxWindowShell implements WindowShell {
      @Override
     public final WindowState createState(Path template) throws IOException  {
         return new JavaFxWindowState(FXMLLoader.load(template.toUri().toURL()), this.imageProvider, this, this.stage.getScene());
+    }
+
+    @Override
+    public WindowState createState(Path template, Properties properties) throws IOException {
+        var processedName = template.toString().replace(".fxml", "_processed.fxml");
+        Path processed = Path.of(processedName);
+        if(Files.notExists(processed)) {
+            Files.createFile(processed);
+            var lines = Files.readAllLines(template);
+            List<String> result = new ArrayList<>();
+            for (String line : lines) {
+                for (var entry : properties.entrySet()) {
+                    if (line.contains("${" + entry.getKey().toString() + "}")) {
+                        line = line.replace("${" + entry.getKey() + "}", entry.getValue().toString());
+                    }
+                }
+                result.add(line);
+            }
+            Files.write(processed, result);
+        }
+        return this.createState(processed);
     }
 
     @Override

@@ -56,6 +56,7 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
     private final Map<String, JavaFxGridLayout> grids = new HashMap<>();
     private final Map<String, JavaFxTileLayout> tiles = new HashMap<>();
     private final Map<String, JavaFxScrollbar> scrollbars = new HashMap<>();
+    private final Map<String, JavaFxBorderLayout> borders = new HashMap<>();
 
 
     JavaFxWindowState(Pane pane, WindowImageProvider imageProvider, JavaFxWindowShell shell, Scene scene) {
@@ -198,6 +199,19 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
                 result = new JavaFxTileLayout((TilePane) item);
                 this.tiles.put(id, result);
                 this.tiles.put(item.getId(), result);
+            }
+        }
+        return Optional.ofNullable(result);
+    }
+
+    @Override
+    public Optional<BorderLayout> findBorder(String id) {
+        var result = this.borders.get(id);
+        if(result == null) {
+            var item = this.pane.lookup(id);
+            if(item != null && item.getClass() == BorderPane.class) {
+                result = new JavaFxBorderLayout((BorderPane) item, shell, imageProvider);
+                this.borders.put(id, result);
             }
         }
         return Optional.ofNullable(result);
