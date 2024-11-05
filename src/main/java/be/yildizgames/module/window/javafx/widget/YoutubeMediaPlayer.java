@@ -34,6 +34,12 @@ class YoutubeMediaPlayer extends JavaFxBaseWidget<YoutubeMediaPlayer> implements
         this.setReady(this.webview);
     }
 
+    YoutubeMediaPlayer(WebView webview) {
+        super();
+        this.webview = webview;
+        this.setReady(this.webview);
+    }
+
     @Override
     public void setMedia(String url) {
         var rurl = this.reformatUrl(url);

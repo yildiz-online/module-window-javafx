@@ -2,12 +2,14 @@ package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.color.Color;
 import be.yildizgames.module.coordinates.Coordinates;
-import be.yildizgames.module.window.widget.GridLayout;
 import be.yildizgames.module.window.widget.BorderLayout;
+import be.yildizgames.module.window.widget.GridLayout;
 import be.yildizgames.module.window.widget.TileLayout;
 import be.yildizgames.module.window.widget.WindowButton;
 import be.yildizgames.module.window.widget.WindowImage;
 import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.WindowInputBox;
+import be.yildizgames.module.window.widget.WindowMediaPlayer;
 import be.yildizgames.module.window.widget.WindowScrollbar;
 import be.yildizgames.module.window.widget.WindowShape;
 import be.yildizgames.module.window.widget.WindowState;
@@ -18,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -32,6 +35,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.web.WebView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +61,8 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
     private final Map<String, JavaFxTileLayout> tiles = new HashMap<>();
     private final Map<String, JavaFxScrollbar> scrollbars = new HashMap<>();
     private final Map<String, JavaFxBorderLayout> borders = new HashMap<>();
+    private final Map<String, YoutubeMediaPlayer> mediaPlayers = new HashMap<>();
+    private final Map<String, JavaFxInputBox> inputBoxes = new HashMap<>();
 
 
     JavaFxWindowState(Pane pane, WindowImageProvider imageProvider, JavaFxWindowShell shell, Scene scene) {
@@ -148,6 +154,20 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
     }
 
     @Override
+    public Optional<WindowInputBox> findInputBox(String id) {
+        var result = this.inputBoxes.get(id);
+        if(result == null) {
+            var item = this.pane.lookup(id);
+            if(item != null && item.getClass() == TextField.class) {
+                result = new JavaFxInputBox((TextField)item);
+                this.inputBoxes.put(id, result);
+            }
+        }
+        this.shell.toFront();
+        return Optional.ofNullable(result);
+    }
+
+    @Override
     public Optional<WindowButton> findButton(String id) {
         var result = this.buttons.get(id);
         if(result == null) {
@@ -215,6 +235,19 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
             }
         }
         return Optional.ofNullable(result);
+    }
+
+    @Override
+    public Optional<WindowMediaPlayer> findMediaPlayer(String id) {
+        var result = this.mediaPlayers.get(id);
+        if(result == null) {
+            var item = this.pane.lookup(id);
+            if(item != null && item.getClass() == WebView.class) {
+              //  result = new YoutubeMediaPlayer((WebView) item, shell, imageProvider);
+             //   this.mediaPlayers.put(id, result);
+            }
+        }
+        return Optional.empty();
     }
 
     @Override

@@ -47,6 +47,11 @@ class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowI
         this.setReady(this.textField);
     }
 
+    JavaFxInputBox(TextField textField) {
+        super();
+        this.textField = textField;
+        this.setReady(this.textField);
+    }
 
     @Override
     public final WindowInputBox setCoordinates(Coordinates coordinates) {
