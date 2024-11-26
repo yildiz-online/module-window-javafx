@@ -128,6 +128,7 @@ public class JavaFxWindowShell implements WindowShell {
     public WindowState createState(Path template, Properties properties) throws IOException {
         var processedName = template.toString().replace(".fxml", "_processed.fxml");
         Path processed = Path.of(processedName);
+        Files.deleteIfExists(processed);
         if(Files.notExists(processed)) {
             Files.createFile(processed);
             var lines = Files.readAllLines(template);
