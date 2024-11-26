@@ -75,10 +75,12 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
     }
 
     public final int getHeight() {
+        this.recomputeCoordinates();
         return this.coordinates.getHeight();
     }
 
     public final int getWidth() {
+        this.recomputeCoordinates();
         return this.coordinates.getHeight();
     }
 
@@ -87,11 +89,13 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
     }
 
     public final T setPositionTop(int top) {
+        this.recomputeCoordinates();
         this.coordinates = FullCoordinates.full(this.getWidth(), this.getHeight(), this.getLeft(), top);
         return (T) this;
     }
 
     public final T setPositionLeft(int left) {
+        this.recomputeCoordinates();
         this.coordinates = FullCoordinates.full(this.getWidth(), this.getHeight(), left, this.getTop());
         return (T) this;
     }
@@ -147,22 +151,27 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
     }
 
     public final Coordinates getCoordinates() {
+        this.recomputeCoordinates();
         return this.coordinates;
     }
 
     public final int getLeft() {
+        this.recomputeCoordinates();
         return this.coordinates.getLeft();
     }
 
     public final int getRight() {
+        this.recomputeCoordinates();
         return this.coordinates.getLeft() + this.coordinates.getWidth();
     }
 
     public final int getTop() {
+        this.recomputeCoordinates();
         return this.coordinates.getTop();
     }
 
     public final int getBottom() {
+        this.recomputeCoordinates();
         return this.coordinates.getTop() + this.coordinates.getHeight();
     }
 
@@ -171,10 +180,12 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
     }
 
     protected final void updatePosition(Position c) {
+        this.recomputeCoordinates();
         this.coordinates = FullCoordinates.full(this.coordinates.getWidth(), this.coordinates.getHeight(), c.getLeft(), c.getTop());
     }
 
     protected final void updateSize(Size c) {
+        this.recomputeCoordinates();
         this.coordinates = FullCoordinates.full(c.getWidth(), c.getHeight(), this.coordinates.getLeft(), this.coordinates.getTop());
     }
 
@@ -204,5 +215,14 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
 
     public final boolean isFocused() {
         return this.node.isFocused();
+    }
+
+    private void recomputeCoordinates() {
+        var boundsInScreen = this.node.localToScreen(this.node.getBoundsInLocal());
+        this.coordinates = FullCoordinates.full(
+                (int) boundsInScreen.getWidth(),
+                (int) boundsInScreen.getHeight(),
+                (int) boundsInScreen.getMinX(),
+                (int) boundsInScreen.getMinY());
     }
 }
