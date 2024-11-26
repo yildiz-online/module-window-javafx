@@ -22,6 +22,16 @@ public class JavaFxTileLayout implements TileLayout {
     }
 
     @Override
+    public void removeItem(WindowImage image) {
+        this.pane.getChildren().remove(((JavaFxImage)image).getNode());
+    }
+
+    @Override
+    public int getSize() {
+        return this.pane.getChildren().size();
+    }
+
+    @Override
     public final void setGap(int horizontal, int vertical) {
         this.pane.setHgap(horizontal);
         this.pane.setVgap(vertical);
