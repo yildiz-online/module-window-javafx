@@ -225,4 +225,8 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
                 (int) boundsInScreen.getMinX(),
                 (int) boundsInScreen.getMinY());
     }
+
+    final Node getNode() {
+        return this.node;
+    }
 }

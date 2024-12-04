@@ -169,8 +169,4 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
         this.imageView.toBack();
         return this;
     }
-
-    ImageView getNode() {
-        return this.imageView;
-    }
 }
