@@ -50,6 +50,8 @@ class JavaFxMultiLayerImage extends JavaFxBaseWidget<JavaFxMultiLayerImage> impl
 
     private final StackPane stackPane = new StackPane();
 
+    private boolean preserveRatio;
+
     JavaFxMultiLayerImage(Pane pane, WindowImageProvider provider) {
         super();
         this.provider = provider;
@@ -91,12 +93,17 @@ class JavaFxMultiLayerImage extends JavaFxBaseWidget<JavaFxMultiLayerImage> impl
     public final WindowMultiLayerImage setImage(String url, int layer) {
         if (layer >= this.imageViews.size()) {
             for (int i = this.imageViews.size(); i <= layer; i++) {
-                this.imageViews.add(new JavaFxImage(new ImageView(), provider));
+                var image = new JavaFxImage(new ImageView(), provider);
+                this.imageViews.add(image);
+                if(this.preserveRatio) {
+                    image.preserveRatio();
+                }
             }
         }
         this.imageViews.get(layer).setImage(url);
         this.stackPane.getChildren().clear();
         this.imageViews.forEach(i -> this.stackPane.getChildren().add(i.getNode()));
+        this.imageViews.forEach(i -> i.setSize(this.getCoordinates()));
         return this;
     }
 
@@ -122,6 +129,13 @@ class JavaFxMultiLayerImage extends JavaFxBaseWidget<JavaFxMultiLayerImage> impl
     @Override
     public final WindowMultiLayerImage toBack() {
         this.stackPane.toBack();
+        return this;
+    }
+
+    @Override
+    public WindowMultiLayerImage preserveRatio() {
+        this.imageViews.forEach(JavaFxImage::preserveRatio);
+        this.preserveRatio = true;
         return this;
     }
 }
