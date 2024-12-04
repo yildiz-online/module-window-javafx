@@ -58,7 +58,7 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
     private final Map<String, JavaFxShape> shapes = new HashMap<>();
     private final Map<String, JavaFxButton> buttons = new HashMap<>();
     private final Map<String, JavaFxGridLayout> grids = new HashMap<>();
-    private final Map<String, JavaFxTileLayout> tiles = new HashMap<>();
+    private final Map<String, JavaFxTileLayout<?>> tiles = new HashMap<>();
     private final Map<String, JavaFxScrollbar> scrollbars = new HashMap<>();
     private final Map<String, JavaFxBorderLayout> borders = new HashMap<>();
     private final Map<String, YoutubeMediaPlayer> mediaPlayers = new HashMap<>();

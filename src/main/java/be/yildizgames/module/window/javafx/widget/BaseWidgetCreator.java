@@ -86,6 +86,11 @@ abstract class BaseWidgetCreator implements WindowWidgetCreator {
     }
 
     @Override
+    public final JavaFxMultiLayerImage createMultiLayerImage() {
+        return new JavaFxMultiLayerImage(this.pane, this.imageProvider);
+    }
+
+    @Override
     public final JavaFxVirtualKeyboard createVirtualKeyboard(KeyboardListener listener) {
         return new JavaFxVirtualKeyboard(listener, this.imageProvider, this.pane);
     }
