@@ -1,13 +1,13 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.window.widget.TileLayout;
-import be.yildizgames.module.window.widget.WindowImage;
+import be.yildizgames.module.window.widget.WindowWidget;
 import javafx.scene.layout.TilePane;
 
 /**
  * @author Grégory Van den Borre
  */
-public class JavaFxTileLayout implements TileLayout {
+public class JavaFxTileLayout<T extends WindowWidget<T>> implements TileLayout<T> {
 
     private final TilePane pane;
 
@@ -17,17 +17,17 @@ public class JavaFxTileLayout implements TileLayout {
     }
 
     @Override
-    public final void addItem(WindowImage image) {
-        this.pane.getChildren().add(((JavaFxImage)image).getNode());
+    public final void addItem(T t) {
+        this.pane.getChildren().add(((JavaFxBaseWidget<?>)t).getNode());
     }
 
     @Override
-    public void removeItem(WindowImage image) {
-        this.pane.getChildren().remove(((JavaFxImage)image).getNode());
+    public final void removeItem(T t) {
+        this.pane.getChildren().remove(((JavaFxBaseWidget<?>)t).getNode());
     }
 
     @Override
-    public int getSize() {
+    public final int getSize() {
         return this.pane.getChildren().size();
     }
 
