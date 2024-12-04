@@ -43,6 +43,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Grégory Van den Borre
  */
+@SuppressWarnings("unchecked")
 class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
 
     private Coordinates coordinates = FullCoordinates.ZERO;
