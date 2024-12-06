@@ -13,12 +13,14 @@
 package be.yildizgames.module.window.javafx.widget.experimental;
 
 import be.yildizgames.module.color.Color;
+import be.yildizgames.module.coordinates.Coordinates;
 import be.yildizgames.module.coordinates.FullCoordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.input.Key;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.widget.WindowImageProvider;
+import be.yildizgames.module.window.widget.animation.AnimationBehavior;
 import be.yildizgames.module.window.widget.experimental.KeyboardLayout;
 import be.yildizgames.module.window.widget.experimental.KeyboardLayoutKey;
 import be.yildizgames.module.window.widget.experimental.SimpleQwertyKeyboardLayout;
@@ -200,8 +202,63 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
+    public int getRight() {
+        return this.positionX + (int) this.pane.getWidth();
+    }
+
+    @Override
     public final int getTop() {
         return this.positionY;
+    }
+
+    @Override
+    public int getBottom() {
+        return this.positionY + (int) this.pane.getHeight();
+    }
+
+    @Override
+    public VirtualKeyboard setCssStyleClass(String cssClass) {
+        return this;
+    }
+
+    @Override
+    public VirtualKeyboard setScaleAnimation(AnimationBehavior animation) {
+        return this;
+    }
+
+    @Override
+    public VirtualKeyboard playScaleAnimation() {
+        return this;
+    }
+
+    @Override
+    public VirtualKeyboard stopScaleAnimation() {
+        return this;
+    }
+
+    @Override
+    public VirtualKeyboard setTranslationAnimation(AnimationBehavior animation) {
+        return this;
+    }
+
+    @Override
+    public VirtualKeyboard playTranslationAnimation() {
+        return this;
+    }
+
+    @Override
+    public VirtualKeyboard stopTranslationAnimation() {
+        return this;
+    }
+
+    @Override
+    public VirtualKeyboard setCoordinates(Coordinates coordinates) {
+        return this;
+    }
+
+    @Override
+    public VirtualKeyboard setOpacity(float opacity) {
+        return this;
     }
 
     @Override
@@ -209,6 +266,16 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         this.pane.setMinSize(size.getWidth(), size.getHeight());
         this.pane.setMaxSize(size.getWidth(), size.getHeight());
         return this;
+    }
+
+    @Override
+    public VirtualKeyboard requestFocus() {
+        return this;
+    }
+
+    @Override
+    public int getHeight() {
+        return (int) this.pane.getHeight();
     }
 
     @Override
@@ -241,7 +308,6 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
     @Override
     public final VirtualKeyboard setBackground(String image) {
-
         return this;
     }
 
@@ -267,6 +333,11 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
+    public VirtualKeyboard toBack() {
+        return this;
+    }
+
+    @Override
     public final VirtualKeyboard setVisible(boolean visible) {
         this.keys.values().forEach(k -> k.setVisible(visible));
         if(visible) {
@@ -285,6 +356,11 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     public final VirtualKeyboard capsLock(boolean selected) {
         this.modifiers.capsLock.setSelected(selected);
         return this;
+    }
+
+    @Override
+    public Coordinates getCoordinates() {
+        return FullCoordinates.ZERO;
     }
 
     private static class Modifiers {
