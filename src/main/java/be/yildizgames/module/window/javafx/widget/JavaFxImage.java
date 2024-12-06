@@ -70,7 +70,6 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     @Override
     public final WindowImage setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.imageView.setLayoutX(coordinates.getLeft());
         this.imageView.setLayoutY(coordinates.getTop());
         this.imageView.setFitHeight(coordinates.getHeight());
@@ -81,16 +80,14 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     @Override
     public final WindowImage setSize(Size size) {
-        this.updateSize(size);
         this.imageView.setFitHeight(size.getHeight());
         this.imageView.setFitWidth(size.getWidth());
-
+       // this.updateSize(size);
         return this;
     }
 
     @Override
     public final WindowImage setPosition(Position position) {
-        this.updatePosition(position);
         this.imageView.setLayoutX(position.getLeft());
         this.imageView.setLayoutY(position.getTop());
 

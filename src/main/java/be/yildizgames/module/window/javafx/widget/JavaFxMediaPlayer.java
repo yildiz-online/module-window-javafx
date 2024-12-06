@@ -72,9 +72,7 @@ class JavaFxMediaPlayer implements WindowMediaPlayer {
 
     @Override
     public final JavaFxMediaPlayer setCoordinates(Coordinates coordinates) {
-        this.youtubeMediaPlayer.updateCoordinates(coordinates);
         this.youtubeMediaPlayer.setCoordinates(coordinates);
-        this.fileMediaPlayer.updateCoordinates(coordinates);
         this.fileMediaPlayer.setCoordinates(coordinates);
         return this;
     }
@@ -101,8 +99,6 @@ class JavaFxMediaPlayer implements WindowMediaPlayer {
 
     @Override
     public final JavaFxMediaPlayer setSize(Size size) {
-        this.youtubeMediaPlayer.updateSize(size);
-        this.fileMediaPlayer.updateSize(size);
         this.youtubeMediaPlayer.setSize(size);
         this.fileMediaPlayer.setSize(size);
         return this;
@@ -110,8 +106,6 @@ class JavaFxMediaPlayer implements WindowMediaPlayer {
 
     @Override
     public final JavaFxMediaPlayer setPosition(Position position) {
-        this.youtubeMediaPlayer.updatePosition(position);
-        this.fileMediaPlayer.updatePosition(position);
         this.youtubeMediaPlayer.setPosition(position);
         this.fileMediaPlayer.setPosition(position);
         return this;

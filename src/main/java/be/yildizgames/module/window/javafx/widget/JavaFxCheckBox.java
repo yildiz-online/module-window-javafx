@@ -99,7 +99,6 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
 
     @Override
     public final JavaFxCheckBox setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.checkBox.setLayoutX(coordinates.getLeft());
         this.checkBox.setLayoutY(coordinates.getTop());
         this.checkBox.setMaxHeight(coordinates.getHeight());
@@ -113,7 +112,6 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
 
     @Override
     public final WindowCheckBox setSize(Size size) {
-        this.updateSize(size);
         this.checkBox.setMaxHeight(size.getHeight());
         this.checkBox.setMinHeight(size.getHeight());
         this.checkBox.setMaxWidth(size.getWidth());
@@ -123,7 +121,6 @@ class JavaFxCheckBox extends JavaFxBaseWidget<JavaFxCheckBox> implements WindowC
 
     @Override
     public final WindowCheckBox setPosition(Position position) {
-        this.updatePosition(position);
         this.checkBox.setLayoutX(position.getLeft());
         this.checkBox.setLayoutY(position.getTop());
         this.caption.setLayoutX(position.getLeft() + 20.0);

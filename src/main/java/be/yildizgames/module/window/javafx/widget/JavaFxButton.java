@@ -67,7 +67,6 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
 
     @Override
     public WindowButton setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.button.setLayoutX(coordinates.getLeft());
         this.button.setLayoutY(coordinates.getTop());
         this.button.setMaxHeight(coordinates.getHeight());
@@ -80,7 +79,6 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
 
     @Override
     public WindowButton setSize(Size size) {
-        this.updateSize(size);
         this.button.setMaxHeight(size.getHeight());
         this.button.setMinHeight(size.getHeight());
         this.button.setMaxWidth(size.getWidth());
@@ -91,7 +89,6 @@ class JavaFxButton extends JavaFxBaseWidget<JavaFxButton> implements WindowButto
 
     @Override
     public final WindowButton setPosition(Position position) {
-        this.updatePosition(position);
         this.button.setLayoutX(position.getLeft());
         this.button.setLayoutY(position.getTop());
 

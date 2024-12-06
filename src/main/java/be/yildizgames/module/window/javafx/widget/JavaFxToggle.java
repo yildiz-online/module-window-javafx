@@ -42,7 +42,6 @@ class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements WindowToggl
 
     @Override
     public JavaFxToggle setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.toggle.setLayoutX(coordinates.getLeft());
         this.toggle.setLayoutY(coordinates.getTop());
         this.toggle.setMinSize(coordinates.getWidth(), coordinates.getHeight());
@@ -54,7 +53,6 @@ class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements WindowToggl
 
     @Override
     public JavaFxToggle setSize(Size size) {
-        this.updateSize(size);
         this.toggle.setMinSize(size.getWidth(), size.getHeight());
         this.toggle.setMaxSize(size.getWidth(), size.getHeight());
         return this;
@@ -62,7 +60,6 @@ class JavaFxToggle extends JavaFxBaseWidget<JavaFxToggle> implements WindowToggl
 
     @Override
     public JavaFxToggle setPosition(Position position) {
-        this.updatePosition(position);
         this.toggle.setLayoutX(position.getLeft());
         this.toggle.setLayoutY(position.getTop());
         this.caption.setLayoutX(position.getLeft() + 20.0);

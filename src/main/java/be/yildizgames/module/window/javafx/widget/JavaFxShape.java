@@ -42,7 +42,6 @@ class JavaFxShape extends JavaFxBaseWidget<JavaFxShape> implements WindowShape {
 
     @Override
     public JavaFxShape setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.rectangle.setX(coordinates.getLeft());
         this.rectangle.setY(coordinates.getTop());
         this.rectangle.setHeight(coordinates.getHeight());
@@ -52,7 +51,6 @@ class JavaFxShape extends JavaFxBaseWidget<JavaFxShape> implements WindowShape {
 
     @Override
     public JavaFxShape setSize(Size size) {
-        this.updateSize(size);
         this.rectangle.setHeight(size.getHeight());
         this.rectangle.setWidth(size.getWidth());
         return this;
@@ -60,7 +58,6 @@ class JavaFxShape extends JavaFxBaseWidget<JavaFxShape> implements WindowShape {
 
     @Override
     public JavaFxShape setPosition(Position position) {
-        this.updatePosition(position);
         this.rectangle.setX(position.getLeft());
         this.rectangle.setY(position.getTop());
         return this;

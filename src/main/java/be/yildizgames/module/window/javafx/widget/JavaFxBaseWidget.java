@@ -27,8 +27,6 @@ package be.yildizgames.module.window.javafx.widget;
 import be.yildizgames.module.coordinates.Coordinates;
 import be.yildizgames.module.coordinates.FullCoordinates;
 import be.yildizgames.module.coordinates.ParentRelativePosition;
-import be.yildizgames.module.coordinates.Position;
-import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.widget.WidgetEvent;
 import be.yildizgames.module.window.widget.animation.AnimationBehavior;
 import javafx.animation.ScaleTransition;
@@ -45,8 +43,6 @@ import javafx.scene.input.MouseEvent;
  */
 @SuppressWarnings("unchecked")
 class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
-
-    private Coordinates coordinates = FullCoordinates.ZERO;
 
     private Node node;
 
@@ -76,29 +72,15 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
     }
 
     public final int getHeight() {
-        this.recomputeCoordinates();
-        return this.coordinates.getHeight();
+        return (int) this.node.localToScreen(this.node.getBoundsInLocal()).getHeight();
     }
 
     public final int getWidth() {
-        this.recomputeCoordinates();
-        return this.coordinates.getHeight();
+        return (int) this.node.localToScreen(this.node.getBoundsInLocal()).getWidth();
     }
 
     public T setPosition(ParentRelativePosition position, int distance) {
         throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    public final T setPositionTop(int top) {
-        this.recomputeCoordinates();
-        this.coordinates = FullCoordinates.full(this.getWidth(), this.getHeight(), this.getLeft(), top);
-        return (T) this;
-    }
-
-    public final T setPositionLeft(int left) {
-        this.recomputeCoordinates();
-        this.coordinates = FullCoordinates.full(this.getWidth(), this.getHeight(), left, this.getTop());
-        return (T) this;
     }
 
     public final T setTranslationAnimation(AnimationBehavior animation) {
@@ -152,42 +134,28 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
     }
 
     public final Coordinates getCoordinates() {
-        this.recomputeCoordinates();
-        return this.coordinates;
+        var boundsInScreen = this.node.localToScreen(this.node.getBoundsInLocal());
+        return FullCoordinates.full(
+                (int) boundsInScreen.getWidth(),
+                (int) boundsInScreen.getHeight(),
+                (int) boundsInScreen.getMinX(),
+                (int) boundsInScreen.getMinY());
     }
 
     public final int getLeft() {
-        this.recomputeCoordinates();
-        return this.coordinates.getLeft();
+        return (int)this.node.localToScreen(this.node.getBoundsInLocal()).getMinX();
     }
 
     public final int getRight() {
-        this.recomputeCoordinates();
-        return this.coordinates.getLeft() + this.coordinates.getWidth();
+        return (int)this.node.localToScreen(this.node.getBoundsInLocal()).getMaxX();
     }
 
     public final int getTop() {
-        this.recomputeCoordinates();
-        return this.coordinates.getTop();
+        return (int)this.node.localToScreen(this.node.getBoundsInLocal()).getMinY();
     }
 
     public final int getBottom() {
-        this.recomputeCoordinates();
-        return this.coordinates.getTop() + this.coordinates.getHeight();
-    }
-
-    protected final void updateCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    protected final void updatePosition(Position c) {
-        this.recomputeCoordinates();
-        this.coordinates = FullCoordinates.full(this.coordinates.getWidth(), this.coordinates.getHeight(), c.getLeft(), c.getTop());
-    }
-
-    protected final void updateSize(Size c) {
-        this.recomputeCoordinates();
-        this.coordinates = FullCoordinates.full(c.getWidth(), c.getHeight(), this.coordinates.getLeft(), this.coordinates.getTop());
+        return (int)this.node.localToScreen(this.node.getBoundsInLocal()).getMaxY();
     }
 
     public final T setOpacity(float opacity) {
@@ -216,15 +184,6 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
 
     public final boolean isFocused() {
         return this.node.isFocused();
-    }
-
-    private void recomputeCoordinates() {
-        var boundsInScreen = this.node.localToScreen(this.node.getBoundsInLocal());
-        this.coordinates = FullCoordinates.full(
-                (int) boundsInScreen.getWidth(),
-                (int) boundsInScreen.getHeight(),
-                (int) boundsInScreen.getMinX(),
-                (int) boundsInScreen.getMinY());
     }
 
     final Node getNode() {

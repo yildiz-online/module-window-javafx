@@ -86,7 +86,6 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
 
     @Override
     public final JavaFxDropDown setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.comboBox.setLayoutX(coordinates.getLeft());
         this.comboBox.setLayoutY(coordinates.getTop());
         this.comboBox.setMaxHeight(coordinates.getHeight());
@@ -101,7 +100,6 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
 
     @Override
     public final JavaFxDropDown setSize(Size size) {
-        this.updateSize(size);
         this.comboBox.setMaxHeight(size.getHeight());
         this.comboBox.setMinHeight(size.getHeight());
         this.comboBox.setMaxWidth(size.getWidth());
@@ -112,7 +110,6 @@ class JavaFxDropDown extends JavaFxBaseWidget<JavaFxDropDown> implements WindowD
 
     @Override
     public final JavaFxDropDown setPosition(Position position) {
-        this.updatePosition(position);
         this.comboBox.setLayoutX(position.getLeft());
         this.comboBox.setLayoutY(position.getTop());
         this.caption.setLayoutX(position.getLeft());

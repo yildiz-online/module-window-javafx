@@ -50,7 +50,6 @@ class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements WindowCanva
 
     @Override
     public final JavaFxCanvas setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.canvas.setLayoutX(coordinates.getLeft());
         this.canvas.setLayoutY(coordinates.getTop());
         this.canvas.setHeight(coordinates.getHeight());
@@ -60,7 +59,6 @@ class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements WindowCanva
 
     @Override
     public final JavaFxCanvas setSize(Size size) {
-        this.updateSize(size);
         this.canvas.setHeight(size.getHeight());
         this.canvas.setWidth(size.getWidth());
 
@@ -69,7 +67,6 @@ class JavaFxCanvas extends JavaFxBaseWidget<JavaFxCanvas> implements WindowCanva
 
     @Override
     public final JavaFxCanvas setPosition(Position position) {
-        this.updatePosition(position);
         this.canvas.setLayoutX(position.getLeft());
         this.canvas.setLayoutY(position.getTop());
 

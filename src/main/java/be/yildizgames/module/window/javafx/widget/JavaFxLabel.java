@@ -113,7 +113,6 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
 
     @Override
     public final WindowTextLine setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.label.setLayoutX(coordinates.getLeft());
         this.label.setLayoutY(coordinates.getTop());
         this.label.setMaxHeight(coordinates.getHeight());
@@ -124,7 +123,6 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
 
     @Override
     public final WindowTextLine setSize(Size size) {
-        this.updateSize(size);
         this.label.setMaxWidth(size.getWidth());
         this.label.setMaxHeight(size.getHeight());
 
@@ -133,7 +131,6 @@ class JavaFxLabel extends JavaFxBaseWidget<JavaFxLabel> implements WindowTextLin
 
     @Override
     public final WindowTextLine setPosition(Position position) {
-        this.updatePosition(position);
         this.label.setLayoutX(position.getLeft());
         this.label.setLayoutY(position.getTop());
 

@@ -55,7 +55,6 @@ class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowI
 
     @Override
     public final WindowInputBox setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.textField.setLayoutX(coordinates.getLeft());
         this.textField.setLayoutY(coordinates.getTop());
         this.textField.setMaxHeight(coordinates.getHeight());
@@ -68,7 +67,6 @@ class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowI
 
     @Override
     public final WindowInputBox setSize(Size size) {
-        this.updateSize(size);
         this.textField.setMaxHeight(size.getHeight());
         this.textField.setMinHeight(size.getHeight());
         this.textField.setMaxWidth(size.getWidth());
@@ -79,7 +77,6 @@ class JavaFxInputBox extends JavaFxBaseWidget<JavaFxInputBox> implements WindowI
 
     @Override
     public final WindowInputBox setPosition(Position position) {
-        this.updatePosition(position);
         this.textField.setLayoutX(position.getLeft());
         this.textField.setLayoutY(position.getTop());
 

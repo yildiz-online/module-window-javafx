@@ -25,6 +25,7 @@
 package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.coordinates.Coordinates;
+import be.yildizgames.module.coordinates.FullCoordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
 import be.yildizgames.module.window.input.MouseOverListener;
@@ -51,6 +52,7 @@ class JavaFxMultiLayerImage extends JavaFxBaseWidget<JavaFxMultiLayerImage> impl
     private final StackPane stackPane = new StackPane();
 
     private boolean preserveRatio;
+    private Size size = FullCoordinates.ZERO;
 
     JavaFxMultiLayerImage(Pane pane, WindowImageProvider provider) {
         super();
@@ -61,7 +63,6 @@ class JavaFxMultiLayerImage extends JavaFxBaseWidget<JavaFxMultiLayerImage> impl
 
     @Override
     public final WindowMultiLayerImage setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.stackPane.setLayoutX(coordinates.getLeft());
         this.stackPane.setLayoutY(coordinates.getTop());
         this.stackPane.setPrefHeight(coordinates.getHeight());
@@ -73,7 +74,7 @@ class JavaFxMultiLayerImage extends JavaFxBaseWidget<JavaFxMultiLayerImage> impl
 
     @Override
     public final WindowMultiLayerImage setSize(Size size) {
-        this.updateSize(size);
+        this.size = size;
         this.stackPane.setPrefHeight(size.getHeight());
         this.stackPane.setPrefWidth(size.getWidth());
         this.imageViews.forEach(i -> i.setSize(size));
@@ -82,7 +83,6 @@ class JavaFxMultiLayerImage extends JavaFxBaseWidget<JavaFxMultiLayerImage> impl
 
     @Override
     public final WindowMultiLayerImage setPosition(Position position) {
-        this.updatePosition(position);
         this.stackPane.setLayoutX(position.getLeft());
         this.stackPane.setLayoutY(position.getTop());
 
@@ -103,7 +103,7 @@ class JavaFxMultiLayerImage extends JavaFxBaseWidget<JavaFxMultiLayerImage> impl
         this.imageViews.get(layer).setImage(url);
         this.stackPane.getChildren().clear();
         this.imageViews.forEach(i -> this.stackPane.getChildren().add(i.getNode()));
-        this.imageViews.forEach(i -> i.setSize(this.getCoordinates()));
+        this.imageViews.forEach(i -> i.setSize(this.size));
         return this;
     }
 

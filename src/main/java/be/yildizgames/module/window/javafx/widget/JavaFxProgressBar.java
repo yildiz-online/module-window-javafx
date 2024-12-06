@@ -54,7 +54,6 @@ class JavaFxProgressBar extends JavaFxBaseWidget<JavaFxProgressBar> implements W
 
     @Override
     public WindowProgressBar setCoordinates(Coordinates coordinates) {
-        this.updateCoordinates(coordinates);
         this.progressBar.setLayoutX(coordinates.getLeft());
         this.progressBar.setLayoutY(coordinates.getTop());
         this.progressBar.setMaxHeight(coordinates.getHeight());
@@ -67,7 +66,6 @@ class JavaFxProgressBar extends JavaFxBaseWidget<JavaFxProgressBar> implements W
 
     @Override
     public WindowProgressBar setSize(Size size) {
-        this.updateSize(size);
         this.progressBar.setMaxHeight(size.getHeight());
         this.progressBar.setMinHeight(size.getHeight());
         this.progressBar.setMaxWidth(size.getWidth());
@@ -78,7 +76,6 @@ class JavaFxProgressBar extends JavaFxBaseWidget<JavaFxProgressBar> implements W
 
     @Override
     public WindowProgressBar setPosition(Position position) {
-        this.updatePosition(position);
         this.progressBar.setLayoutX(position.getLeft());
         this.progressBar.setLayoutY(position.getTop());
 
