@@ -222,7 +222,12 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
-    public final VirtualKeyboard setBlinkAnimation(double duration) {
+    public final VirtualKeyboard playBlinkAnimation(double duration) {
+        return this;
+    }
+
+    @Override
+    public final VirtualKeyboard stopBlinkAnimation() {
         return this;
     }
 

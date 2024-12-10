@@ -39,6 +39,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
+import java.util.Optional;
+
 /**
  * Building a widget is an async process done by the javafx thread, thus it is necessary to ensure that it is fully built before attempting to use it.
  *
@@ -52,6 +54,8 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
     private final ScaleTransition scaleAnimation = new ScaleTransition();
 
     private final TranslateTransition translateAnimation = new TranslateTransition();
+
+    private FadeTransition fadeTransition;
 
     JavaFxBaseWidget() {
         super();
@@ -68,12 +72,18 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
         }
     }
 
-    public final T setBlinkAnimation(double duration) {
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(duration), this.node);
+    public final T playBlinkAnimation(double duration) {
+        this.stopBlinkAnimation();
+        this.fadeTransition = new FadeTransition(Duration.seconds(duration), this.node);
         fadeTransition.setFromValue(1.0);
         fadeTransition.setToValue(0.0);
         fadeTransition.setCycleCount(Animation.INDEFINITE);
         fadeTransition.play();
+        return (T)this;
+    }
+
+    public final T stopBlinkAnimation() {
+        Optional.ofNullable(this.fadeTransition).ifPresent(FadeTransition::stop);
         return (T)this;
     }
 
