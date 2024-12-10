@@ -29,12 +29,15 @@ import be.yildizgames.module.coordinates.FullCoordinates;
 import be.yildizgames.module.coordinates.ParentRelativePosition;
 import be.yildizgames.module.window.widget.WidgetEvent;
 import be.yildizgames.module.window.widget.animation.AnimationBehavior;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 /**
  * Building a widget is an async process done by the javafx thread, thus it is necessary to ensure that it is fully built before attempting to use it.
@@ -65,6 +68,14 @@ class JavaFxBaseWidget<T extends JavaFxBaseWidget<T>> {
         }
     }
 
+    public final T setBlinkAnimation(double duration) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(duration), this.node);
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.setCycleCount(Animation.INDEFINITE);
+        fadeTransition.play();
+        return (T)this;
+    }
 
     public final T setCssStyleClass(String cssClass) {
         this.node.getStyleClass().add(cssClass);
