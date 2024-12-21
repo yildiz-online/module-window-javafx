@@ -168,6 +168,11 @@ class JavaFxWindowState extends BaseWidgetCreator implements WindowState {
     }
 
     @Override
+    public final String getId() {
+        return this.pane.getId();
+    }
+
+    @Override
     public Optional<WindowButton> findButton(String id) {
         var result = this.buttons.get(id);
         if(result == null) {
