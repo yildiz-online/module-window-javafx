@@ -2,6 +2,7 @@ package be.yildizgames.module.window.javafx.widget;
 
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.javafx.widget.experimental.JavaFxVirtualKeyboard;
+import be.yildizgames.module.window.widget.VerticalLayout;
 import be.yildizgames.module.window.widget.WindowCanvas;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.WindowMenuBar;
@@ -143,5 +144,10 @@ abstract class BaseWidgetCreator implements WindowWidgetCreator {
     @Override
     public final JavaFxWindowShell getWindow() {
         return this.shell;
+    }
+
+    @Override
+    public final VerticalLayout createVerticalLayout() {
+        return new JavaFxVerticalWidget(this.pane);
     }
 }
