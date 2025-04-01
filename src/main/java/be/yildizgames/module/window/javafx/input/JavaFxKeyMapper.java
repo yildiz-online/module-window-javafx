@@ -38,6 +38,16 @@ public class JavaFxKeyMapper {
     private static final EnumMap<Key, KeyCode> reverse = new EnumMap<>(Key.class);
 
     static {
+        put(KeyCode.AT, Key.AT);
+        put(KeyCode.PERIOD, Key.PERIOD);
+        put(KeyCode.AMPERSAND, Key.AMPERSAND);
+        put(KeyCode.EQUALS, Key.EQUALS);
+        put(KeyCode.PLUS, Key.PLUS);
+        put(KeyCode.MINUS, Key.MINUS);
+        put(KeyCode.STAR, Key.STAR);
+        put(KeyCode.EXCLAMATION_MARK, Key.EXCLAMATION);
+        put(KeyCode.SLASH, Key.SLASH);
+        put(KeyCode.DOLLAR, Key.DOLLAR);
         put(KeyCode.ENTER, Key.ENTER);
         put(KeyCode.ESCAPE, Key.ESC);
         put(KeyCode.BACK_SPACE, Key.BACK_SPACE);
@@ -63,12 +73,7 @@ public class JavaFxKeyMapper {
         put(KeyCode.F10, Key.F10);
         put(KeyCode.F11, Key.F11);
         put(KeyCode.F12, Key.F12);
-        put(KeyCode.A, Key.A);
-        put(KeyCode.Q, Key.Q);
-        put(KeyCode.W, Key.W);
-        put(KeyCode.E, Key.E);
-        put(KeyCode.R, Key.R);
-        put(KeyCode.T, Key.T);
+
     }
 
     private static void put(KeyCode code, Key key) {

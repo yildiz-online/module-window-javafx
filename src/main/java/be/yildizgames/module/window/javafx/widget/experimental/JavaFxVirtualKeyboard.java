@@ -21,10 +21,9 @@ import be.yildizgames.module.window.input.Key;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.animation.AnimationBehavior;
-import be.yildizgames.module.window.widget.experimental.KeyboardLayout;
+import be.yildizgames.module.window.widget.keyboard.KeyboardLayout;
 import be.yildizgames.module.window.widget.experimental.KeyboardLayoutKey;
-import be.yildizgames.module.window.widget.experimental.SimpleQwertyKeyboardLayout;
-import be.yildizgames.module.window.widget.experimental.VirtualKeyboard;
+import be.yildizgames.module.window.widget.keyboard.VirtualKeyboard;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.BooleanProperty;
@@ -57,7 +56,7 @@ import java.util.Map;
  */
 public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
-    private final KeyboardLayout layout = new SimpleQwertyKeyboardLayout();
+    private final KeyboardLayout layout;
 
     private final Map<Key, Button> keys = new HashMap<>();
     private final WindowImageProvider imageProvider;
@@ -82,12 +81,13 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
      *               If target is null, KeyEvents will be dynamically forwarded to the focus owner
      *               in the Scene containing this keyboard.
      */
-    public JavaFxVirtualKeyboard(KeyboardListener target, WindowImageProvider imageProvider, Pane pane) {
+    public JavaFxVirtualKeyboard(KeyboardListener target, WindowImageProvider imageProvider, Pane pane, KeyboardLayout layout) {
         super();
         this.pane = pane;
         this.imageProvider = imageProvider;
         this.modifiers = new Modifiers();
         this.listenerList.add(target);
+        this.layout = layout;
 
         // non-regular buttons (don't respond to Shift)
         final Button escape = createNonshiftableButton("Esc", Key.ESC, modifiers);
@@ -129,7 +129,7 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         final StringBinding text =
                 Bindings.when(modifiers.shiftDown().or(modifiers.capsLockOn().and(letter)))
                         .then(key.shifted())
-                        .otherwise(key.unshifted());
+                        .otherwise(key.unShifted());
         var button = createButton(text, key.code(), modifiers);
         button.setMinSize(this.keyWidth, this.keyHeight);
         button.setMaxSize(this.keyWidth, this.keyHeight);
@@ -192,7 +192,7 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
-    public final Size getSize() {
+    public final Size getDimensions() {
         return FullCoordinates.size((int) this.pane.getWidth(), (int) this.pane.getHeight());
     }
 
@@ -369,7 +369,7 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     }
 
     @Override
-    public Coordinates getCoordinates() {
+    public final Coordinates getCoordinates() {
         return FullCoordinates.ZERO;
     }
 

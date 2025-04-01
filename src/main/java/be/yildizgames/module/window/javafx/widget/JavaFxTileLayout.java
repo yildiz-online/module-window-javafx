@@ -32,11 +32,6 @@ public class JavaFxTileLayout<T extends WindowWidget<T>> implements TileLayout<T
     }
 
     @Override
-    public final int getSize() {
-        return this.pane.getChildren().size();
-    }
-
-    @Override
     public final void setGap(int horizontal, int vertical) {
         this.pane.setHgap(horizontal);
         this.pane.setVgap(vertical);
@@ -147,6 +142,11 @@ public class JavaFxTileLayout<T extends WindowWidget<T>> implements TileLayout<T
     @Override
     public int getWidth() {
         return 0;
+    }
+
+    @Override
+    public final int getSize() {
+        return this.pane.getChildren().size();
     }
 
     @Override

@@ -13,6 +13,7 @@ import be.yildizgames.module.window.widget.WindowTextArea;
 import be.yildizgames.module.window.widget.WindowTreeElement;
 import be.yildizgames.module.window.widget.WindowTreeRoot;
 import be.yildizgames.module.window.widget.WindowWidgetCreator;
+import be.yildizgames.module.window.widget.keyboard.KeyboardLayout;
 import javafx.scene.layout.Pane;
 
 /**
@@ -92,8 +93,8 @@ abstract class BaseWidgetCreator implements WindowWidgetCreator {
     }
 
     @Override
-    public final JavaFxVirtualKeyboard createVirtualKeyboard(KeyboardListener listener) {
-        return new JavaFxVirtualKeyboard(listener, this.imageProvider, this.pane);
+    public final JavaFxVirtualKeyboard createVirtualKeyboard(KeyboardLayout layout, KeyboardListener listener) {
+        return new JavaFxVirtualKeyboard(listener, this.imageProvider, this.pane, layout);
     }
 
     @Override
