@@ -7,10 +7,6 @@ updates:
       day: "sunday"
       time: "04:00"
       timezone: Europe/Brussels
-    ignore:
-      - dependency-name: "org.openjfx:javafx*"
-        versions:
-          - "*ea*"
     open-pull-requests-limit: 99
     assignees:
       - "yildiz-online"
