@@ -21,8 +21,8 @@ import be.yildizgames.module.window.input.Key;
 import be.yildizgames.module.window.input.KeyboardListener;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 import be.yildizgames.module.window.widget.animation.AnimationBehavior;
-import be.yildizgames.module.window.widget.keyboard.KeyboardLayout;
 import be.yildizgames.module.window.widget.experimental.KeyboardLayoutKey;
+import be.yildizgames.module.window.widget.keyboard.KeyboardLayout;
 import be.yildizgames.module.window.widget.keyboard.VirtualKeyboard;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
@@ -56,7 +56,7 @@ import java.util.Map;
  */
 public class JavaFxVirtualKeyboard implements VirtualKeyboard {
 
-    private final KeyboardLayout layout;
+    private KeyboardLayout layout;
 
     private final Map<Key, Button> keys = new HashMap<>();
     private final WindowImageProvider imageProvider;
@@ -87,7 +87,7 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         this.imageProvider = imageProvider;
         this.modifiers = new Modifiers();
         this.listenerList.add(target);
-        this.layout = layout;
+
 
         // non-regular buttons (don't respond to Shift)
         final Button escape = createNonshiftableButton("Esc", Key.ESC, modifiers);
@@ -96,12 +96,7 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
         final Button enter = createNonshiftableButton("Enter", Key.ENTER, modifiers);
         final Button tab = createNonshiftableButton("Tab", Key.TAB, modifiers);
 
-        for(var layoutKey: this.layout.getKeys()) {
-            var key = createShiftableButton(layoutKey, modifiers);
-            this.pane.getChildren().addAll(key);
-            this.keys.put(layoutKey.code(), key);
-        }
-        updateLayout();
+        this.setLayout(layout);
     }
 
     private void updateLayout() {
@@ -334,6 +329,20 @@ public class JavaFxVirtualKeyboard implements VirtualKeyboard {
     @Override
     public final KeyboardLayout getLayout() {
         return this.layout;
+    }
+
+    @Override
+    public final VirtualKeyboard setLayout(KeyboardLayout layout) {
+        this.layout = layout;
+        this.pane.getChildren().removeAll(this.keys.values());
+        this.keys.clear();
+        for(var layoutKey: this.layout.getKeys()) {
+            var key = createShiftableButton(layoutKey, modifiers);
+            this.pane.getChildren().addAll(key);
+            this.keys.put(layoutKey.code(), key);
+        }
+        updateLayout();
+        return this;
     }
 
     @Override
