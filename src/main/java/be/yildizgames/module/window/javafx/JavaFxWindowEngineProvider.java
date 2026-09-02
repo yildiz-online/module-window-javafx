@@ -29,6 +29,8 @@ import be.yildizgames.module.window.WindowEngineProvider;
 import be.yildizgames.module.window.widget.WindowImageProvider;
 
 /**
+ * Provider to use with service loader.
+ *
  * @author Grégory Van den Borre
  */
 public class JavaFxWindowEngineProvider implements WindowEngineProvider {
