@@ -7,6 +7,7 @@ open module be.yildizgames.module.window.javafx {
     requires org.controlsfx.controls;
     requires javafx.web;
     requires javafx.fxml;
+    requires java.desktop;
 
     provides be.yildizgames.module.window.WindowEngineProvider
             with be.yildizgames.module.window.javafx.JavaFxWindowEngineProvider;

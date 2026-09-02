@@ -48,6 +48,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.awt.*;
+import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -264,7 +266,31 @@ public class JavaFxWindowShell implements WindowShell {
 
     @Override
     public final JavaFxWindowShell toFront() {
-        this.stage.toFront();
+        Platform.runLater(() -> {
+            if (stage.isIconified()) {
+                stage.setIconified(false);
+            }
+
+            stage.toFront();
+            stage.requestFocus();
+            stage.setAlwaysOnTop(true);
+            stage.setAlwaysOnTop(false);
+            try {
+                Robot robot = new Robot();
+                Point oldPos = MouseInfo.getPointerInfo().getLocation();
+
+                int x = (int) stage.getX() + 20;
+                int y = (int) stage.getY() + 10;
+
+                robot.mouseMove(x, y);
+                robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+
+                robot.mouseMove((int) oldPos.getX(), (int) oldPos.getY());
+            } catch (Exception e) {
+                System.getLogger(this.getClass().getName()).log(System.Logger.Level.ERROR, "", e);
+            }
+        });
         return this;
     }
 
