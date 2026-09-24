@@ -24,6 +24,7 @@
 
 package be.yildizgames.module.window.javafx.widget;
 
+import be.yildizgames.common.hashing.HashingFactory;
 import be.yildizgames.module.coordinates.Coordinates;
 import be.yildizgames.module.coordinates.Position;
 import be.yildizgames.module.coordinates.Size;
@@ -38,6 +39,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author Grégory Van den Borre
@@ -50,7 +52,7 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     private ImageMetadata metadata = new ImageMetadata(0.0, 0.0);
 
-    private String imageFileName = "";
+    private byte[] crc32 = new byte[0];
 
     JavaFxImage(Pane pane, WindowImageProvider provider, String image) {
         super();
@@ -96,20 +98,21 @@ class JavaFxImage extends JavaFxBaseWidget<JavaFxImage> implements WindowImage {
 
     @Override
     public final WindowImage setImage(String url) {
-        if (!this.imageFileName.equals(url) && !url.isEmpty()) {
-            try  {
-                var is = provider.getImage(url);
+        if(url.isEmpty()) {
+            this.imageView.setImage(null);
+            this.crc32 = new byte[0];
+            return this;
+        }
+        try (var is = this.provider.getImage(url)) {
+            var hash = HashingFactory.CRC32.compute(is).getBytes();
+            if(!Arrays.equals(hash, this.crc32)) {
                 var image = new Image(is);
                 this.metadata = new ImageMetadata(image.getWidth(), image.getHeight());
                 this.imageView.setImage(image);
-                this.imageFileName = url;
-                is.close();
-            } catch (IOException e) {
-                throw new IllegalArgumentException(e);
+                this.crc32 = hash;
             }
-        } else if (url.isEmpty()) {
-            this.imageView.setImage(null);
-            this.imageFileName = "";
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
         }
         return this;
     }
